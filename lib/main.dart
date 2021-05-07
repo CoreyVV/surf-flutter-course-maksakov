@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(App());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      // home: MyHomePage(title: 'Flutter Demo Home Page'),
       home: MyStatefulWidget(),
     );
   }
@@ -126,6 +125,10 @@ class MyFirstWidget extends StatelessWidget {
       ),
     );
   }
+
+  // String getContextRuntimeType() {
+  //   return context.runtimeType.toString();
+  // }
 }
 
 class MyStatefulWidget extends StatefulWidget {
@@ -139,10 +142,25 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     ++_counter;
     print(_counter);
+    print(getContextRuntimeType());
     return Container(
       child: Center(
         child: Text('Hello!'),
       ),
+    );
+  }
+
+  String getContextRuntimeType() {
+    return context.runtimeType.toString();
+  }
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyStatefulWidget(),
+      title: 'places',
     );
   }
 }
