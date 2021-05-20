@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SightListScreen extends StatefulWidget {
   @override
@@ -20,7 +21,50 @@ class _SightListScreenState extends State<SightListScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('places'),
+        // title: Text(
+        //   'Список\nинтересных мест',
+        //   textAlign: TextAlign.left,
+        //   style: TextStyle(
+        //       fontFamily: 'Roboto',
+        //       color: Colors.black,
+        //       fontWeight: FontWeight.w700,
+        //       fontSize: 32,
+        //       fontStyle: FontStyle.normal),
+        //   maxLines: 2,
+        // ),
+        // toolbarHeight: 136,
+        // backgroundColor: Colors.transparent,
+        // elevation: 0.0,
+        title: RichText(
+          text: TextSpan(
+              text: 'С',
+              style: TextStyle(
+                  color: Colors.green,
+                  backgroundColor: Colors.transparent,
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.normal),
+              children: [
+                TextSpan(
+                    text: 'писок',
+                    style: TextStyle(color: Colors.black),
+                    children: [
+                      TextSpan(
+                          text: '\nи',
+                          style: TextStyle(color: Colors.yellow),
+                          children: [
+                            TextSpan(
+                                text: 'нтересных мест',
+                                style: TextStyle(color: Colors.black))
+                          ])
+                    ]),
+              ]),
+          textAlign: TextAlign.left,
+          maxLines: 2,
+        ),
+        toolbarHeight: 136,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
       ),
       body: Center(
         child: GridView.count(
