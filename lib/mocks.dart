@@ -18,7 +18,7 @@ final List mocks = [
       details: 'Terraced fields.',
       type: 'mountains'),
   Sight(
-      name: 'Watkins Glen State Park',
+      name: 'Bagan',
       lat: 21.166666,
       lon: 94.8833298,
       url:
