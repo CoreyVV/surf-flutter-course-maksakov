@@ -7,7 +7,8 @@ final List mocks = [
       lon: -76.88910484314,
       url:
           'https://cdn11.bigcommerce.com/s-b4g395tyji/images/stencil/2000x2000/products/715/972/17-27__76825.1549493540.jpg',
-      details: 'A series of waterfalls and gorges.',
+      details:
+          'A series of waterfalls and gorges. You will certainly enjoy hiking in the Glen gorge along the stream and admiring the 19 waterfalls along its course. You can also opt for a hike on the gorge rim for breathtaking views from above!',
       type: 'parks'),
   Sight(
       name: 'Mù Cang Chải',
