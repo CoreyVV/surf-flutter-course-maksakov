@@ -11,8 +11,43 @@ class SightDetails extends StatelessWidget {
     return Container(
         child: Column(children: [
       Container(
-        color: Colors.blueGrey,
+        color: Colors.white,
         height: 360,
+        child: Stack(
+          children: [
+            Image.network(
+              sight.url,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            Positioned(
+                top: 36,
+                left: 16,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  width: 32,
+                  height: 32,
+                )),
+          ],
+        ),
       ),
       Container(
         padding: EdgeInsets.only(left: 16, right: 16),
@@ -62,7 +97,7 @@ class SightDetails extends StatelessWidget {
             Container(
               alignment: Alignment.topLeft,
               padding: EdgeInsets.only(top: 16, bottom: 24),
-              height: 72,
+              height: 112,
               child: Text(
                 sight.details,
                 style: TextStyle(

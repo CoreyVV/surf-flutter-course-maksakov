@@ -7,11 +7,11 @@ class Sight {
   final String type;
 
   Sight({
-    this.name,
-    this.lat,
-    this.lon,
-    this.url,
-    this.details,
-    this.type,
+    required this.name,
+    required this.lat,
+    required this.lon,
+    required this.url,
+    required this.details,
+    required this.type,
   });
 }

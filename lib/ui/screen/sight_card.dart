@@ -17,13 +17,31 @@ class SightCard extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 16, top: 16, right: 16),
                 height: 132,
-                color: Colors.blue,
-                child: Row(
+                child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.topLeft,
+                    Image.network(
+                      sight.url,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
+                    Positioned(
+                      top: 16,
+                      left: 16,
                       child: Text(
                         sight.type,
                         style: TextStyle(
@@ -35,9 +53,9 @@ class SightCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(child: FittedBox()),
-                    Align(
-                      alignment: Alignment.topRight,
+                    Positioned(
+                      top: 19,
+                      right: 18,
                       child: Icon(
                         Icons.favorite_border,
                         color: Colors.white,
