@@ -4,7 +4,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -23,6 +23,9 @@ flutter:
 
   assets:
     - res/
+    # - res/images/place_00.jpg
+    # - res/images/place_01.jpg
+    # - res/images/place_02.jpg
   
   fonts:
     - family: Roboto

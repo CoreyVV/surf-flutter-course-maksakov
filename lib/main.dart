@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
-      home: SightListScreen(),
-      // home: Scaffold(body: SightDetails(mocks[2])),
+      // home: SightListScreen(),
+      home: Scaffold(body: SightDetails(mocks[0])),
       title: 'places',
     );
   }
