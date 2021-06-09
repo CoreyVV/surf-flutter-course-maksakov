@@ -44,7 +44,7 @@ class _SightListScreenState extends State<SightListScreen> {
       appBar: SightAppBar(136),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(right: 16, left: 16),
+          padding: EdgeInsets.only(left: 16, right: 16),
           child: Column(
             children: [
               SightCard(mocks[0]),
@@ -58,18 +58,36 @@ class _SightListScreenState extends State<SightListScreen> {
       //   onPressed: _incrementCounter,
       //   child: Icon(Icons.add),
       // ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'person',
-      //     ),
-      //   ],
-      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.list,
+                color: Color(0xFF252849),
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.map,
+                color: Color(0xFF252849),
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite,
+                color: Color(0xFF252849),
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.settings,
+                color: Color(0xFF252849),
+              ),
+              label: ''),
+        ],
+      ),
     );
   }
 }
