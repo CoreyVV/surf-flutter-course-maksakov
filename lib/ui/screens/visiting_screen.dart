@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screen/sight_visited.dart';
-import 'package:places/ui/screen/sight_planned.dart';
+import 'package:places/ui/screens/sight_visited.dart';
+import 'package:places/ui/screens/sight_planned.dart';
 
 class VisitingScreen extends StatelessWidget {
   @override
@@ -18,12 +18,7 @@ class VisitingScreen extends StatelessWidget {
               child: Text(
                 'Избранное',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: 'Roboto',
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    fontStyle: FontStyle.normal),
+                style: Theme.of(context).accentTextTheme.headline6,
                 maxLines: 2,
               ),
             ),
@@ -33,16 +28,17 @@ class VisitingScreen extends StatelessWidget {
                 margin:
                     EdgeInsets.only(left: 16, top: 14, right: 15, bottom: 6),
                 decoration: BoxDecoration(
-                  color: Color(0xFFF5F5F5),
+                  color: Theme.of(context).primaryColorDark,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: TabBar(
                   labelPadding: EdgeInsets.zero,
-                  unselectedLabelColor: Color(0xFF7C7E92),
+                  labelColor: Theme.of(context).primaryColor,
+                  unselectedLabelColor: Theme.of(context).unselectedWidgetColor,
                   indicatorSize: TabBarIndicatorSize.label,
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
-                      color: Color(0xFF3B3E5B)),
+                      color: Theme.of(context).accentColor),
                   tabs: [
                     Container(
                       width: 184,
@@ -73,14 +69,14 @@ class VisitingScreen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(left: 16, top: 16, right: 16),
                 child: Column(children: [
-                  SightCardVisited(mocks[0]),
+                  SightCardPlanned(mocks[0]),
                   // SightCardVisited(mocks[2]),
                 ]),
               ),
               Container(
                 padding: EdgeInsets.only(left: 16, top: 16, right: 16),
                 child: Column(children: [
-                  SightCardPlanned(mocks[1]),
+                  SightCardVisited(mocks[1]),
                 ]),
               ),
             ],
@@ -92,25 +88,21 @@ class VisitingScreen extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.list,
-                    color: Color(0xFF252849),
                   ),
                   label: ''),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.map,
-                    color: Color(0xFF252849),
                   ),
                   label: ''),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.favorite,
-                    color: Color(0xFF252849),
                   ),
                   label: ''),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.settings,
-                    color: Color(0xFF252849),
                   ),
                   label: ''),
             ],

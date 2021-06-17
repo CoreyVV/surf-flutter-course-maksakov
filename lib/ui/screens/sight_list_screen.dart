@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screen/sight_card.dart';
+import 'package:places/ui/screens/res/style.dart';
+import 'package:places/ui/screens/sight_card.dart';
 import 'package:places/mocks.dart';
 
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,16 +17,11 @@ class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         'Список\nинтересных мест',
         textAlign: TextAlign.left,
-        style: TextStyle(
-            fontFamily: 'Roboto',
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
-            fontSize: 32,
-            fontStyle: FontStyle.normal),
+        style: Theme.of(context).accentTextTheme.headline4,
         maxLines: 2,
       ),
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
+      // backgroundColor: Colors.transparent,
+      // elevation: 0.0,
       toolbarHeight: height,
     );
   }
@@ -65,25 +61,25 @@ class _SightListScreenState extends State<SightListScreen> {
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.list,
-                color: Color(0xFF252849),
+                // color: Color(0xFF252849),
               ),
               label: ''),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.map,
-                color: Color(0xFF252849),
+                // color: Color(0xFF252849),
               ),
               label: ''),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.favorite,
-                color: Color(0xFF252849),
+                // color: Color(0xFF252849),
               ),
               label: ''),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.settings,
-                color: Color(0xFF252849),
+                // color: Color(0xFF252849),
               ),
               label: ''),
         ],

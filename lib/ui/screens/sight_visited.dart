@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screens/res/colors.dart';
 
 class SightCardVisited extends StatelessWidget {
   final Sight sight;
@@ -44,13 +45,10 @@ class SightCardVisited extends StatelessWidget {
                     left: 16,
                     child: Text(
                       sight.type,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: 'Roboto',
-                      ),
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .button!
+                          .copyWith(color: white),
                     ),
                   ),
                   Positioned(
@@ -58,24 +56,22 @@ class SightCardVisited extends StatelessWidget {
                     right: 16,
                     child: Icon(
                       Icons.close,
-                      color: Colors.white,
                     ),
                   ),
                   Positioned(
-                      top: 16,
-                      right: 56,
-                      child: Icon(
-                        Icons.calendar_today,
-                        color: Colors.white,
-                      )),
+                    top: 16,
+                    right: 56,
+                    child: Icon(
+                      Icons.calendar_today,
+                    ),
+                  ),
                 ],
               ),
             ),
             Container(
-              // padding: EdgeInsets.only(left: 16, top: 16, right: 16),
               width: double.infinity,
-              height: 102,
-              color: Color(0xFFF5F5F5),
+              height: 122,
+              color: Theme.of(context).primaryColorDark,
               child: Stack(
                 children: [
                   Positioned(
@@ -83,27 +79,15 @@ class SightCardVisited extends StatelessWidget {
                     left: 16,
                     child: Text(
                       sight.name,
-                      style: TextStyle(
-                        color: Color(0xFF3B3E5B),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: 'Roboto',
-                      ),
+                      style: Theme.of(context).accentTextTheme.bodyText1,
                     ),
                   ),
                   Positioned(
                     top: 38,
                     left: 16,
                     child: Text(
-                      'Запланировано на 12 окт. 2020',
-                      style: TextStyle(
-                        color: Color(0xFF4CAF50),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: 'Roboto',
-                      ),
+                      'Цель достигнута 12 окт. 2020',
+                      style: Theme.of(context).primaryTextTheme.bodyText2,
                     ),
                   ),
                   Positioned(
@@ -111,13 +95,7 @@ class SightCardVisited extends StatelessWidget {
                     left: 16,
                     child: Text(
                       'закрыто до 09:00',
-                      style: TextStyle(
-                        color: Color(0xFF7C7E92),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: 'Roboto',
-                      ),
+                      style: Theme.of(context).primaryTextTheme.bodyText2,
                     ),
                   ),
                 ],
