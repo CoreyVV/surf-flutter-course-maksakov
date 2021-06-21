@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screens/res/colors.dart';
 
 class SightDetails extends StatelessWidget {
   final Sight sight;
@@ -11,7 +12,6 @@ class SightDetails extends StatelessWidget {
     return Container(
         child: Column(children: [
       Container(
-        color: Colors.white,
         height: 360,
         child: Stack(
           children: [
@@ -36,16 +36,17 @@ class SightDetails extends StatelessWidget {
               height: double.infinity,
             ),
             Positioned(
-                top: 36,
-                left: 16,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  width: 32,
-                  height: 32,
-                )),
+              top: 36,
+              left: 16,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(context).primaryColor,
+                ),
+                width: 32,
+                height: 32,
+              ),
+            ),
           ],
         ),
       ),
@@ -58,39 +59,24 @@ class SightDetails extends StatelessWidget {
               padding: EdgeInsets.only(top: 24, bottom: 2),
               child: Text(
                 sight.name,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                  fontFamily: 'Roboto',
-                ),
+                style: Theme.of(context).accentTextTheme.headline5,
               ),
             ),
             Row(
               children: [
                 Text(
                   sight.type,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'Roboto',
-                  ),
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .bodyText2!
+                      .copyWith(fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
                   width: 16,
                 ),
                 Text(
                   'закрыто до 09:00',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'Roboto',
-                  ),
+                  style: Theme.of(context).primaryTextTheme.bodyText2,
                 )
               ],
             ),
@@ -100,13 +86,7 @@ class SightDetails extends StatelessWidget {
               height: 112,
               child: Text(
                 sight.details,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                  fontFamily: 'Roboto',
-                ),
+                style: Theme.of(context).accentTextTheme.bodyText2,
                 maxLines: 4,
               ),
             ),
@@ -114,16 +94,16 @@ class SightDetails extends StatelessWidget {
               alignment: Alignment.center,
               margin: EdgeInsets.only(bottom: 24),
               height: 48,
-              color: Colors.green,
+              decoration: BoxDecoration(
+                color: Theme.of(context).buttonColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Text(
                 'ПОСТРОИТЬ МАРШРУТ',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                  fontFamily: 'Roboto',
-                ),
+                style: Theme.of(context)
+                    .accentTextTheme
+                    .button!
+                    .copyWith(color: white),
               ),
             ),
             Container(
@@ -132,34 +112,22 @@ class SightDetails extends StatelessWidget {
               child: Row(children: [
                 Icon(
                   Icons.calendar_today_outlined,
-                  color: Colors.grey,
+                  color: Theme.of(context).unselectedWidgetColor,
                 ),
                 SizedBox(width: 9),
                 Text(
                   'Запланировать',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'Roboto',
-                  ),
+                  style: Theme.of(context).primaryTextTheme.bodyText2,
                 ),
                 SizedBox(width: 40),
                 Icon(
                   Icons.favorite_border,
-                  color: Colors.black,
+                  color: Theme.of(context).accentColor,
                 ),
                 SizedBox(width: 9),
                 Text(
                   'В избранное',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'Roboto',
-                  ),
+                  style: Theme.of(context).accentTextTheme.bodyText2,
                 )
               ]),
             )

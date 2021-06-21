@@ -44,13 +44,12 @@ class SightCard extends StatelessWidget {
                       left: 16,
                       child: Text(
                         sight.type,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.normal,
-                          fontFamily: 'Roboto',
-                        ),
+                        style: Theme.of(context)
+                            .accentTextTheme
+                            .bodyText2!
+                            .copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
                       ),
                     ),
                     Positioned(
@@ -58,7 +57,6 @@ class SightCard extends StatelessWidget {
                       right: 18,
                       child: Icon(
                         Icons.favorite_border,
-                        color: Colors.white,
                       ),
                     ),
                   ],
@@ -67,7 +65,7 @@ class SightCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(left: 16, right: 16),
                 height: 92,
-                color: Color(0xFFF5F5F5),
+                color: Theme.of(context).primaryColorDark,
                 child: Column(
                   children: [
                     SizedBox(
@@ -80,12 +78,7 @@ class SightCard extends StatelessWidget {
                         child: Text(
                           sight.name,
                           maxLines: 2,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.normal,
-                              fontFamily: 'Roboto'),
+                          style: Theme.of(context).accentTextTheme.bodyText1,
                         ),
                       ),
                     ),
@@ -99,13 +92,8 @@ class SightCard extends StatelessWidget {
                         child: Text(
                           sight.details,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                              fontFamily: 'Roboto'),
+                          maxLines: 2,
+                          style: Theme.of(context).primaryTextTheme.bodyText2,
                         ),
                       ),
                     ),
