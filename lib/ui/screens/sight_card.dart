@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/ui/screens/res/colors.dart';
 
 class SightCard extends StatelessWidget {
   final Sight sight;
@@ -49,14 +51,25 @@ class SightCard extends StatelessWidget {
                             .bodyText2!
                             .copyWith(
                               fontWeight: FontWeight.w700,
+                              color: white,
                             ),
                       ),
                     ),
                     Positioned(
                       top: 19,
                       right: 18,
-                      child: Icon(
-                        Icons.favorite_border,
+                      child: InkWell(
+                        onTap: () {
+                          print('sight_card/icon-heart was tapped');
+                        },
+                        child: Container(
+                          child: SvgPicture.asset(
+                            'res/icons/icon-heart.svg',
+                            height: 24,
+                            width: 24,
+                            color: white,
+                          ),
+                        ),
                       ),
                     ),
                   ],

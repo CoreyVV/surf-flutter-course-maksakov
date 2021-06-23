@@ -23,9 +23,17 @@ flutter:
 
   assets:
     - res/
-    # - res/images/place_00.jpg
-    # - res/images/place_01.jpg
-    # - res/images/place_02.jpg
+    - res/icons/icon-heart.svg
+    - res/icons/bottom_navigation-icon-list.svg
+    - res/icons/bottom_navigation-icon-map.svg
+    - res/icons/bottom_navigation-icon-heart-full.svg
+    - res/icons/bottom_navigation-icon-settings.svg
+    - res/icons/button-white-icon-go.svg
+    - res/icons/icon-calendar.svg
+    - res/icons/header-icon-arrow.svg
+    - res/icons/icon-close.svg
+    - res/icons/icon-calendar.svg
+    - res/icons/icon-share.svg
   
   fonts:
     - family: Roboto

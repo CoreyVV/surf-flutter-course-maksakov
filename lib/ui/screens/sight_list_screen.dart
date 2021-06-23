@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:places/ui/screens/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/style.dart';
 import 'package:places/ui/screens/sight_card.dart';
 import 'package:places/mocks.dart';
@@ -36,54 +38,24 @@ class _SightListScreenState extends State<SightListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: SightAppBar(136),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: Column(
-            children: [
-              SightCard(mocks[0]),
-              SightCard(mocks[1]),
-              SightCard(mocks[2]),
-            ],
+        resizeToAvoidBottomInset: false,
+        appBar: SightAppBar(136),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            child: Column(
+              children: [
+                SightCard(mocks[0]),
+                SightCard(mocks[1]),
+                SightCard(mocks[2]),
+              ],
+            ),
           ),
         ),
-      ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   child: Icon(Icons.add),
-      // ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.list,
-                // color: Color(0xFF252849),
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.map,
-                // color: Color(0xFF252849),
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.favorite,
-                // color: Color(0xFF252849),
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.settings,
-                // color: Color(0xFF252849),
-              ),
-              label: ''),
-        ],
-      ),
-    );
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: _incrementCounter,
+        //   child: Icon(Icons.add),
+        // ),
+        bottomNavigationBar: MyBottomNavigationBar());
   }
 }

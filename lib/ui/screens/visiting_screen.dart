@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/mocks.dart';
+import 'package:places/ui/screens/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/sight_visited.dart';
 import 'package:places/ui/screens/sight_planned.dart';
 
@@ -81,32 +83,7 @@ class VisitingScreen extends StatelessWidget {
               ),
             ],
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.list,
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.map,
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.favorite,
-                  ),
-                  label: ''),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.settings,
-                  ),
-                  label: ''),
-            ],
-          ),
+          bottomNavigationBar: MyBottomNavigationBar(),
         );
       }),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/screens/res/colors.dart';
 
@@ -54,15 +55,41 @@ class SightCardPlanned extends StatelessWidget {
                   Positioned(
                     top: 16,
                     right: 16,
-                    child: Icon(
-                      Icons.close,
+                    child: InkWell(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.transparent,
+                        ),
+                        child: SvgPicture.asset(
+                          'res/icons/icon-close.svg',
+                        ),
+                        width: 24,
+                        height: 24,
+                      ),
+                      onTap: () {
+                        print('sight_planned/close was tapped');
+                      },
                     ),
                   ),
                   Positioned(
                     top: 16,
                     right: 56,
-                    child: Icon(
-                      Icons.calendar_today,
+                    child: InkWell(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          // color: Colors.transparent,
+                        ),
+                        child: SvgPicture.asset(
+                          'res/icons/icon-calendar.svg',
+                        ),
+                        width: 24,
+                        height: 24,
+                      ),
+                      onTap: () {
+                        print('sight_planned/calendar was tapped');
+                      },
                     ),
                   ),
                 ],
