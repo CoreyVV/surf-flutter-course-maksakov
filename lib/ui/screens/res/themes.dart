@@ -3,6 +3,7 @@ import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/style.dart';
 
 final darkTheme = ThemeData(
+  brightness: Brightness.dark,
   primaryColor: blackMain,
   primaryColorDark: blackDark,
   accentColor: white,
@@ -43,6 +44,7 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
+  brightness: Brightness.light,
   primaryColor: white,
   primaryColorDark: whiteDark,
   accentColor: secondaryWhite,
@@ -88,6 +90,17 @@ final lightTheme = ThemeData(
   ),
   primaryIconTheme: IconThemeData(
     color: black,
+  ),
+  sliderTheme: SliderThemeData(
+    // activeTickMarkColor: white,
+    activeTrackColor: green,
+    // inactiveTickMarkColor: inactiveBlack,
+    inactiveTrackColor: inactiveBlack,
+    thumbColor: white,
+    trackHeight: 1,
+    rangeThumbShape: RoundRangeSliderThumbShape(
+      elevation: 4,
+    ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: secondaryBlack,

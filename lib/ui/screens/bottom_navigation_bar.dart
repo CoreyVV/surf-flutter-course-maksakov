@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:places/ui/screens/res/icons.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
   @override
@@ -9,33 +10,13 @@ class MyBottomNavigationBar extends StatelessWidget {
       showUnselectedLabels: false,
       items: [
         BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'res/icons/bottom_navigation-icon-list.svg',
-              height: 24,
-              width: 24,
-            ),
-            label: ''),
+            icon: MyIcons.bbottom_navigation_icon_list, label: ''),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'res/icons/bottom_navigation-icon-map.svg',
-              height: 24,
-              width: 24,
-            ),
-            label: ''),
+            icon: MyIcons.bottom_navigation_icon_map, label: ''),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'res/icons/bottom_navigation-icon-heart-full.svg',
-              height: 24,
-              width: 24,
-            ),
-            label: ''),
+            icon: MyIcons.bottom_navigation_icon_heart_full, label: ''),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'res/icons/bottom_navigation-icon-settings.svg',
-              height: 24,
-              width: 24,
-            ),
-            label: ''),
+            icon: MyIcons.bottom_navigation_icon_settings, label: ''),
       ],
     );
   }
