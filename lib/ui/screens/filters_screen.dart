@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:location/location.dart';
 import 'package:places/domain/sight.dart';
+import 'package:places/mocks.dart';
+import 'package:places/services/filters.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 
-late int _amountFilteredPlaces;
+int _amountFilteredPlaces = 0;
 
 const double _searchMinDistance = 100;
 const double _searchMaxDistance = 10000;
 const double _searchDistanceStep = 100;
 final int _searchDivisions =
     ((_searchMaxDistance - _searchMinDistance) / _searchDistanceStep).round();
+late RangeValues _currentRangeValues;
 
 //класс типа места с иконкой и заголовком
 class SightTypeIcon {
@@ -57,6 +61,7 @@ Map<SightTypeIcon, bool> filterMap = {
   sightTypeIconParticularPlace: false,
   sightTypeIconRestourant: false,
 };
+List<String> filterList = [];
 
 //экран фильтров
 class FilterScreen extends StatefulWidget {
@@ -111,7 +116,9 @@ class _FilterScreenState extends State<FilterScreen> {
           TypeFilter(onTap: (SightTypeIcon key) {
             setState(() {
               filterMap[key] = !filterMap[key]!;
-              _amountFilteredPlaces++;
+              filterMap[key]!
+                  ? filterList.add(key.type)
+                  : filterList.remove(key.type);
             });
           }),
           DistanceFilter(),
@@ -361,7 +368,7 @@ class DistanceFilter extends StatefulWidget {
 }
 
 class DistanceFilterState extends State<DistanceFilter> {
-  late RangeValues _currentRangeValues;
+  // late RangeValues _currentRangeValues;
   late String _textRangeValues;
 
   @override
@@ -416,7 +423,6 @@ class DistanceFilterState extends State<DistanceFilter> {
                 RangeSlider(
                   values: _currentRangeValues,
                   onChanged: (newRangeValues) {
-                    _amountFilteredPlaces++;
                     setState(() => renewTextRangeSlider(newRangeValues));
                   },
                   min: _searchMinDistance,
@@ -440,19 +446,75 @@ class ShowButton extends StatefulWidget {
 }
 
 class _ShowButtonState extends State<ShowButton> {
-  // late int _amountFilteredPlaces;
   late String _textElevatedButton;
 
   void renewTextElevatedButton() {
-    _amountFilteredPlaces++;
     _textElevatedButton = 'ПОКАЗАТЬ (${_amountFilteredPlaces})';
   }
 
   @override
   void initState() {
     super.initState();
-    _amountFilteredPlaces = 0;
+    getSights();
     _textElevatedButton = 'ПОКАЗАТЬ (${_amountFilteredPlaces})';
+  }
+
+  getSights() async {
+    List<Sight> sights = [];
+
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _currentPosition;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _currentPosition = await location.getLocation();
+
+    print(_currentPosition);
+    setState(() {
+      for (var sight in mocks) {
+        if (filterList.length > 0) {
+          if ((checkSight(
+                  sight.lat,
+                  sight.lon,
+                  _currentPosition.latitude!,
+                  _currentPosition.longitude!,
+                  _searchMinDistance / 1000,
+                  _searchMaxDistance / 1000)) &&
+              (filterList.contains(sight.type))) {
+            sights.add(sight);
+          }
+        } else {
+          if (checkSight(
+              sight.lat,
+              sight.lon,
+              _currentPosition.latitude!,
+              _currentPosition.longitude!,
+              _searchMinDistance / 1000,
+              _searchMaxDistance / 1000)) {
+            sights.add(sight);
+          }
+        }
+      }
+      _amountFilteredPlaces = sights.length;
+      renewTextElevatedButton();
+    });
   }
 
   @override
@@ -467,10 +529,9 @@ class _ShowButtonState extends State<ShowButton> {
           child: ElevatedButton(
             child: Text(_textElevatedButton),
             onPressed: () {
-              setState(() => renewTextElevatedButton());
-
+              getSights();
               print('show button was tapped');
-              print(filterMap);
+              print(filterList);
             },
           ),
         ),
