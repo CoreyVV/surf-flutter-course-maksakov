@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:places/ui/screens/res/icons.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
@@ -10,13 +9,29 @@ class MyBottomNavigationBar extends StatelessWidget {
       showUnselectedLabels: false,
       items: [
         BottomNavigationBarItem(
-            icon: MyIcons.bbottom_navigation_icon_list, label: ''),
+          icon: MyIcon(
+            asset: AssetsStr.bottom_navigation_icon_list,
+          ),
+          label: '',
+        ),
         BottomNavigationBarItem(
-            icon: MyIcons.bottom_navigation_icon_map, label: ''),
+          icon: MyIcon(
+            asset: AssetsStr.bottom_navigation_icon_map,
+          ),
+          label: '',
+        ),
         BottomNavigationBarItem(
-            icon: MyIcons.bottom_navigation_icon_heart_full, label: ''),
+          icon: MyIcon(
+            asset: AssetsStr.bottom_navigation_icon_heart,
+          ),
+          label: '',
+        ),
         BottomNavigationBarItem(
-            icon: MyIcons.bottom_navigation_icon_settings, label: ''),
+          icon: MyIcon(
+            asset: AssetsStr.bottom_navigation_icon_settings,
+          ),
+          label: '',
+        ),
       ],
     );
   }

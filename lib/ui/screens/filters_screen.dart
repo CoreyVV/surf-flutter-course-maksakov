@@ -52,7 +52,7 @@ final sightTypeIconRestourant = SightTypeIcon(
     type: SightType.restourant,
     icon: MyIcons.catalog_white_restourant);
 
-// // храним значение таблицы фильтров
+//храним значение таблицы фильтров
 Map<SightTypeIcon, bool> filterMap = {
   sightTypeIconCafe: false,
   sightTypeIconHotel: false,
@@ -65,7 +65,7 @@ List<String> filterList = [];
 
 //экран фильтров
 class FilterScreen extends StatefulWidget {
-  // const FilterScreen({Key? key}) : super(key: key);
+// const FilterScreen({Key? key}) : super(key: key);
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
@@ -75,7 +75,6 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: _filterAppBar(context),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: Padding(
@@ -88,7 +87,6 @@ class _FilterScreenState extends State<FilterScreen> {
                 print('filter_screen/back was tapped');
               },
               icon: MyIcons.icon_arrow,
-              // color: Colors.black, //Theme.of(context).accentColor,
             ),
           ),
         ),
@@ -98,7 +96,10 @@ class _FilterScreenState extends State<FilterScreen> {
             child: TextButton(
               onPressed: () {
                 print('filter_screen/clear was tapped');
-                setState(() => (filterMap.updateAll((key, value) => false)));
+                setState(() {
+                  filterMap.updateAll((key, value) => false);
+                  filterList.clear();
+                });
               },
               child: Text(
                 'Очистить',
@@ -125,7 +126,6 @@ class _FilterScreenState extends State<FilterScreen> {
           ShowButton(),
         ],
       ),
-      // persistentFooterButtons: [],
     );
   }
 }
@@ -346,6 +346,7 @@ class TypeFilterBox extends StatelessWidget {
           InkWell(
             borderRadius: BorderRadius.circular(64),
             onTap: onTap,
+            child: Ink(),
           ),
           if (filterMap[sightTypeIcon]!)
             Positioned(
@@ -368,7 +369,6 @@ class DistanceFilter extends StatefulWidget {
 }
 
 class DistanceFilterState extends State<DistanceFilter> {
-  // late RangeValues _currentRangeValues;
   late String _textRangeValues;
 
   @override

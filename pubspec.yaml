@@ -28,7 +28,7 @@ flutter:
     - res/icons/icon-heart.svg
     - res/icons/bottom_navigation-icon-list.svg
     - res/icons/bottom_navigation-icon-map.svg
-    - res/icons/bottom_navigation-icon-heart-full.svg
+    - res/icons/bottom_navigation-icon-heart.svg
     - res/icons/bottom_navigation-icon-settings.svg
     - res/icons/button-white-icon-go.svg
     - res/icons/icon-calendar.svg
@@ -44,6 +44,7 @@ flutter:
     - res/icons/catalog-white-restourant.svg
     - res/icons/icon-arrow.svg
     - res/icons/icon-tick_choice.svg
+    - res/icons/icon-info.svg
   
   fonts:
     - family: Roboto
