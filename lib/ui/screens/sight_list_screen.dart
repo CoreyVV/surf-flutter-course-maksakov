@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:places/domain/sight.dart';
 import 'package:places/ui/screens/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/style.dart';
 import 'package:places/ui/screens/sight_card.dart';
@@ -45,17 +46,19 @@ class _SightListScreenState extends State<SightListScreen> {
             padding: EdgeInsets.only(left: 16, right: 16),
             child: Column(
               children: [
-                SightCard(mocks[0]),
-                SightCard(mocks[1]),
-                SightCard(mocks[2]),
+                for (var sight in mocks)
+                  Column(
+                    children: [
+                      SightCard(sight),
+                      SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: _incrementCounter,
-        //   child: Icon(Icons.add),
-        // ),
         bottomNavigationBar: MyBottomNavigationBar());
   }
 }

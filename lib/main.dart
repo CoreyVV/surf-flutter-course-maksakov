@@ -4,6 +4,7 @@ import 'package:places/ui/screens/SettingsScreen.dart';
 import 'package:places/ui/screens/filters_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/themes.dart';
+import 'package:places/ui/screens/sight_card.dart';
 import 'package:places/ui/screens/visiting_screen.dart';
 import 'package:places/ui/screens/sight_details.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
@@ -26,12 +27,13 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        systemNavigationBarColor: white, //blackMain,white
+        systemNavigationBarColor: white,
       ),
     );
     return MaterialApp(
       theme: themeNotifier.getTheme(),
       // home: SightListScreen(),
+      // home: SightCard(mocks[0]),
       // home: Scaffold(body: SightDetails(mocks[0])),
       // home: VisitingScreen(),
       home: FilterScreen(),
