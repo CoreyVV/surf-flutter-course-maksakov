@@ -30,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
             height: 24,
           ),
           Container(
-            margin: EdgeInsets.only(left: 16, right: 16),
+            margin: EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -55,7 +55,7 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 16, right: 16),
+            margin: EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(

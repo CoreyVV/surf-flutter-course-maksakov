@@ -32,11 +32,11 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
     );
     return MaterialApp(
       theme: themeNotifier.getTheme(),
-      // home: SightListScreen(),
+      home: SightListScreen(),
       // home: SightCard(mocks[0]),
       // home: Scaffold(body: SightDetails(mocks[0])),
       // home: VisitingScreen(),
-      home: FilterScreen(),
+      // home: FilterScreen(),
       // home: SettingsScreen(),
       title: 'places',
     );

@@ -26,4 +26,12 @@ final List mocks = [
           'https://windows10spotlight.com/wp-content/uploads/2019/12/a2c93088f3755e1fdd94a974cc4a06a5-768x432.jpg',
       details: 'An ancient city.',
       type: SightType.museum),
+  Sight(
+      name: 'Test',
+      lat: 37.4515504,
+      lon: -122.054032,
+      url:
+          'https://windows10spotlight.com/wp-content/uploads/2019/12/a2c93088f3755e1fdd94a974cc4a06a5-768x432.jpg',
+      details: 'Test location.',
+      type: SightType.park),
 ];
