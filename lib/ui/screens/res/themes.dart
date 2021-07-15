@@ -3,6 +3,7 @@ import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/style.dart';
 
 final darkTheme = ThemeData(
+  brightness: Brightness.dark,
   primaryColor: blackMain,
   primaryColorDark: blackDark,
   accentColor: white,
@@ -43,18 +44,19 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
+  brightness: Brightness.light,
   primaryColor: white,
   primaryColorDark: whiteDark,
-  accentColor: secondaryBlack,
+  accentColor: secondaryWhite,
   unselectedWidgetColor: inactiveBlack,
   canvasColor: white,
   accentTextTheme: TextTheme(
-    headline4: normal32w700.copyWith(color: secondaryBlack),
-    headline5: normal24w700.copyWith(color: secondaryBlack),
-    headline6: normal18w500.copyWith(color: secondaryBlack),
-    bodyText1: normal16w500.copyWith(color: secondaryBlack),
-    bodyText2: normal14w400.copyWith(color: secondaryBlack),
-    button: normal14w700.copyWith(color: secondaryBlack),
+    headline4: normal32w700.copyWith(color: secondaryWhite),
+    headline5: normal24w700.copyWith(color: secondaryWhite),
+    headline6: normal18w500.copyWith(color: secondaryWhite),
+    bodyText1: normal16w500.copyWith(color: secondaryWhite),
+    bodyText2: normal14w400.copyWith(color: secondaryWhite),
+    button: normal14w700.copyWith(color: secondaryWhite),
   ),
   primaryTextTheme: TextTheme(
     // headline4: normal32w700.copyWith(color: Colors.red),
@@ -73,8 +75,32 @@ final lightTheme = ThemeData(
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.accent,
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: green,
+      elevation: 0.0,
+      textStyle: normal14w700.copyWith(color: white),
+      shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(12.0),
+      ),
+    ),
+  ),
   iconTheme: IconThemeData(
     color: white,
+  ),
+  primaryIconTheme: IconThemeData(
+    color: black,
+  ),
+  sliderTheme: SliderThemeData(
+    // activeTickMarkColor: white,
+    activeTrackColor: green,
+    // inactiveTickMarkColor: inactiveBlack,
+    inactiveTrackColor: inactiveBlack,
+    thumbColor: white,
+    trackHeight: 1,
+    rangeThumbShape: RoundRangeSliderThumbShape(
+      elevation: 4,
+    ),
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: secondaryBlack,

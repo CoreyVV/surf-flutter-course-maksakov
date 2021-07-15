@@ -14,6 +14,8 @@ dependencies:
 
   flutter_svg: ^0.22.0
 
+  location: ^4.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -23,9 +25,26 @@ flutter:
 
   assets:
     - res/
-    # - res/images/place_00.jpg
-    # - res/images/place_01.jpg
-    # - res/images/place_02.jpg
+    - res/icons/icon-heart.svg
+    - res/icons/bottom_navigation-icon-list.svg
+    - res/icons/bottom_navigation-icon-map.svg
+    - res/icons/bottom_navigation-icon-heart.svg
+    - res/icons/bottom_navigation-icon-settings.svg
+    - res/icons/button-white-icon-go.svg
+    - res/icons/icon-calendar.svg
+    - res/icons/header-icon-arrow.svg
+    - res/icons/icon-close.svg
+    - res/icons/icon-calendar.svg
+    - res/icons/icon-share.svg
+    - res/icons/catalog-white-cafe.svg
+    - res/icons/catalog-white-hotel.svg
+    - res/icons/catalog-white-museum.svg
+    - res/icons/catalog-white-park.svg
+    - res/icons/catalog-white-particular_place.svg
+    - res/icons/catalog-white-restourant.svg
+    - res/icons/icon-arrow.svg
+    - res/icons/icon-tick_choice.svg
+    - res/icons/icon-info.svg
   
   fonts:
     - family: Roboto
