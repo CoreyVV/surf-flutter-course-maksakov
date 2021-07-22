@@ -9,5 +9,5 @@ const Color blackMain = Color(0xFF21222C),
     greenWhite = Color(0xFF4CAF50),
     secondaryBlack = Color(0xFF3B3E5B),
     whiteDark = Color(0xFFF5F5F5),
-    whiteMain = Color(0x252849),
+    whiteMain = Color(0xFF252849),
     secondaryWhite = Color(0xFF3B3E5B);

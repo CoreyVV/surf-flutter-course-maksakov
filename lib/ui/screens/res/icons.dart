@@ -64,4 +64,8 @@ class AssetsStr {
       'res/icons/bottom_navigation-icon-map.svg';
   static final String bottom_navigation_icon_settings =
       'res/icons/bottom_navigation-icon-settings.svg';
+  static final String icon_view = 'res/icons/icon-view.svg';
+  static final String icon_clear = 'res/icons/icon-clear.svg';
+  static final String icon_arrow = 'res/icons/header-icon-arrow.svg';
+  static final String icon_tick = 'res/icons/icon-tick.svg';
 }
