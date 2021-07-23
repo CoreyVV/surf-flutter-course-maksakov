@@ -48,6 +48,7 @@ flutter:
     - res/icons/icon-view.svg
     - res/icons/icon-clear.svg
     - res/icons/icon-tick.svg
+    - res/icons/icon-plus.svg
   fonts:
     - family: Roboto
       fonts:

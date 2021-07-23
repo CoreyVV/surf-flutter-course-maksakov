@@ -68,4 +68,5 @@ class AssetsStr {
   static final String icon_clear = 'res/icons/icon-clear.svg';
   static final String icon_arrow = 'res/icons/header-icon-arrow.svg';
   static final String icon_tick = 'res/icons/icon-tick.svg';
+  static final String icon_plus = 'res/icons/icon-plus.svg';
 }

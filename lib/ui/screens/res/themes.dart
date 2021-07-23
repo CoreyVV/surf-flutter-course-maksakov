@@ -127,4 +127,12 @@ final lightTheme = ThemeData(
       borderSide: BorderSide(color: greenWhite.withOpacity(0.4), width: 1),
     ),
   ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    // foregroundColor: yellow,
+    // focusColor: greenWhite,
+    focusElevation: 0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
+  ),
 );
