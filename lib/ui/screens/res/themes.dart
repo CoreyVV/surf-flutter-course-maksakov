@@ -61,6 +61,7 @@ final lightTheme = ThemeData(
   primaryTextTheme: TextTheme(
     // headline4: normal32w700.copyWith(color: Colors.red),
     headline5: normal24w700.copyWith(color: inactiveBlack),
+    headline6: normal18w500.copyWith(color: inactiveBlack),
     subtitle1: normal16w500.copyWith(color: inactiveBlack),
     bodyText1: normal14w700.copyWith(color: inactiveBlack),
     bodyText2: normal14w400.copyWith(color: inactiveBlack),

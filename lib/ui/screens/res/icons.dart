@@ -38,10 +38,14 @@ class MyIcons {
 class MyIcon extends StatelessWidget {
   final String asset;
   final Color? color;
+  final double? height;
+  final BoxFit fit;
 
   const MyIcon({
     required this.asset,
     this.color,
+    this.height,
+    this.fit = BoxFit.contain,
   });
 
   @override
@@ -51,6 +55,8 @@ class MyIcon extends StatelessWidget {
     return SvgPicture.asset(
       this.asset,
       color: iconColor,
+      height: this.height,
+      fit: this.fit,
     );
   }
 }
@@ -69,4 +75,7 @@ class AssetsStr {
   static final String icon_arrow = 'res/icons/header-icon-arrow.svg';
   static final String icon_tick = 'res/icons/icon-tick.svg';
   static final String icon_plus = 'res/icons/icon-plus.svg';
+  static final String search = 'res/icons/Search.svg';
+  static final String filter = 'res/icons/Filter.svg';
+  static final String delete = 'res/icons/Delete.svg';
 }

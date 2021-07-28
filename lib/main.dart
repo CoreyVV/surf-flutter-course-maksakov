@@ -76,8 +76,7 @@ class ThemeNotifier extends ChangeNotifier {
 
     final style = SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      systemNavigationBarColor:
-          themeNotifier.getPrimaryColor(), //blackMain,white
+      systemNavigationBarColor: themeNotifier.getPrimaryColor(),
     );
 
     SystemChrome.setSystemUIOverlayStyle(style);
