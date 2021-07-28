@@ -5,8 +5,12 @@ import 'package:places/ui/screens/res/colors.dart';
 
 class SightCardVisited extends StatelessWidget {
   final Sight sight;
+  final void Function() onRemove;
 
-  const SightCardVisited(this.sight);
+  const SightCardVisited({
+    required this.sight,
+    required this.onRemove,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,7 @@ class SightCardVisited extends StatelessWidget {
                         height: 24,
                       ),
                       onTap: () {
-                        print('sight_visited/close was tapped');
+                        onRemove();
                       },
                     ),
                   ),

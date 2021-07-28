@@ -5,8 +5,12 @@ import 'package:places/ui/screens/res/colors.dart';
 
 class SightCardPlanned extends StatelessWidget {
   final Sight sight;
+  final void Function() onRemove;
 
-  const SightCardPlanned(this.sight);
+  const SightCardPlanned({
+    required this.sight,
+    required this.onRemove,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,7 @@ class SightCardPlanned extends StatelessWidget {
                         height: 24,
                       ),
                       onTap: () {
-                        print('sight_planned/close was tapped');
+                        onRemove();
                       },
                     ),
                   ),
