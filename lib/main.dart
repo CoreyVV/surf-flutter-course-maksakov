@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:places/ui/screens/AddSightScreen.dart';
 import 'package:places/ui/screens/SettingsScreen.dart';
 import 'package:places/ui/screens/filters_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
@@ -38,6 +39,8 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
       // home: VisitingScreen(),
       // home: FilterScreen(),
       // home: SettingsScreen(),
+      // home: AddSightScreen(),
+      // home: SelectSightType(),
       title: 'places',
     );
   }
@@ -73,8 +76,7 @@ class ThemeNotifier extends ChangeNotifier {
 
     final style = SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      systemNavigationBarColor:
-          themeNotifier.getPrimaryColor(), //blackMain,white
+      systemNavigationBarColor: themeNotifier.getPrimaryColor(),
     );
 
     SystemChrome.setSystemUIOverlayStyle(style);

@@ -61,10 +61,19 @@ final lightTheme = ThemeData(
   primaryTextTheme: TextTheme(
     // headline4: normal32w700.copyWith(color: Colors.red),
     headline5: normal24w700.copyWith(color: inactiveBlack),
+    headline6: normal18w500.copyWith(color: inactiveBlack),
     subtitle1: normal16w500.copyWith(color: inactiveBlack),
     bodyText1: normal14w700.copyWith(color: inactiveBlack),
     bodyText2: normal14w400.copyWith(color: inactiveBlack),
     button: normal14w700.copyWith(color: inactiveBlack),
+  ),
+  textTheme: TextTheme(
+    // headline4: normal32w700.copyWith(color: whiteMain),
+    // headline5: normal24w700.copyWith(color: whiteMain),
+    // headline6: normal18w500.copyWith(color: whiteMain),
+    bodyText1:
+        normal16w500.copyWith(color: whiteMain, fontWeight: FontWeight.w400),
+    // bodyText2: normal14w400.copyWith(color: whiteMain),
   ),
   appBarTheme: AppBarTheme(
     brightness: Brightness.light,
@@ -91,6 +100,9 @@ final lightTheme = ThemeData(
   primaryIconTheme: IconThemeData(
     color: black,
   ),
+  accentIconTheme: IconThemeData(
+    color: greenWhite,
+  ),
   sliderTheme: SliderThemeData(
     // activeTickMarkColor: white,
     activeTrackColor: green,
@@ -105,5 +117,23 @@ final lightTheme = ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: secondaryBlack,
     unselectedItemColor: secondaryBlack,
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(color: greenWhite.withOpacity(0.4), width: 2),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8),
+      borderSide: BorderSide(color: greenWhite.withOpacity(0.4), width: 1),
+    ),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    // foregroundColor: yellow,
+    // focusColor: greenWhite,
+    focusElevation: 0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
   ),
 );

@@ -83,6 +83,7 @@ class _FilterScreenState extends State<FilterScreen> {
             height: 32,
             width: 32,
             child: IconButton(
+              splashRadius: 16,
               onPressed: () {
                 print('filter_screen/back was tapped');
               },
