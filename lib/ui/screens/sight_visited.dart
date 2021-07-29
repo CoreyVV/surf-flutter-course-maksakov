@@ -6,11 +6,13 @@ import 'package:places/ui/screens/res/colors.dart';
 class SightCardVisited extends StatelessWidget {
   final Sight sight;
   final void Function() onRemove;
+  final Key key;
 
   const SightCardVisited({
+    required this.key,
     required this.sight,
     required this.onRemove,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

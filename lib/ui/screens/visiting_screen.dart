@@ -81,6 +81,9 @@ class _VisitingScreenState extends State<VisitingScreen> {
                       if (mocks.isNotEmpty)
                         for (var sight in mocks)
                           SightCardPlanned(
+                            key: ValueKey(sight.name +
+                                sight.lat.toString() +
+                                sight.lon.toString()),
                             sight: sight,
                             onRemove: () {
                               setState(() {
@@ -107,6 +110,9 @@ class _VisitingScreenState extends State<VisitingScreen> {
                       if (mocks.isNotEmpty)
                         for (var sight in mocks)
                           SightCardVisited(
+                            key: ValueKey(sight.name +
+                                sight.lat.toString() +
+                                sight.lon.toString()),
                             sight: sight,
                             onRemove: () {
                               setState(() {
