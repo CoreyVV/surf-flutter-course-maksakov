@@ -52,6 +52,9 @@ flutter:
     - res/icons/Filter.svg
     - res/icons/Search.svg
     - res/icons/Delete.svg
+    - res/icons/GO.svg
+    - res/icons/Card.svg
+
 
   fonts:
     - family: Roboto

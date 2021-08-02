@@ -78,4 +78,6 @@ class AssetsStr {
   static final String search = 'res/icons/Search.svg';
   static final String filter = 'res/icons/Filter.svg';
   static final String delete = 'res/icons/Delete.svg';
+  static final String card = 'res/icons/Card.svg';
+  static final String go = 'res/icons/GO.svg';
 }
