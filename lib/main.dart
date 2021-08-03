@@ -36,10 +36,10 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
       // home: SightListScreen(),
       // home: SightCard(mocks[0]),
       // home: Scaffold(body: SightDetails(mocks[0])),
-      home: VisitingScreen(),
+      // home: VisitingScreen(),
       // home: FilterScreen(),
       // home: SettingsScreen(),
-      // home: AddSightScreen(),
+      home: AddSightScreen(),
       // home: SelectSightType(),
       title: 'places',
     );

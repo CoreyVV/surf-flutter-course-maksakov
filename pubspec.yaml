@@ -54,6 +54,7 @@ flutter:
     - res/icons/Delete.svg
     - res/icons/GO.svg
     - res/icons/Card.svg
+    - res/icons/Button-White-Plus.svg
 
 
   fonts:

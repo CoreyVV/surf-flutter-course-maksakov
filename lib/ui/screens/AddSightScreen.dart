@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/domain/sight.dart';
@@ -53,6 +54,14 @@ final _sightTypeRestourant = _SightType(
   title: 'Ресторан',
   type: SightType.restourant,
 );
+
+List<String> imagesList = [
+  'https://cdn.theatlantic.com/thumbor/gHSN4W8eC4AnkdqA-v7NJUABcBo=/1500x1001/media/img/photo/2016/09/the-beauty-of-terraced-fields/t01_82594302/original.jpg',
+  'https://cdn.theatlantic.com/thumbor/jlBbH8ql4PADBerveJ9yyWJZLU0=/1500x908/media/img/photo/2016/09/the-beauty-of-terraced-fields/t02_154921930/original.jpg',
+  'https://cdn.theatlantic.com/thumbor/62twl5RYxffj8l5YUMiOoMMKJhE=/1500x834/media/img/photo/2016/09/the-beauty-of-terraced-fields/t05_RTS2ZQM/original.jpg',
+  'https://cdn.theatlantic.com/thumbor/RR4kX56okPh66ol7XMs0-gJwvq0=/1500x1041/media/img/photo/2016/09/the-beauty-of-terraced-fields/t14_AP614457396093/original.jpg',
+  'https://cdn.theatlantic.com/thumbor/x8eCTMMqX65_ukNTZxFVGnD6V38=/1500x1001/media/img/photo/2016/09/the-beauty-of-terraced-fields/t23_RTR1ZJD7/original.jpg'
+];
 
 //храним значение фильтров
 Map<_SightType, bool> _typesMap = {
@@ -157,6 +166,10 @@ class _NewSightBody extends StatelessWidget {
             ),
             child: Column(
               children: [
+                _ImagesRow(),
+                SizedBox(
+                  height: 24,
+                ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -535,6 +548,137 @@ class _TypeFilterBox extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+//виджет для добавления отображения изображений места
+class _ImagesRow extends StatefulWidget {
+  // const _ImagesRow({ Key? key }) : super(key: key);
+
+  @override
+  __ImagesRowState createState() => __ImagesRowState();
+}
+
+class __ImagesRowState extends State<_ImagesRow> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          Container(
+            width: 72,
+            height: 72,
+            // padding: EdgeInsets.only(right: 16),
+            child: InkWell(
+              onTap: () {
+                print('AddSightScreen/Plus was tapped');
+              },
+              borderRadius: BorderRadius.circular(12),
+              child: MyIcon(
+                asset: AssetsStr.button_white_plus,
+                color: Theme.of(context).buttonColor,
+                // height: 72,
+                // fit: BoxFit.fitHeight,
+              ),
+            ),
+          ),
+          for (String imageURL in imagesList)
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: _ImageRowItem(
+                url: imageURL,
+                onRemove: () {
+                  setState(() {
+                    imagesList.remove(imageURL);
+                  });
+                },
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ImageRowItem extends StatelessWidget {
+  final String url;
+  final Function onRemove;
+  const _ImageRowItem({
+    // Key? key,
+    required this.url,
+    required this.onRemove,
+  }); //: super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onVerticalDragUpdate: (details) {
+        int sensitivity = 8;
+        if (details.delta.dy > sensitivity) {
+          // Down Swipe
+        } else if (details.delta.dy < -sensitivity) {
+          // Up Swipe
+          onRemove();
+        }
+      },
+      child: SizedBox(
+        width: 72,
+        height: 72,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Stack(
+            children: [
+              // Dismissible(key: key, child: child);
+              Image.network(
+                url,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              Positioned(
+                top: 3,
+                right: 3,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.transparent,
+                      ),
+                      child: MyIcon(
+                        asset: AssetsStr.icon_clear,
+                      ),
+                      // width: 24,
+                      // height: 24,
+                    ),
+                    onTap: () {
+                      onRemove();
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
