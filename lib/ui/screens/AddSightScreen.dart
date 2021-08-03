@@ -161,7 +161,6 @@ class _NewSightBody extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(
               left: 16,
-              top: 24,
               right: 24,
             ),
             child: Column(
@@ -563,40 +562,45 @@ class _ImagesRow extends StatefulWidget {
 class __ImagesRowState extends State<_ImagesRow> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          Container(
-            width: 72,
-            height: 72,
-            // padding: EdgeInsets.only(right: 16),
-            child: InkWell(
-              onTap: () {
-                print('AddSightScreen/Plus was tapped');
-              },
-              borderRadius: BorderRadius.circular(12),
-              child: MyIcon(
-                asset: AssetsStr.button_white_plus,
-                color: Theme.of(context).buttonColor,
-                // height: 72,
-                // fit: BoxFit.fitHeight,
-              ),
-            ),
-          ),
-          for (String imageURL in imagesList)
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: _ImageRowItem(
-                url: imageURL,
-                onRemove: () {
-                  setState(() {
-                    imagesList.remove(imageURL);
-                  });
+    return Container(
+      width: double.infinity,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 24),
+              width: 72,
+              height: 72,
+              // padding: EdgeInsets.only(right: 16),
+              child: InkWell(
+                onTap: () {
+                  print('AddSightScreen/Plus was tapped');
                 },
+                borderRadius: BorderRadius.circular(12),
+                child: MyIcon(
+                  asset: AssetsStr.button_white_plus,
+                  color: Theme.of(context).buttonColor,
+                  // height: 72,
+                  // fit: BoxFit.fitHeight,
+                ),
               ),
             ),
-        ],
+            for (String imageURL in imagesList)
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, top: 24),
+                child: _ImageRowItem(
+                  // key: ValueKey(imageURL),
+                  url: imageURL,
+                  onRemove: () {
+                    setState(() {
+                      imagesList.remove(imageURL);
+                    });
+                  },
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -606,23 +610,19 @@ class _ImageRowItem extends StatelessWidget {
   final String url;
   final Function onRemove;
   const _ImageRowItem({
-    // Key? key,
+    Key? key,
     required this.url,
     required this.onRemove,
-  }); //: super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onVerticalDragUpdate: (details) {
-        int sensitivity = 8;
-        if (details.delta.dy > sensitivity) {
-          // Down Swipe
-        } else if (details.delta.dy < -sensitivity) {
-          // Up Swipe
-          onRemove();
-        }
+    return Dismissible(
+      key: ValueKey(url),
+      onDismissed: (details) {
+        onRemove();
       },
+      direction: DismissDirection.up,
       child: SizedBox(
         width: 72,
         height: 72,
