@@ -17,13 +17,14 @@ class SightCardVisited extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 16),
+      width: 360,
+      height: 218,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
+            SizedBox(
+              width: 360,
               height: 96,
               child: Stack(
                 children: [
@@ -44,8 +45,8 @@ class SightCardVisited extends StatelessWidget {
                       );
                     },
                     fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
+                    width: 360,
+                    // height: double.infinity,
                   ),
                   Positioned(
                     top: 16,
@@ -61,48 +62,54 @@ class SightCardVisited extends StatelessWidget {
                   Positioned(
                     top: 16,
                     right: 16,
-                    child: InkWell(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.transparent,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.transparent,
+                          ),
+                          child: SvgPicture.asset(
+                            'res/icons/icon-close.svg',
+                          ),
+                          width: 24,
+                          height: 24,
                         ),
-                        child: SvgPicture.asset(
-                          'res/icons/icon-close.svg',
-                        ),
-                        width: 24,
-                        height: 24,
+                        onTap: () {
+                          onRemove();
+                        },
                       ),
-                      onTap: () {
-                        onRemove();
-                      },
                     ),
                   ),
                   Positioned(
                     top: 16,
                     right: 56,
-                    child: InkWell(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          // color: Colors.transparent,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            // color: Colors.transparent,
+                          ),
+                          child: SvgPicture.asset(
+                            'res/icons/icon-share.svg',
+                          ),
+                          width: 24,
+                          height: 24,
                         ),
-                        child: SvgPicture.asset(
-                          'res/icons/icon-share.svg',
-                        ),
-                        width: 24,
-                        height: 24,
+                        onTap: () {
+                          print('sight_planned/share was tapped');
+                        },
                       ),
-                      onTap: () {
-                        print('sight_planned/share was tapped');
-                      },
                     ),
                   ),
                 ],
               ),
             ),
             Container(
-              width: double.infinity,
+              width: 360,
               height: 122,
               color: Theme.of(context).primaryColorDark,
               child: Stack(
@@ -113,6 +120,7 @@ class SightCardVisited extends StatelessWidget {
                     child: Text(
                       sight.name,
                       style: Theme.of(context).accentTextTheme.bodyText1,
+                      maxLines: 2,
                     ),
                   ),
                   Positioned(
