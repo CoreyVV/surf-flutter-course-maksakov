@@ -117,8 +117,14 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                 },
                                 onAccept: (Sight? data) {
                                   int index = _listPlannedSights.indexOf(sight);
-                                  _listPlannedSights.remove(data!);
-                                  _listPlannedSights.insert(index, data);
+                                  if (index <
+                                      _listPlannedSights.indexOf(data!)) {
+                                    _listPlannedSights.remove(data);
+                                    _listPlannedSights.insert(index, data);
+                                  } else {
+                                    _listPlannedSights.remove(data);
+                                    _listPlannedSights.insert(index - 1, data);
+                                  }
                                   setState(() {
                                     _mapIsOnMovePlanned[sight.name] = false;
                                   });
@@ -157,14 +163,68 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                 ),
                                 child: _mapIsDragPlanned[sight.name]!
                                     ? SizedBox.shrink()
-                                    : SightCardVisited(
-                                        key: ValueKey(sight),
-                                        sight: sight,
-                                        onRemove: () {
-                                          setState(() {
-                                            _listPlannedSights.remove(sight);
-                                          });
-                                        },
+                                    : Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            child: Container(
+                                              width: 360,
+                                              height: 218,
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 80,
+                                            right: 28,
+                                            child: Column(
+                                              children: [
+                                                MyIcon(
+                                                  asset: AssetsStr.icon_bucket,
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  'Удалить',
+                                                  style: Theme.of(context)
+                                                      .accentTextTheme
+                                                      .bodyText1!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Dismissible(
+                                            key: ValueKey(sight.name + 'ds_vs'),
+                                            // crossAxisEndOffset: 80.0,
+                                            direction:
+                                                DismissDirection.endToStart,
+                                            dismissThresholds: const {
+                                              DismissDirection.endToStart: 0.25
+                                            },
+                                            child: SightCardVisited(
+                                              key: ValueKey(sight),
+                                              sight: sight,
+                                              onRemove: () {
+                                                setState(() {
+                                                  _listPlannedSights
+                                                      .remove(sight);
+                                                });
+                                              },
+                                            ),
+                                            onDismissed: (direction) {
+                                              setState(() {
+                                                _listPlannedSights
+                                                    .remove(sight);
+                                              });
+                                            },
+                                          ),
+                                        ],
                                       ),
                               ),
                             ],
@@ -209,8 +269,14 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                 },
                                 onAccept: (Sight? data) {
                                   int index = _listVisitedSights.indexOf(sight);
-                                  _listVisitedSights.remove(data!);
-                                  _listVisitedSights.insert(index, data);
+                                  if (index <
+                                      _listVisitedSights.indexOf(data!)) {
+                                    _listVisitedSights.remove(data);
+                                    _listVisitedSights.insert(index, data);
+                                  } else {
+                                    _listVisitedSights.remove(data);
+                                    _listVisitedSights.insert(index - 1, data);
+                                  }
                                   setState(() {
                                     _mapIsOnMoveVisited[sight.name] = false;
                                   });
@@ -249,14 +315,68 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                 ),
                                 child: _mapIsDragVisited[sight.name]!
                                     ? SizedBox.shrink()
-                                    : SightCardVisited(
-                                        key: ValueKey(sight),
-                                        sight: sight,
-                                        onRemove: () {
-                                          setState(() {
-                                            _listVisitedSights.remove(sight);
-                                          });
-                                        },
+                                    : Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            child: Container(
+                                              width: 360,
+                                              height: 218,
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 80,
+                                            right: 28,
+                                            child: Column(
+                                              children: [
+                                                MyIcon(
+                                                  asset: AssetsStr.icon_bucket,
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  'Удалить',
+                                                  style: Theme.of(context)
+                                                      .accentTextTheme
+                                                      .bodyText1!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Dismissible(
+                                            key: ValueKey(sight.name + 'ds_vs'),
+                                            // crossAxisEndOffset: 80.0,
+                                            direction:
+                                                DismissDirection.endToStart,
+                                            dismissThresholds: const {
+                                              DismissDirection.endToStart: 0.25
+                                            },
+                                            child: SightCardVisited(
+                                              key: ValueKey(sight),
+                                              sight: sight,
+                                              onRemove: () {
+                                                setState(() {
+                                                  _listVisitedSights
+                                                      .remove(sight);
+                                                });
+                                              },
+                                            ),
+                                            onDismissed: (direction) {
+                                              setState(() {
+                                                _listVisitedSights
+                                                    .remove(sight);
+                                              });
+                                            },
+                                          ),
+                                        ],
                                       ),
                               ),
                             ],

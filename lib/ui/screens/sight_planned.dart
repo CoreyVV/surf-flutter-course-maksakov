@@ -19,6 +19,7 @@ class SightCardPlanned extends StatelessWidget {
     return Container(
       width: 360,
       height: 218,
+      color: Colors.transparent,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Column(
@@ -28,6 +29,11 @@ class SightCardPlanned extends StatelessWidget {
               height: 96,
               child: Stack(
                 children: [
+                  Positioned.fill(
+                    child: Container(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                   Image.network(
                     sight.url,
                     loadingBuilder: (BuildContext context, Widget child,
