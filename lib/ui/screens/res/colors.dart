@@ -11,4 +11,5 @@ const Color blackMain = Color(0xFF21222C),
     whiteDark = Color(0xFFF5F5F5),
     whiteMain = Color(0xFF252849),
     secondaryWhite = Color(0xFF3B3E5B),
-    yellow = Color(0xFFFCDD3D);
+    yellow = Color(0xFFFCDD3D),
+    red = Color(0xFFEF4343);

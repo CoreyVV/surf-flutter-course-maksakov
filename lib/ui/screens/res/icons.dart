@@ -80,4 +80,6 @@ class AssetsStr {
   static final String delete = 'res/icons/Delete.svg';
   static final String card = 'res/icons/Card.svg';
   static final String go = 'res/icons/GO.svg';
+  static final String button_white_plus = 'res/icons/Button-White-Plus.svg';
+  static final String icon_bucket = 'res/icons/Icon-Bucket.svg';
 }

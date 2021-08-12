@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screens/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_visited.dart';
 import 'package:places/ui/screens/sight_planned.dart';
+
+List<Sight> _listVisitedSights = [...mocks];
+List<Sight> _listPlannedSights = [...mocks];
 
 class VisitingScreen extends StatefulWidget {
   @override
@@ -11,6 +15,17 @@ class VisitingScreen extends StatefulWidget {
 }
 
 class _VisitingScreenState extends State<VisitingScreen> {
+  bool isDrag = false;
+  bool isOnMove = false;
+  Map<String, bool> _mapIsDragVisited = Map.fromIterable(_listVisitedSights,
+      key: (item) => item.name, value: (item) => false);
+  Map<String, bool> _mapIsOnMoveVisited = Map.fromIterable(_listVisitedSights,
+      key: (item) => item.name, value: (item) => false);
+  Map<String, bool> _mapIsDragPlanned = Map.fromIterable(_listVisitedSights,
+      key: (item) => item.name, value: (item) => false);
+  Map<String, bool> _mapIsOnMovePlanned = Map.fromIterable(_listVisitedSights,
+      key: (item) => item.name, value: (item) => false);
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -75,21 +90,141 @@ class _VisitingScreenState extends State<VisitingScreen> {
             children: [
               SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.only(left: 16, top: 16, right: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      if (mocks.isNotEmpty)
-                        for (var sight in mocks)
-                          SightCardPlanned(
-                            key: ValueKey(sight.name +
-                                sight.lat.toString() +
-                                sight.lon.toString()),
-                            sight: sight,
-                            onRemove: () {
-                              setState(() {
-                                mocks.remove(sight);
-                              });
-                            },
+                      if (_listPlannedSights.isNotEmpty)
+                        for (var sight in _listPlannedSights)
+                          Column(
+                            children: [
+                              DragTarget(
+                                key: ValueKey(sight.name + 'dt'),
+                                builder:
+                                    (context, candidateData, rejectedData) {
+                                  return Container(
+                                    height: _mapIsOnMovePlanned[sight.name]!
+                                        ? 218
+                                        : 16,
+                                    width: 338,
+                                    color: Colors.transparent,
+                                  );
+                                },
+                                onWillAccept: (Sight? data) {
+                                  return _listPlannedSights.contains(data);
+                                },
+                                onAccept: (Sight? data) {
+                                  int index = _listPlannedSights.indexOf(sight);
+                                  if (index <
+                                      _listPlannedSights.indexOf(data!)) {
+                                    _listPlannedSights.remove(data);
+                                    _listPlannedSights.insert(index, data);
+                                  } else {
+                                    _listPlannedSights.remove(data);
+                                    _listPlannedSights.insert(index - 1, data);
+                                  }
+                                  setState(() {
+                                    _mapIsOnMovePlanned[sight.name] = false;
+                                  });
+                                },
+                                onMove: (data) {
+                                  setState(() {
+                                    _mapIsOnMovePlanned[sight.name] = true;
+                                  });
+                                },
+                                onLeave: (data) {
+                                  setState(() {
+                                    _mapIsOnMovePlanned[sight.name] = false;
+                                  });
+                                },
+                              ),
+                              Draggable<Sight>(
+                                data: sight,
+                                onDragStarted: () {
+                                  setState(() {
+                                    _mapIsDragPlanned[sight.name] = true;
+                                  });
+                                },
+                                onDragEnd: (details) {
+                                  setState(() {
+                                    _mapIsDragPlanned[sight.name] = false;
+                                  });
+                                },
+                                feedback: SightCardPlanned(
+                                  key: ValueKey(sight),
+                                  sight: sight,
+                                  onRemove: () {
+                                    setState(() {
+                                      _listPlannedSights.remove(sight);
+                                    });
+                                  },
+                                ),
+                                child: _mapIsDragPlanned[sight.name]!
+                                    ? SizedBox.shrink()
+                                    : Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            child: Container(
+                                              width: 360,
+                                              height: 218,
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 80,
+                                            right: 28,
+                                            child: Column(
+                                              children: [
+                                                MyIcon(
+                                                  asset: AssetsStr.icon_bucket,
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  'Удалить',
+                                                  style: Theme.of(context)
+                                                      .accentTextTheme
+                                                      .bodyText1!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Dismissible(
+                                            key: ValueKey(sight.name + 'ds_vs'),
+                                            // crossAxisEndOffset: 80.0,
+                                            direction:
+                                                DismissDirection.endToStart,
+                                            dismissThresholds: const {
+                                              DismissDirection.endToStart: 0.25
+                                            },
+                                            child: SightCardVisited(
+                                              key: ValueKey(sight),
+                                              sight: sight,
+                                              onRemove: () {
+                                                setState(() {
+                                                  _listPlannedSights
+                                                      .remove(sight);
+                                                });
+                                              },
+                                            ),
+                                            onDismissed: (direction) {
+                                              setState(() {
+                                                _listPlannedSights
+                                                    .remove(sight);
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                              ),
+                            ],
                           )
                       else
                         _EmptyList(
@@ -104,21 +239,141 @@ class _VisitingScreenState extends State<VisitingScreen> {
               ),
               SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.only(left: 16, top: 16, right: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      if (mocks.isNotEmpty)
-                        for (var sight in mocks)
-                          SightCardVisited(
-                            key: ValueKey(sight.name +
-                                sight.lat.toString() +
-                                sight.lon.toString()),
-                            sight: sight,
-                            onRemove: () {
-                              setState(() {
-                                mocks.remove(sight);
-                              });
-                            },
+                      if (_listVisitedSights.isNotEmpty)
+                        for (var sight in _listVisitedSights)
+                          Column(
+                            children: [
+                              DragTarget(
+                                key: ValueKey(sight.name + 'dt'),
+                                builder:
+                                    (context, candidateData, rejectedData) {
+                                  return Container(
+                                    height: _mapIsOnMoveVisited[sight.name]!
+                                        ? 218
+                                        : 16,
+                                    width: 338,
+                                    color: Colors.transparent,
+                                  );
+                                },
+                                onWillAccept: (Sight? data) {
+                                  return _listVisitedSights.contains(data);
+                                },
+                                onAccept: (Sight? data) {
+                                  int index = _listVisitedSights.indexOf(sight);
+                                  if (index <
+                                      _listVisitedSights.indexOf(data!)) {
+                                    _listVisitedSights.remove(data);
+                                    _listVisitedSights.insert(index, data);
+                                  } else {
+                                    _listVisitedSights.remove(data);
+                                    _listVisitedSights.insert(index - 1, data);
+                                  }
+                                  setState(() {
+                                    _mapIsOnMoveVisited[sight.name] = false;
+                                  });
+                                },
+                                onMove: (data) {
+                                  setState(() {
+                                    _mapIsOnMoveVisited[sight.name] = true;
+                                  });
+                                },
+                                onLeave: (data) {
+                                  setState(() {
+                                    _mapIsOnMoveVisited[sight.name] = false;
+                                  });
+                                },
+                              ),
+                              Draggable<Sight>(
+                                data: sight,
+                                onDragStarted: () {
+                                  setState(() {
+                                    _mapIsDragVisited[sight.name] = true;
+                                  });
+                                },
+                                onDragEnd: (details) {
+                                  setState(() {
+                                    _mapIsDragVisited[sight.name] = false;
+                                  });
+                                },
+                                feedback: SightCardVisited(
+                                  key: ValueKey(sight),
+                                  sight: sight,
+                                  onRemove: () {
+                                    setState(() {
+                                      _listVisitedSights.remove(sight);
+                                    });
+                                  },
+                                ),
+                                child: _mapIsDragVisited[sight.name]!
+                                    ? SizedBox.shrink()
+                                    : Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            child: Container(
+                                              width: 360,
+                                              height: 218,
+                                              color: Theme.of(context)
+                                                  .backgroundColor,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 80,
+                                            right: 28,
+                                            child: Column(
+                                              children: [
+                                                MyIcon(
+                                                  asset: AssetsStr.icon_bucket,
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  'Удалить',
+                                                  style: Theme.of(context)
+                                                      .accentTextTheme
+                                                      .bodyText1!
+                                                      .copyWith(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .primaryColor),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Dismissible(
+                                            key: ValueKey(sight.name + 'ds_vs'),
+                                            // crossAxisEndOffset: 80.0,
+                                            direction:
+                                                DismissDirection.endToStart,
+                                            dismissThresholds: const {
+                                              DismissDirection.endToStart: 0.25
+                                            },
+                                            child: SightCardVisited(
+                                              key: ValueKey(sight),
+                                              sight: sight,
+                                              onRemove: () {
+                                                setState(() {
+                                                  _listVisitedSights
+                                                      .remove(sight);
+                                                });
+                                              },
+                                            ),
+                                            onDismissed: (direction) {
+                                              setState(() {
+                                                _listVisitedSights
+                                                    .remove(sight);
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                              ),
+                            ],
                           )
                       else
                         _EmptyList(
