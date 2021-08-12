@@ -25,39 +25,8 @@ flutter:
 
   assets:
     - res/
-    - res/icons/icon-heart.svg
-    - res/icons/bottom_navigation-icon-list.svg
-    - res/icons/bottom_navigation-icon-map.svg
-    - res/icons/bottom_navigation-icon-heart.svg
-    - res/icons/bottom_navigation-icon-settings.svg
-    - res/icons/button-white-icon-go.svg
-    - res/icons/icon-calendar.svg
-    - res/icons/header-icon-arrow.svg
-    - res/icons/icon-close.svg
-    - res/icons/icon-calendar.svg
-    - res/icons/icon-share.svg
-    - res/icons/catalog-white-cafe.svg
-    - res/icons/catalog-white-hotel.svg
-    - res/icons/catalog-white-museum.svg
-    - res/icons/catalog-white-park.svg
-    - res/icons/catalog-white-particular_place.svg
-    - res/icons/catalog-white-restourant.svg
-    - res/icons/icon-arrow.svg
-    - res/icons/icon-tick_choice.svg
-    - res/icons/icon-info.svg
-    - res/icons/icon-view.svg
-    - res/icons/icon-clear.svg
-    - res/icons/icon-tick.svg
-    - res/icons/icon-plus.svg
-    - res/icons/Filter.svg
-    - res/icons/Search.svg
-    - res/icons/Delete.svg
-    - res/icons/GO.svg
-    - res/icons/Card.svg
-    - res/icons/Button-White-Plus.svg
-    - res/icons/Icon-Bucket.svg
-
-
+    - res/icons/
+  
   fonts:
     - family: Roboto
       fonts:

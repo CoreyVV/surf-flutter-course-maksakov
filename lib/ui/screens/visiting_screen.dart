@@ -110,10 +110,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                   );
                                 },
                                 onWillAccept: (Sight? data) {
-                                  if (_listPlannedSights.contains(data)) {
-                                    return true;
-                                  }
-                                  return false;
+                                  return _listPlannedSights.contains(data);
                                 },
                                 onAccept: (Sight? data) {
                                   int index = _listPlannedSights.indexOf(sight);
@@ -262,10 +259,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
                                   );
                                 },
                                 onWillAccept: (Sight? data) {
-                                  if (_listVisitedSights.contains(data)) {
-                                    return true;
-                                  }
-                                  return false;
+                                  return _listVisitedSights.contains(data);
                                 },
                                 onAccept: (Sight? data) {
                                   int index = _listVisitedSights.indexOf(sight);
