@@ -55,7 +55,7 @@ final _sightTypeRestourant = _SightType(
   type: SightType.restourant,
 );
 
-List<String> imagesList = [
+List<String> _imagesList = [
   'https://cdn.theatlantic.com/thumbor/gHSN4W8eC4AnkdqA-v7NJUABcBo=/1500x1001/media/img/photo/2016/09/the-beauty-of-terraced-fields/t01_82594302/original.jpg',
   'https://cdn.theatlantic.com/thumbor/jlBbH8ql4PADBerveJ9yyWJZLU0=/1500x908/media/img/photo/2016/09/the-beauty-of-terraced-fields/t02_154921930/original.jpg',
   'https://cdn.theatlantic.com/thumbor/62twl5RYxffj8l5YUMiOoMMKJhE=/1500x834/media/img/photo/2016/09/the-beauty-of-terraced-fields/t05_RTS2ZQM/original.jpg',
@@ -191,6 +191,13 @@ class _NewSightBody extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           print('AddSightScreen/Category was tapped');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  SelectSightType(),
+                            ),
+                          );
                         },
                         icon: MyIcon(
                           asset: AssetsStr.icon_view,
@@ -477,6 +484,12 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
           splashRadius: 28,
           onPressed: () {
             print('AddSightScreen/SelectSightType/back was tapped');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => AddSightScreen(),
+              ),
+            );
           },
           icon: MyIcon(asset: AssetsStr.icon_arrow)),
       title: Row(
@@ -562,44 +575,46 @@ class _ImagesRow extends StatefulWidget {
 class __ImagesRowState extends State<_ImagesRow> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 24),
-              width: 72,
-              height: 72,
-              // padding: EdgeInsets.only(right: 16),
-              child: InkWell(
-                onTap: () {
-                  print('AddSightScreen/Plus was tapped');
-                },
-                borderRadius: BorderRadius.circular(12),
-                child: MyIcon(
-                  asset: AssetsStr.button_white_plus,
-                  color: Theme.of(context).buttonColor,
-                  // height: 72,
-                  // fit: BoxFit.fitHeight,
-                ),
-              ),
-            ),
-            for (String imageURL in imagesList)
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, top: 24),
-                child: _ImageRowItem(
-                  // key: ValueKey(imageURL),
-                  url: imageURL,
-                  onRemove: () {
-                    setState(() {
-                      imagesList.remove(imageURL);
-                    });
-                  },
-                ),
-              ),
-          ],
+    return SafeArea(
+      child: Container(
+        height: 96,
+        width: 360,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: _imagesList.length + 1,
+          itemBuilder: (context, index) {
+            return index == 0
+                ? Container(
+                    margin: const EdgeInsets.only(top: 24),
+                    width: 72,
+                    height: 72,
+                    // padding: EdgeInsets.only(right: 16),
+                    child: InkWell(
+                      onTap: () {
+                        print('AddSightScreen/Plus was tapped');
+                      },
+                      borderRadius: BorderRadius.circular(12),
+                      child: MyIcon(
+                        asset: AssetsStr.button_white_plus,
+                        color: Theme.of(context).buttonColor,
+                        // height: 72,
+                        // fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 16.0, top: 24),
+                    child: _ImageRowItem(
+                      // key: ValueKey(imageURL),
+                      url: _imagesList[index - 1],
+                      onRemove: () {
+                        setState(() {
+                          _imagesList.remove(_imagesList[index - 1]);
+                        });
+                      },
+                    ),
+                  );
+          },
         ),
       ),
     );
