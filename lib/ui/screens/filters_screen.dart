@@ -120,7 +120,7 @@ class _FilterScreenState extends State<FilterScreen> {
           ),
         ],
       ),
-      body: ListView(
+      body: Column(
         children: [
           TypeFilter(onTap: (SightTypeIcon key) {
             setState(() {

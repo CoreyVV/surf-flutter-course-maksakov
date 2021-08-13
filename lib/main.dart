@@ -39,8 +39,8 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
       // home: VisitingScreen(),
       // home: FilterScreen(),
       // home: SettingsScreen(),
-      home: AddSightScreen(),
-      // home: SelectSightType(),
+      // home: AddSightScreen(),
+      home: SelectSightType(),
       title: 'places',
     );
   }
