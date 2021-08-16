@@ -154,7 +154,9 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   }
 
   _addHistory() {
-    if (_controller.text != '') _historyQueries.add(_controller.text);
+    if ((_controller.text != '') &&
+        (!_historyQueries.contains(_controller.text)))
+      _historyQueries.add(_controller.text);
   }
 
   _showHistory(BuildContext context) {

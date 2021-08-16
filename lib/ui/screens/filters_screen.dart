@@ -6,6 +6,7 @@ import 'package:places/mocks.dart';
 import 'package:places/services/filters.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/sight_list_screen.dart';
 
 int _amountFilteredPlaces = 0;
 
@@ -86,6 +87,12 @@ class _FilterScreenState extends State<FilterScreen> {
               splashRadius: 16,
               onPressed: () {
                 print('filter_screen/back was tapped');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => SightListScreen(),
+                  ),
+                );
               },
               icon: MyIcons.icon_arrow,
             ),

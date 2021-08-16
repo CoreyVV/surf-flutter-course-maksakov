@@ -44,24 +44,30 @@ class _SightListScreenState extends State<SightListScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: SightAppBar(136),
-        body: SingleChildScrollView(
+        body: SafeArea(
           child: Container(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: SearchBar(),
                 ),
-                for (var sight in mocks)
-                  Column(
-                    children: [
-                      SightCard(sight),
-                      SizedBox(
-                        height: 16,
-                      ),
-                    ],
-                  ),
+                Flexible(
+                  child: ListView.builder(
+                      itemCount: mocks.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            SightCard(mocks[index]),
+                            SizedBox(
+                              height: 16,
+                            ),
+                          ],
+                        );
+                      }),
+                )
+                // for (var sight in mocks)
               ],
             ),
           ),
