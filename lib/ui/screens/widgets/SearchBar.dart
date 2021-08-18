@@ -70,7 +70,7 @@ class SearchBar extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
         ],
       ),
     );

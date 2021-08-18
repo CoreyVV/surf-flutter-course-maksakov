@@ -51,6 +51,7 @@ final lightTheme = ThemeData(
   unselectedWidgetColor: inactiveBlack,
   canvasColor: white,
   backgroundColor: red,
+  indicatorColor: whiteMain,
   accentTextTheme: TextTheme(
     headline4: normal32w700.copyWith(color: secondaryWhite),
     headline5: normal24w700.copyWith(color: secondaryWhite),

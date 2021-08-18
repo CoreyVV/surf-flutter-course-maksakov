@@ -3,12 +3,13 @@ import 'dart:core';
 
 //проверка расстояния до места
 bool checkSight(
-    double checkPointLat,
-    double checkPointLon,
-    double currentPointLat,
-    double currentPointLon,
-    double distanceMin,
-    double distanceMax) {
+  double checkPointLat,
+  double checkPointLon,
+  double currentPointLat,
+  double currentPointLon,
+  double distanceMin,
+  double distanceMax,
+) {
   var ky = 40000 / 360;
   var kx = cos(pi * currentPointLat / 180.0) * ky;
   var dx = (currentPointLon - checkPointLon).abs() * kx;

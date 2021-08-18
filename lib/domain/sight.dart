@@ -13,6 +13,7 @@ class Sight {
   final double lon;
   final String url;
   final String details;
+  final List images;
   final String type;
 
   Sight({
@@ -20,6 +21,7 @@ class Sight {
     required this.lat,
     required this.lon,
     required this.url,
+    required this.images,
     required this.details,
     required this.type,
   });
