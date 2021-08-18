@@ -87,4 +87,7 @@ class AssetsStr {
       'res/icons/button-white-icon-go.svg';
   static final String header_icon_arrow = 'res/icons/header-icon-arrow.svg';
   static final String icon_heart = 'res/icons/icon-heart.svg';
+  static final String tutorial1Frame = 'res/icons/Tutorial 1 frame.svg';
+  static final String tutorial2Frame = 'res/icons/Tutorial 2 frame.svg';
+  static final String tutorial3Frame = 'res/icons/Tutorial 3 frame.svg';
 }
