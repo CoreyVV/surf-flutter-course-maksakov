@@ -36,13 +36,13 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
       theme: themeNotifier.getTheme(),
       // home: SightListScreen(),
       // home: SightCard(mocks[0]),
-      // home: Scaffold(body: SightDetails(sight: mocks[0])),
+      home: Scaffold(body: SightDetails(sight: mocks[0])),
       // home: VisitingScreen(),
       // home: FilterScreen(),
       // home: SettingsScreen(),
       // home: AddSightScreen(),
       // home: SelectSightType(),
-      home: OnboardingScreen(),
+      // home: OnboardingScreen(),
       title: 'places',
     );
   }
