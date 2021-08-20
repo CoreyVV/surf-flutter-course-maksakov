@@ -13,7 +13,7 @@ class Sight {
   final double lon;
   final String url;
   final String details;
-  final List images;
+  final List<String> images;
   final String type;
 
   Sight({
