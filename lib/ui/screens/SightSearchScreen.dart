@@ -346,7 +346,9 @@ class _Item extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => SightDetails(sight),
+                builder: (BuildContext context) => SightDetails(
+                  sight: sight,
+                ),
               ),
             );
           },

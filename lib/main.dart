@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/ui/screens/AddSightScreen.dart';
+import 'package:places/ui/screens/OnboardingScreen.dart';
 import 'package:places/ui/screens/SettingsScreen.dart';
 import 'package:places/ui/screens/filters_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
@@ -35,12 +36,13 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
       theme: themeNotifier.getTheme(),
       // home: SightListScreen(),
       // home: SightCard(mocks[0]),
-      // home: Scaffold(body: SightDetails(mocks[0])),
+      // home: Scaffold(body: SightDetails(sight: mocks[0])),
       // home: VisitingScreen(),
       // home: FilterScreen(),
       // home: SettingsScreen(),
       // home: AddSightScreen(),
-      home: SelectSightType(),
+      // home: SelectSightType(),
+      home: OnboardingScreen(),
       title: 'places',
     );
   }

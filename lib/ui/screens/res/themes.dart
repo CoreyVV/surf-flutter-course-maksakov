@@ -51,6 +51,7 @@ final lightTheme = ThemeData(
   unselectedWidgetColor: inactiveBlack,
   canvasColor: white,
   backgroundColor: red,
+  indicatorColor: whiteMain,
   accentTextTheme: TextTheme(
     headline4: normal32w700.copyWith(color: secondaryWhite),
     headline5: normal24w700.copyWith(color: secondaryWhite),
@@ -70,11 +71,11 @@ final lightTheme = ThemeData(
   ),
   textTheme: TextTheme(
     // headline4: normal32w700.copyWith(color: whiteMain),
-    // headline5: normal24w700.copyWith(color: whiteMain),
+    headline5: normal24w700.copyWith(color: whiteMain),
     // headline6: normal18w500.copyWith(color: whiteMain),
     bodyText1:
         normal16w500.copyWith(color: whiteMain, fontWeight: FontWeight.w400),
-    // bodyText2: normal14w400.copyWith(color: whiteMain),
+    bodyText2: normal14w400.copyWith(color: whiteMain),
   ),
   appBarTheme: AppBarTheme(
     brightness: Brightness.light,

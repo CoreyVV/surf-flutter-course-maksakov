@@ -82,4 +82,12 @@ class AssetsStr {
   static final String go = 'res/icons/GO.svg';
   static final String button_white_plus = 'res/icons/Button-White-Plus.svg';
   static final String icon_bucket = 'res/icons/Icon-Bucket.svg';
+  static final String icon_calendar = 'res/icons/icon-calendar.svg';
+  static final String button_white_icon_go =
+      'res/icons/button-white-icon-go.svg';
+  static final String header_icon_arrow = 'res/icons/header-icon-arrow.svg';
+  static final String icon_heart = 'res/icons/icon-heart.svg';
+  static final String tutorial1Frame = 'res/icons/Tutorial 1 frame.svg';
+  static final String tutorial2Frame = 'res/icons/Tutorial 2 frame.svg';
+  static final String tutorial3Frame = 'res/icons/Tutorial 3 frame.svg';
 }

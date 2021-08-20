@@ -60,7 +60,7 @@ List<String> _imagesList = [
   'https://cdn.theatlantic.com/thumbor/jlBbH8ql4PADBerveJ9yyWJZLU0=/1500x908/media/img/photo/2016/09/the-beauty-of-terraced-fields/t02_154921930/original.jpg',
   'https://cdn.theatlantic.com/thumbor/62twl5RYxffj8l5YUMiOoMMKJhE=/1500x834/media/img/photo/2016/09/the-beauty-of-terraced-fields/t05_RTS2ZQM/original.jpg',
   'https://cdn.theatlantic.com/thumbor/RR4kX56okPh66ol7XMs0-gJwvq0=/1500x1041/media/img/photo/2016/09/the-beauty-of-terraced-fields/t14_AP614457396093/original.jpg',
-  'https://cdn.theatlantic.com/thumbor/x8eCTMMqX65_ukNTZxFVGnD6V38=/1500x1001/media/img/photo/2016/09/the-beauty-of-terraced-fields/t23_RTR1ZJD7/original.jpg'
+  'https://cdn.theatlantic.com/thumbor/x8eCTMMqX65_ukNTZxFVGnD6V38=/1500x1001/media/img/photo/2016/09/the-beauty-of-terraced-fields/t23_RTR1ZJD7/original.jpg',
 ];
 
 //храним значение фильтров
@@ -204,7 +204,7 @@ class _NewSightBody extends StatelessWidget {
                           color: Theme.of(context).primaryIconTheme.color,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Container(
@@ -295,13 +295,16 @@ class _NewSightBody extends StatelessWidget {
                 onPressed: () {
                   print('AddSightScreen\Create button was tapped');
                   checkSight()
-                      ? mocks.add(Sight(
-                          name: _name,
-                          lat: _lat,
-                          lon: _long,
-                          url: _url,
-                          details: _desc,
-                          type: _selectedType))
+                      ? mocks.add(
+                          Sight(
+                              name: _name,
+                              lat: _lat,
+                              lon: _long,
+                              url: _url,
+                              images: [],
+                              details: _desc,
+                              type: _selectedType),
+                        )
                       : null;
                 },
               ),

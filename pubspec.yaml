@@ -16,6 +16,8 @@ dependencies:
 
   location: ^4.2.0
 
+  surf_lint_rules: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
