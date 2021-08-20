@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/screens/res/icons.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
+  const MyBottomNavigationBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(

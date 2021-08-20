@@ -27,14 +27,15 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         systemNavigationBarColor: white,
       ),
     );
+
     return MaterialApp(
       theme: themeNotifier.getTheme(),
-      // home: SightListScreen(),
+      home: SightListScreen(),
       // home: SightCard(mocks[0]),
       // home: Scaffold(body: SightDetails(sight: mocks[0])),
       // home: VisitingScreen(),
@@ -42,7 +43,7 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
       // home: SettingsScreen(),
       // home: AddSightScreen(),
       // home: SelectSightType(),
-      home: OnboardingScreen(),
+      // home: OnboardingScreen(),
       title: 'places',
     );
   }

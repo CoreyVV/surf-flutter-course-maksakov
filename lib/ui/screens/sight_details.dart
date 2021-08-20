@@ -13,59 +13,65 @@ class SightDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(
-        children: [
-          _SightsImages(
-            sight: sight,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
+      child: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+            delegate: _HeaderDelegate(
+              child: _SightsImages(
+                sight: sight,
+              ),
             ),
-            child: Column(
-              children: [
-                _SightsTexts(sight: sight),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 24,
+          ),
+          SliverFillRemaining(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Column(
+                children: [
+                  _SightsTexts(sight: sight),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 24,
+                    ),
+                    child: _ButtonGoTo(),
                   ),
-                  child: _ButtonGoTo(),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        width: 0.8,
-                        color: Theme.of(context).unselectedWidgetColor,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          width: 0.8,
+                          color: Theme.of(context).unselectedWidgetColor,
+                        ),
+                      ),
+                    ),
+                    padding: const EdgeInsets.only(
+                      left: 17,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                        top: 19,
+                      ),
+                      child: Row(
+                        children: [
+                          _Button(
+                            title: 'Запланировать',
+                            asset: AssetsStr.icon_calendar,
+                          ),
+                          const SizedBox(width: 40),
+                          _Button(
+                            title: 'В избранное',
+                            asset: AssetsStr.icon_heart,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  padding: const EdgeInsets.only(
-                    left: 17,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                      top: 19,
-                    ),
-                    child: Row(
-                      children: [
-                        _Button(
-                          title: 'Запланировать',
-                          asset: AssetsStr.icon_calendar,
-                        ),
-                        const SizedBox(width: 40),
-                        _Button(
-                          title: 'В избранное',
-                          asset: AssetsStr.icon_heart,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -325,5 +331,31 @@ class _SightsTexts extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _HeaderDelegate extends SliverPersistentHeaderDelegate {
+  Widget child;
+
+  _HeaderDelegate({required this.child});
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return child;
+  }
+
+  @override
+  double get maxExtent => 360.0;
+
+  @override
+  double get minExtent => 0.0;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    throw false;
   }
 }
