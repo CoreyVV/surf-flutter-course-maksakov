@@ -90,4 +90,5 @@ class AssetsStr {
   static final String tutorial1Frame = 'res/icons/Tutorial 1 frame.svg';
   static final String tutorial2Frame = 'res/icons/Tutorial 2 frame.svg';
   static final String tutorial3Frame = 'res/icons/Tutorial 3 frame.svg';
+  static final String subtract = 'res/icons/Subtract.svg';
 }
