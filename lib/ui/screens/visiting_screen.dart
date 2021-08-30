@@ -85,6 +85,7 @@ class _VisitingScreenState extends State<VisitingScreen> {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             toolbarHeight: 108,
+            automaticallyImplyLeading: false,
           ),
           body: TabBarView(
             children: [
