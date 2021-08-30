@@ -11,8 +11,8 @@ enum _State {
   found,
 }
 
-final TextEditingController _controller = TextEditingController();
-List _historyQueries = [];
+late final TextEditingController _controller;
+List<String> _historyQueries = [];
 _State _currentState = _State.empty;
 
 class SightSearchScreen extends StatefulWidget {
@@ -25,6 +25,7 @@ class SightSearchScreen extends StatefulWidget {
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _focusNode = FocusNode();
   List _foundSight = [];
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -343,11 +344,12 @@ class _Item extends StatelessWidget {
             ),
           ),
           onTap: () {
+            FocusScope.of(context).unfocus();
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => SightDetails(
-                  sight: sight,
+                  id: sight.id,
                 ),
               ),
             );

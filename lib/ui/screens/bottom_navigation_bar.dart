@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/settings_screen.dart';
+import 'package:places/ui/screens/sight_list_screen.dart';
+import 'package:places/ui/screens/visiting_screen.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
   const MyBottomNavigationBar({Key? key}) : super(key: key);
@@ -36,6 +39,46 @@ class MyBottomNavigationBar extends StatelessWidget {
           label: '',
         ),
       ],
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => SightListScreen(),
+                ),
+              );
+              break;
+            }
+          case 1:
+            {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => SightListScreen(),
+                ),
+              );
+              break;
+            }
+          case 2:
+            {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => VisitingScreen(),
+                ),
+              );
+              break;
+            }
+          case 3:
+            {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => SettingsScreen(),
+                ),
+              );
+              break;
+            }
+        }
+      },
     );
   }
 }

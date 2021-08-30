@@ -2,6 +2,7 @@ import 'domain/sight.dart';
 
 final List mocks = [
   Sight(
+    id: '0000',
     name: 'Watkins Glen State Park',
     lat: 42.373537146218,
     lon: -76.88910484314,
@@ -19,6 +20,7 @@ final List mocks = [
     type: SightType.park,
   ),
   Sight(
+    id: '0001',
     name: 'Mù Cang Chải',
     lat: 21.8528313,
     lon: 104.0836104,
@@ -29,6 +31,7 @@ final List mocks = [
     type: SightType.park,
   ),
   Sight(
+    id: '0002',
     name: 'Bagan',
     lat: 21.166666,
     lon: 94.8833298,
@@ -39,6 +42,7 @@ final List mocks = [
     type: SightType.museum,
   ),
   Sight(
+    id: '0003',
     name: 'Test',
     lat: 37.4515504,
     lon: -122.054032,

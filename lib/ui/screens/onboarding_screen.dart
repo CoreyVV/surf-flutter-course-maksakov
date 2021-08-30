@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/sight_list_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -206,7 +207,11 @@ class _ButtonStart extends StatelessWidget {
       width: 376,
       child: ElevatedButton(
         onPressed: () {
-          print('OnboardingScreen\Start was tapped');
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (BuildContext context) => SightListScreen(),
+            ),
+          );
         },
         child: Text('НА СТАРТ'),
       ),
@@ -229,7 +234,11 @@ class _ButtonSkip extends StatelessWidget {
         ),
         child: TextButton(
           onPressed: () {
-            print('OnboardingScreen\Skip was tapped');
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (BuildContext context) => SightListScreen(),
+              ),
+            );
           },
           child: Text(
             'Пропустить',

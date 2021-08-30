@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/screens/add_sight_screen.dart';
 import 'package:places/ui/screens/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_card.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screens/widgets/SearchBar.dart';
+import 'package:places/ui/screens/widgets/search_bar.dart';
 
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -87,7 +88,11 @@ class _NewSightButton extends StatelessWidget {
       width: 177,
       child: FloatingActionButton(
         onPressed: () {
-          print('SightListScreen/NewSightButton was tapped');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) => AddSightScreen(),
+            ),
+          );
         },
         child: Container(
           decoration: BoxDecoration(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screens/OnboardingScreen.dart';
+import 'package:places/ui/screens/onboarding_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 
@@ -37,8 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
         eagerError: true,
       );
 
-      Navigator.push(
-        context,
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => OnboardingScreen(),
         ),

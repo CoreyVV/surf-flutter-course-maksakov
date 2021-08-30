@@ -1,3 +1,5 @@
+import 'package:places/mocks.dart';
+
 class SightType {
   static final String cafe = 'cafe';
   static final String hotel = 'hotel';
@@ -8,6 +10,7 @@ class SightType {
 }
 
 class Sight {
+  final String id;
   final String name;
   final double lat;
   final double lon;
@@ -17,6 +20,7 @@ class Sight {
   final String type;
 
   Sight({
+    this.id = '0005',
     required this.name,
     required this.lat,
     required this.lon,
@@ -25,4 +29,8 @@ class Sight {
     required this.details,
     required this.type,
   });
+
+  static Sight? getSight(String id) {
+    return mocks.where((sight) => (sight.id == id)).first;
+  }
 }

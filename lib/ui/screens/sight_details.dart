@@ -3,78 +3,81 @@ import 'package:places/domain/sight.dart';
 import 'package:places/ui/screens/res/icons.dart';
 
 class SightDetails extends StatelessWidget {
-  final Sight sight;
+  final String id;
 
   const SightDetails({
-    required this.sight,
+    required this.id,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            delegate: _HeaderDelegate(
-              child: _SightsImages(
-                sight: sight,
+    final Sight sight = Sight.getSight(id)!;
+    return Scaffold(
+      body: Material(
+        child: CustomScrollView(
+          slivers: [
+            SliverPersistentHeader(
+              delegate: _HeaderDelegate(
+                child: _SightsImages(
+                  sight: sight,
+                ),
               ),
             ),
-          ),
-          SliverFillRemaining(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              child: Column(
-                children: [
-                  _SightsTexts(sight: sight),
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      bottom: 24,
+            SliverFillRemaining(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                child: Column(
+                  children: [
+                    _SightsTexts(sight: sight),
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        bottom: 24,
+                      ),
+                      child: _ButtonGoTo(),
                     ),
-                    child: _ButtonGoTo(),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          width: 0.8,
-                          color: Theme.of(context).unselectedWidgetColor,
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            width: 0.8,
+                            color: Theme.of(context).unselectedWidgetColor,
+                          ),
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(
+                        left: 17,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 19,
+                        ),
+                        child: Row(
+                          children: [
+                            _Button(
+                              title: 'Запланировать',
+                              asset: AssetsStr.icon_calendar,
+                            ),
+                            const SizedBox(width: 40),
+                            _Button(
+                              title: 'В избранное',
+                              asset: AssetsStr.icon_heart,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    padding: const EdgeInsets.only(
-                      left: 17,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                        top: 19,
-                      ),
-                      child: Row(
-                        children: [
-                          _Button(
-                            title: 'Запланировать',
-                            asset: AssetsStr.icon_calendar,
-                          ),
-                          const SizedBox(width: 40),
-                          _Button(
-                            title: 'В избранное',
-                            asset: AssetsStr.icon_heart,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -120,7 +123,7 @@ class __SightsImagesState extends State<_SightsImages> {
             left: 16,
             child: InkWell(
               onTap: () {
-                print('sight_details/back was tapped');
+                Navigator.of(context).pop();
               },
               child: Container(
                 decoration: BoxDecoration(

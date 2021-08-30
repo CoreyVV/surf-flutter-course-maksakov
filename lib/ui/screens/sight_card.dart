@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/screens/res/colors.dart';
+import 'package:places/ui/screens/sight_details.dart';
 
 class SightCard extends StatelessWidget {
   final Sight sight;
@@ -91,7 +92,14 @@ class SightCard extends StatelessWidget {
                   highlightColor: greenWhite.withOpacity(0.24),
                   splashColor: greenWhite.withOpacity(0.12),
                   onTap: () {
-                    print('SightCard was tapped');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => SightDetails(
+                          id: sight.id,
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -118,7 +126,13 @@ class SightCard extends StatelessWidget {
                   highlightColor: greenWhite.withOpacity(0.24),
                   splashColor: greenWhite.withOpacity(0.12),
                   onTap: () {
-                    print('sight_card/icon-heart was tapped');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            SightDetails(id: sight.id),
+                      ),
+                    );
                   },
                   child: Ink(
                     child: SvgPicture.asset(

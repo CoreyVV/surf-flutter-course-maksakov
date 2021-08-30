@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/main.dart';
 import 'package:places/ui/screens/bottom_navigation_bar.dart';
+import 'package:places/ui/screens/onboarding_screen.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/res/themes.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
+  // ignore: long-method
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +56,9 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -77,7 +80,12 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    print('SettingsScreen/info was tapped');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => OnboardingScreen(),
+                      ),
+                    );
                   },
                   icon: ColorFiltered(
                       colorFilter: ColorFilter.mode(
@@ -88,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: MyBottomNavigationBar(),

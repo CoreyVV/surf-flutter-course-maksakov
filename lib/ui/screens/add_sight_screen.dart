@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:flutter/gestures.dart';
+// import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/domain/sight.dart';
@@ -115,6 +115,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               Material(
                 child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
                   child: Ink(
                     child: Text(
                       'Отмена',
@@ -122,9 +125,6 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                       style: Theme.of(context).primaryTextTheme.subtitle1,
                     ),
                   ),
-                  onTap: () {
-                    print('AddSightScreen/Cancel was tapped');
-                  },
                 ),
               ),
               SizedBox(
@@ -139,6 +139,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+      automaticallyImplyLeading: false,
       toolbarHeight: height,
     );
   }
@@ -154,6 +155,7 @@ class _NewSightBody extends StatelessWidget {
   final FocusNode _focusNodeSave = new FocusNode();
 
   @override
+  // ignore: long-method
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -265,7 +267,8 @@ class _NewSightBody extends StatelessWidget {
             child: TextButton(
               child: Text('Указать на карте'),
               style: ElevatedButton.styleFrom(
-                  onPrimary: Theme.of(context).buttonColor),
+                onPrimary: Theme.of(context).buttonColor,
+              ),
               onPressed: () {
                 print('AddSightScreen\Location button was tapped');
               },
@@ -297,15 +300,17 @@ class _NewSightBody extends StatelessWidget {
                   checkSight()
                       ? mocks.add(
                           Sight(
-                              name: _name,
-                              lat: _lat,
-                              lon: _long,
-                              url: _url,
-                              images: [],
-                              details: _desc,
-                              type: _selectedType),
+                            name: _name,
+                            lat: _lat,
+                            lon: _long,
+                            url: _url,
+                            images: [],
+                            details: _desc,
+                            type: _selectedType,
+                          ),
                         )
                       : null;
+                  Navigator.of(context).pop();
                 },
               ),
             ),
@@ -461,6 +466,7 @@ class _SelectSightTypeState extends State<SelectSightType> {
             child: ElevatedButton(
               child: Text('Сохранить'),
               onPressed: () {
+                Navigator.of(context).pop();
                 print('AddSightScreen/SelectSightType/save button was tapped');
               },
             ),
@@ -484,17 +490,18 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-          splashRadius: 28,
-          onPressed: () {
-            print('AddSightScreen/SelectSightType/back was tapped');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => AddSightScreen(),
-              ),
-            );
-          },
-          icon: MyIcon(asset: AssetsStr.icon_arrow)),
+        splashRadius: 28,
+        onPressed: () {
+          print('AddSightScreen/SelectSightType/back was tapped');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => AddSightScreen(),
+            ),
+          );
+        },
+        icon: MyIcon(asset: AssetsStr.icon_arrow),
+      ),
       title: Row(
         children: [
           SizedBox(
@@ -651,11 +658,15 @@ class _ImageRowItem extends StatelessWidget {
               // Dismissible(key: key, child: child);
               Image.network(
                 url,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
+                loadingBuilder: (
+                  BuildContext context,
+                  Widget child,
+                  ImageChunkEvent? loadingProgress,
+                ) {
                   if (loadingProgress == null) {
                     return child;
                   }
+
                   return Center(
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
