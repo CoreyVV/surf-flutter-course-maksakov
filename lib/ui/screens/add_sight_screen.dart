@@ -338,26 +338,28 @@ class _CreateButton extends StatelessWidget {
       height: 64,
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: ElevatedButton(
-        onPressed: () {
-          print('AddSightScreen/Create button was tapped');
-          if (checkSight()) {
-            mocks.add(
-              Sight(
-                name: _name,
-                lat: _lat,
-                lon: _long,
-                url: _url,
-                images: [],
-                details: _desc,
-                type: _selectedType,
-              ),
-            );
-          }
-          Navigator.of(context).pop();
-        },
+        onPressed: () => _onPressed(context),
         child: const Text('Создать'),
       ),
     );
+  }
+
+  void _onPressed(BuildContext context) {
+    print('AddSightScreen/Create button was tapped');
+    if (checkSight()) {
+      mocks.add(
+        Sight(
+          name: _name,
+          lat: _lat,
+          lon: _long,
+          url: _url,
+          images: [],
+          details: _desc,
+          type: _selectedType,
+        ),
+      );
+    }
+    Navigator.of(context).pop();
   }
 }
 
