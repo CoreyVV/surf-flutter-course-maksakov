@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screens/bottom_navigation_bar.dart';
+import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
+import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 enum _State {
   history,
@@ -11,12 +12,11 @@ enum _State {
   found,
 }
 
-late final TextEditingController _controller;
 List<String> _historyQueries = [];
 _State _currentState = _State.empty;
 
 class SightSearchScreen extends StatefulWidget {
-  // const SightSearchScreen({ Key? key }) : super(key: key);
+  const SightSearchScreen({Key? key}) : super(key: key);
 
   @override
   _SightSearchScreenState createState() => _SightSearchScreenState();
@@ -24,16 +24,14 @@ class SightSearchScreen extends StatefulWidget {
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _focusNode = FocusNode();
-  List _foundSight = [];
-  TextEditingController _controller = TextEditingController();
+  List<Sight> _foundSight = [];
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
-    if (_historyQueries.isNotEmpty)
-      _currentState = _State.history;
-    else
-      _currentState = _State.empty;
+    _currentState = _historyQueries.isNotEmpty ? _State.history : _State.empty;
     super.initState();
+    _controller.addListener(_getSight);
   }
 
   @override
@@ -45,10 +43,11 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   @override
   Widget build(BuildContext context) {
     FocusScope.of(context).requestFocus(_focusNode);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Список интересных мест'),
+        title: const Text('Список интересных мест'),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -57,55 +56,119 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 40,
-                child: _searchBar(context),
+                child: _SearchBar(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  onEditingComplete: _addHistory,
+                  onPressed: _onPressed,
+                ),
               ),
               if (_currentState == _State.found)
                 _FoundSights(listFound: _foundSight)
               else if (_currentState == _State.empty)
-                _NothingFound()
+                const _NothingFound()
               else if (_currentState == _State.history)
-                _showHistory(context),
+                _History(
+                  controller: _controller,
+                  onRemovePressed: (value) {
+                    setState(() {
+                      _historyQueries.remove(value);
+                      if (_historyQueries.isEmpty) _currentState = _State.empty;
+                    });
+                  },
+                  onCleanPressed: () {
+                    setState(() {
+                      _historyQueries.clear();
+                      _currentState = _State.empty;
+                    });
+                  },
+                ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: MyBottomNavigationBar(),
+      bottomNavigationBar: MyBottomNavigationBar(pageIndex: 0,),
     );
   }
 
-  Widget _searchBar(BuildContext context) {
+  void _onPressed() {
+    _controller.clear();
+    _foundSight.clear();
+    _historyQueries.isNotEmpty
+        ? _currentState = _State.history
+        : _currentState = _State.empty;
+    setState(() {});
+  }
+
+  void _getSight() {
+    if (_controller.text != '') {
+      _foundSight = mocks
+          .where(
+            (element) => element.name.toLowerCase().contains(
+                  _controller.text.trim(),
+                ),
+          )
+          .toList();
+    } else {
+      _foundSight.clear();
+    }
+    _historyQueries.isNotEmpty
+        ? _currentState = _State.history
+        : _currentState = _State.empty;
+    if (_foundSight.isNotEmpty) _currentState = _State.found;
+    setState(() {});
+  }
+
+  void _addHistory() {
+    if ((_controller.text != '') &&
+        (!_historyQueries.contains(_controller.text))) {
+      _historyQueries.add(_controller.text);
+    }
+  }
+}
+
+class _SearchBar extends StatelessWidget {
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final void Function() onEditingComplete;
+  final void Function() onPressed;
+
+  const _SearchBar({
+    required this.controller,
+    required this.focusNode,
+    required this.onEditingComplete,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return TextField(
-      controller: _controller,
-      focusNode: _focusNode,
+      controller: controller,
+      focusNode: focusNode,
       cursorHeight: 24,
       cursorWidth: 1,
       textInputAction: TextInputAction.search,
-      onChanged: (newValue) {
-        _getSight();
-      },
-      onEditingComplete: () {
-        _addHistory();
-        _getSight();
-      },
+      onEditingComplete: onEditingComplete,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.transparent),
+          borderSide: const BorderSide(color: Colors.transparent),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.transparent),
+          borderSide: const BorderSide(color: Colors.transparent),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.transparent),
+          borderSide: const BorderSide(color: Colors.transparent),
         ),
         fillColor: Theme.of(context).primaryColorDark,
         filled: true,
         hintText: ' Поиск',
-        contentPadding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+        contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
         prefixIcon: MyIcon(
           asset: AssetsStr.search,
           color: Theme.of(context).unselectedWidgetColor,
@@ -116,51 +179,33 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           color: Colors.transparent,
           child: IconButton(
             icon: MyIcon(
-              asset: AssetsStr.icon_clear,
+              asset: AssetsStr.iconClear,
               color: Theme.of(context).accentColor,
             ),
             iconSize: 18,
             splashRadius: 20,
-            onPressed: () {
-              _controller.clear();
-              _foundSight.clear();
-              _historyQueries.isNotEmpty
-                  ? _currentState = _State.history
-                  : _currentState = _State.empty;
-              setState(() {});
-            },
+            onPressed: onPressed,
           ),
         ),
       ),
     );
   }
+}
 
-  _getSight() {
-    if (_controller.text != '') {
-      _foundSight = mocks
-          .where(
-            (element) => element.name.toLowerCase().contains(
-                  _controller.text.trim(),
-                ),
-          )
-          .toList();
-    } else
-      _foundSight.clear();
-    _historyQueries.isNotEmpty
-        ? _currentState = _State.history
-        : _currentState = _State.empty;
-    if (_foundSight.isNotEmpty) _currentState = _State.found;
+class _History extends StatelessWidget {
+  final TextEditingController controller;
+  final void Function(String) onRemovePressed;
+  final void Function() onCleanPressed;
 
-    setState(() {});
-  }
+  const _History({
+    required this.controller,
+    required this.onRemovePressed,
+    required this.onCleanPressed,
+    Key? key,
+  }) : super(key: key);
 
-  _addHistory() {
-    if ((_controller.text != '') &&
-        (!_historyQueries.contains(_controller.text)))
-      _historyQueries.add(_controller.text);
-  }
-
-  _showHistory(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
@@ -177,23 +222,19 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         for (var i = 0; i < _historyQueries.length; i++)
           Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(top: 15),
+            padding: const EdgeInsets.only(top: 15),
             child: Column(
               children: [
                 _HistoryItem(
                   data: _historyQueries[i],
-                  onPressed: (value) {
-                    setState(() {
-                      _historyQueries.remove(value);
-                      if (_historyQueries.isEmpty) _currentState = _State.empty;
-                    });
-                  },
+                  controller: controller,
+                  onPressed: onRemovePressed,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 13,
                 ),
                 (i != (_historyQueries.length - 1))
-                    ? Divider(
+                    ? const Divider(
                         height: 1,
                       )
                     : Container(),
@@ -203,17 +244,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
         Container(
           alignment: Alignment.centerLeft,
           child: TextButton(
-            onPressed: () {
-              setState(() {
-                _historyQueries.clear();
-                _currentState = _State.empty;
-              });
-            },
-            child: Text('Очистить историю'),
+            onPressed: onCleanPressed,
             style: ElevatedButton.styleFrom(
-                onPrimary: Theme.of(context).buttonColor),
+              onPrimary: Theme.of(context).buttonColor,
+            ),
+            child: const Text('Очистить историю'),
           ),
-        )
+        ),
       ],
     );
   }
@@ -221,13 +258,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
 //Виджет отображения ничего не найденно
 class _NothingFound extends StatelessWidget {
-  // const _showError({Key? key}) : super(key: key);
+  const _NothingFound({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 170,
         ),
         MyIcon(
@@ -235,14 +272,14 @@ class _NothingFound extends StatelessWidget {
           color: Theme.of(context).unselectedWidgetColor,
           height: 48,
         ),
-        SizedBox(
+        const SizedBox(
           height: 24,
         ),
         Text(
           'Ничего не найденою',
           style: Theme.of(context).primaryTextTheme.headline6,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
@@ -258,7 +295,8 @@ class _NothingFound extends StatelessWidget {
 //Виджет отображения списка найденных мест
 class _FoundSights extends StatelessWidget {
   // const _ShowFound({ Key? key }) : super(key: key);
-  final List listFound;
+  final List<Sight> listFound;
+
   const _FoundSights({
     required this.listFound,
   });
@@ -267,14 +305,14 @@ class _FoundSights extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 29,
         ),
         for (var i = 0; i < listFound.length; i++)
           Column(children: [
             _Item(sight: listFound[i]),
             (i != (listFound.length - 1))
-                ? Divider(
+                ? const Divider(
                     height: 1,
                   )
                 : Container(),
@@ -288,16 +326,28 @@ class _FoundSights extends StatelessWidget {
 class _Item extends StatelessWidget {
   // const _Item({ Key? key }) : super(key: key);
   final Sight sight;
+
   const _Item({required this.sight});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 78,
       width: double.infinity,
       // padding: EdgeInsets.only(top: 11),
       child: Material(
         child: InkWell(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            Navigator.push<void>(
+              context,
+              MaterialPageRoute(
+                builder: (_) => SightDetails(
+                  id: sight.id,
+                ),
+              ),
+            );
+          },
           child: Ink(
             child: Row(
               children: [
@@ -309,20 +359,7 @@ class _Item extends StatelessWidget {
                     clipBehavior: Clip.hardEdge,
                     child: Image.network(
                       sight.url,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      },
+                      loadingBuilder: loadingBuilder,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -333,7 +370,7 @@ class _Item extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(sight.name),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(sight.type),
@@ -343,17 +380,6 @@ class _Item extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => SightDetails(
-                  id: sight.id,
-                ),
-              ),
-            );
-          },
         ),
       ),
     );
@@ -363,9 +389,15 @@ class _Item extends StatelessWidget {
 //Виджет элемента истории
 class _HistoryItem extends StatelessWidget {
   final String data;
-  Function onPressed;
-  // const _HistoryItem({ Key? key }) : super(key: key);
-  _HistoryItem({required this.data, required this.onPressed});
+  final TextEditingController controller;
+  final Function(String) onPressed;
+
+  const _HistoryItem({
+    required this.data,
+    required this.controller,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +409,16 @@ class _HistoryItem extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: InkWell(
-              child: Container(
+              onTap: () {
+                controller
+                  ..text = data
+                  ..selection = TextSelection.fromPosition(
+                    TextPosition(
+                      offset: controller.text.length,
+                    ),
+                  );
+              },
+              child: SizedBox(
                 width: 207,
                 child: Text(
                   data,
@@ -388,7 +429,6 @@ class _HistoryItem extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w400),
                 ),
               ),
-              onTap: () => _controller.text = data,
             ),
           ),
           Positioned(

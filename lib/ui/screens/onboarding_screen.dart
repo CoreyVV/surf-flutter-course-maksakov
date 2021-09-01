@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
@@ -8,7 +7,7 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: _Body(),
     );
   }
@@ -35,7 +34,7 @@ class __BodyState extends State<_Body> {
       children: [
         PageView(
           onPageChanged: _getChangedPageAndMoveBar,
-          children: [
+          children: const [
             _FirstPage(),
             _SecondPage(),
             _ThirdPage(),
@@ -48,7 +47,7 @@ class __BodyState extends State<_Body> {
             children: [
               for (int i = 0; i < 3; i++)
                 _MyIndicator(
-                  isActive: (i == _currentPageValue),
+                  isActive: i == _currentPageValue,
                 ),
             ],
           ),
@@ -64,17 +63,16 @@ class _FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _ButtonSkip(),
-        SizedBox(
+        const _ButtonSkip(),
+        const SizedBox(
           height: 187,
         ),
         MyIcon(
           asset: AssetsStr.tutorial1Frame,
           color: Theme.of(context).indicatorColor,
         ),
-        SizedBox(
+        const SizedBox(
           height: 42.6,
         ),
         Text(
@@ -82,7 +80,7 @@ class _FirstPage extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline5,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
@@ -101,17 +99,16 @@ class _SecondPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _ButtonSkip(),
-        SizedBox(
+        const _ButtonSkip(),
+        const SizedBox(
           height: 187,
         ),
         MyIcon(
           asset: AssetsStr.tutorial2Frame,
           color: Theme.of(context).indicatorColor,
         ),
-        SizedBox(
+        const SizedBox(
           height: 47.48,
         ),
         Text(
@@ -119,7 +116,7 @@ class _SecondPage extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline5,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
@@ -138,16 +135,15 @@ class _ThirdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 253,
         ),
         MyIcon(
           asset: AssetsStr.tutorial3Frame,
           color: Theme.of(context).indicatorColor,
         ),
-        SizedBox(
+        const SizedBox(
           height: 47.78,
         ),
         Text(
@@ -155,7 +151,7 @@ class _ThirdPage extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline5,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
@@ -163,10 +159,10 @@ class _ThirdPage extends StatelessWidget {
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyText2,
         ),
-        SizedBox(
+        const SizedBox(
           height: 188,
         ),
-        _ButtonStart(),
+        const _ButtonStart(),
       ],
     );
   }
@@ -207,13 +203,13 @@ class _ButtonStart extends StatelessWidget {
       width: 376,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(
+          Navigator.of(context).pushReplacement<void, void>(
             MaterialPageRoute(
-              builder: (BuildContext context) => SightListScreen(),
+              builder: (_) => const SightListScreen(),
             ),
           );
         },
-        child: Text('НА СТАРТ'),
+        child: const Text('НА СТАРТ'),
       ),
     );
   }
@@ -234,9 +230,9 @@ class _ButtonSkip extends StatelessWidget {
         ),
         child: TextButton(
           onPressed: () {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).pushReplacement<void, void>(
               MaterialPageRoute(
-                builder: (BuildContext context) => SightListScreen(),
+                builder: (_) => const SightListScreen(),
               ),
             );
           },

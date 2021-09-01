@@ -25,19 +25,19 @@ final darkTheme = ThemeData(
     bodyText2: normal14w400.copyWith(color: inactiveBlack),
     button: normal14w700.copyWith(color: inactiveBlack),
   ),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     brightness: Brightness.dark,
     backgroundColor: Colors.transparent,
     elevation: 0.0,
   ),
   buttonColor: green,
-  buttonTheme: ButtonThemeData(
+  buttonTheme: const ButtonThemeData(
     textTheme: ButtonTextTheme.accent,
   ),
-  iconTheme: IconThemeData(
+  iconTheme: const IconThemeData(
     color: white,
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedItemColor: white,
     unselectedItemColor: white,
   ),
@@ -77,13 +77,13 @@ final lightTheme = ThemeData(
         normal16w500.copyWith(color: whiteMain, fontWeight: FontWeight.w400),
     bodyText2: normal14w400.copyWith(color: whiteMain),
   ),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     brightness: Brightness.light,
     backgroundColor: Colors.transparent,
     elevation: 0.0,
   ),
   buttonColor: green,
-  buttonTheme: ButtonThemeData(
+  buttonTheme: const ButtonThemeData(
     textTheme: ButtonTextTheme.accent,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -92,20 +92,20 @@ final lightTheme = ThemeData(
       elevation: 0.0,
       textStyle: normal14w700.copyWith(color: white),
       shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
     ),
   ),
-  iconTheme: IconThemeData(
+  iconTheme: const IconThemeData(
     color: white,
   ),
-  primaryIconTheme: IconThemeData(
+  primaryIconTheme: const IconThemeData(
     color: black,
   ),
-  accentIconTheme: IconThemeData(
+  accentIconTheme: const IconThemeData(
     color: greenWhite,
   ),
-  sliderTheme: SliderThemeData(
+  sliderTheme: const SliderThemeData(
     // activeTickMarkColor: white,
     activeTrackColor: green,
     // inactiveTickMarkColor: inactiveBlack,
@@ -116,7 +116,7 @@ final lightTheme = ThemeData(
       elevation: 4,
     ),
   ),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedItemColor: secondaryBlack,
     unselectedItemColor: secondaryBlack,
   ),
@@ -127,7 +127,7 @@ final lightTheme = ThemeData(
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      borderSide: BorderSide(color: greenWhite.withOpacity(0.4), width: 1),
+      borderSide: BorderSide(color: greenWhite.withOpacity(0.4)),
     ),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
