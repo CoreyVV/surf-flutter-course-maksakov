@@ -3,34 +3,34 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class MyIcons {
 //bottom navigation bars icons
-  static final SvgPicture icon_close =
+  static final SvgPicture iconClose =
       SvgPicture.asset('res/icons/icon-close.svg');
-  static final SvgPicture icon_heart =
+  static final SvgPicture iconHeart =
       SvgPicture.asset('res/icons/icon-heart.svg');
 
 // light theme catalogs icons
-  static final SvgPicture catalog_white_cafe =
+  static final SvgPicture catalogWhiteCafe =
       SvgPicture.asset('res/icons/catalog-white-cafe.svg');
-  static final SvgPicture catalog_white_hotel =
+  static final SvgPicture catalogWhiteHotel =
       SvgPicture.asset('res/icons/catalog-white-hotel.svg');
-  static final SvgPicture catalog_white_museum =
+  static final SvgPicture catalogWhiteMuseum =
       SvgPicture.asset('res/icons/catalog-white-museum.svg');
-  static final SvgPicture catalog_white_park =
+  static final SvgPicture catalogWhitePark =
       SvgPicture.asset('res/icons/catalog-white-park.svg');
-  static final SvgPicture catalog_white_particular_place =
+  static final SvgPicture catalogWhiteParticularPlace =
       SvgPicture.asset('res/icons/catalog-white-particular_place.svg');
-  static final SvgPicture catalog_white_restourant =
-      SvgPicture.asset('res/icons/catalog-white-restourant.svg');
+  static final SvgPicture catalogWhiteRestaurant =
+      SvgPicture.asset('res/icons/catalog-white-restaurant.svg');
 
   //other icons
-  static final SvgPicture icon_arrow = SvgPicture.asset(
+  static final SvgPicture iconArrow = SvgPicture.asset(
     'res/icons/icon-arrow.svg',
     color: Colors.black,
   );
-  static final SvgPicture icon_tick_choice =
+  static final SvgPicture iconTickChoice =
       SvgPicture.asset('res/icons/icon-tick_choice.svg');
 
-  static final SvgPicture icon_info = SvgPicture.asset(
+  static final SvgPicture iconInfo = SvgPicture.asset(
     'res/icons/icon-info.svg',
   );
 }
@@ -46,49 +46,59 @@ class MyIcon extends StatelessWidget {
     this.color,
     this.height,
     this.fit = BoxFit.contain,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final IconThemeData iconTheme = IconTheme.of(context);
-    Color iconColor = color ?? iconTheme.color!;
+    final Color iconColor = color ?? iconTheme.color!;
+    
     return SvgPicture.asset(
-      this.asset,
+      asset,
       color: iconColor,
-      height: this.height,
-      fit: this.fit,
+      height: height,
+      fit: fit,
     );
   }
 }
 
 class AssetsStr {
-  static final String bottom_navigation_icon_heart =
+  static const String bottomNavigationIconHeart =
       'res/icons/bottom_navigation-icon-heart.svg';
-  static final String bottom_navigation_icon_list =
+  static const String bottomNavigationIconList =
       'res/icons/bottom_navigation-icon-list.svg';
-  static final String bottom_navigation_icon_map =
+  static const String bottomNavigationIconMap =
       'res/icons/bottom_navigation-icon-map.svg';
-  static final String bottom_navigation_icon_settings =
+  static const String bottomNavigationIconSettings =
       'res/icons/bottom_navigation-icon-settings.svg';
-  static final String icon_view = 'res/icons/icon-view.svg';
-  static final String icon_clear = 'res/icons/icon-clear.svg';
-  static final String icon_arrow = 'res/icons/header-icon-arrow.svg';
-  static final String icon_tick = 'res/icons/icon-tick.svg';
-  static final String icon_plus = 'res/icons/icon-plus.svg';
-  static final String search = 'res/icons/Search.svg';
-  static final String filter = 'res/icons/Filter.svg';
-  static final String delete = 'res/icons/Delete.svg';
-  static final String card = 'res/icons/Card.svg';
-  static final String go = 'res/icons/GO.svg';
-  static final String button_white_plus = 'res/icons/Button-White-Plus.svg';
-  static final String icon_bucket = 'res/icons/Icon-Bucket.svg';
-  static final String icon_calendar = 'res/icons/icon-calendar.svg';
-  static final String button_white_icon_go =
+  static const String iconView = 'res/icons/icon-view.svg';
+  static const String iconClear = 'res/icons/icon-clear.svg';
+  static const String iconArrow = 'res/icons/header-icon-arrow.svg';
+  static const String iconTick = 'res/icons/icon-tick.svg';
+  static const String iconPlus = 'res/icons/icon-plus.svg';
+  static const String search = 'res/icons/Search.svg';
+  static const String filter = 'res/icons/Filter.svg';
+  static const String delete = 'res/icons/Delete.svg';
+  static const String card = 'res/icons/Card.svg';
+  static const String go = 'res/icons/GO.svg';
+  static const String buttonWhitePlus = 'res/icons/Button-White-Plus.svg';
+  static const String iconBucket = 'res/icons/Icon-Bucket.svg';
+  static const String iconCalendar = 'res/icons/icon-calendar.svg';
+  static const String buttonWhiteIconGo =
       'res/icons/button-white-icon-go.svg';
-  static final String header_icon_arrow = 'res/icons/header-icon-arrow.svg';
-  static final String icon_heart = 'res/icons/icon-heart.svg';
-  static final String tutorial1Frame = 'res/icons/Tutorial 1 frame.svg';
-  static final String tutorial2Frame = 'res/icons/Tutorial 2 frame.svg';
-  static final String tutorial3Frame = 'res/icons/Tutorial 3 frame.svg';
-  static final String subtract = 'res/icons/Subtract.svg';
+  static const String headerIconArrow = 'res/icons/header-icon-arrow.svg';
+  static const String iconHeart = 'res/icons/icon-heart.svg';
+  static const String tutorial1Frame = 'res/icons/Tutorial 1 frame.svg';
+  static const String tutorial2Frame = 'res/icons/Tutorial 2 frame.svg';
+  static const String tutorial3Frame = 'res/icons/Tutorial 3 frame.svg';
+  static const String subtract = 'res/icons/Subtract.svg';
+  static const String iconShare = 'res/icons/icon-share.svg';
+  static const String iconClose = 'res/icons/icon-close.svg';
+  static const String iconHeartFull = 'res/icons/Icon-Heart Full.svg';
+  static const String iconListFull = 'res/icons/Icon-List Full.svg';
+  static const String iconMapFull = 'res/icons/Icon-Map Full.svg';
+  static const String iconSettingsFull = 'res/icons/Icon-Settings-fill.svg';
+
+
 }

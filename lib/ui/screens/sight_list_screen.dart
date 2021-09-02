@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screens/bottom_navigation_bar.dart';
+import 'package:places/ui/screens/add_sight_screen.dart';
+import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_card.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screens/widgets/SearchBar.dart';
+import 'package:places/ui/screens/widgets/search_bar.dart';
 
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -57,7 +58,7 @@ class _SightListScreenState extends State<SightListScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: [
-                        SightCard(mocks[i]),
+                        SightCard(sight: mocks[i]),
                         const SizedBox(
                           height: 16,
                         ),
@@ -69,7 +70,9 @@ class _SightListScreenState extends State<SightListScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: const MyBottomNavigationBar(),
+      bottomNavigationBar: MyBottomNavigationBar(
+        pageIndex: 0,
+      ),
       floatingActionButton: const _NewSightButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -87,11 +90,14 @@ class _NewSightButton extends StatelessWidget {
       width: 177,
       child: FloatingActionButton(
         onPressed: () {
-          print('SightListScreen/NewSightButton was tapped');
+          Navigator.of(context).push<void>(
+            MaterialPageRoute(
+              builder: (_) => const AddSightScreen(),
+            ),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(30),
             gradient: const LinearGradient(
               colors: <Color>[
@@ -105,12 +111,12 @@ class _NewSightButton extends StatelessWidget {
             width: 177,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MyIcon(asset: AssetsStr.icon_plus),
-                const SizedBox(
+              children: const [
+                MyIcon(asset: AssetsStr.iconPlus),
+                SizedBox(
                   width: 13.64,
                 ),
-                const Text('НОВОЕ МЕСТО'),
+                Text('НОВОЕ МЕСТО'),
               ],
             ),
           ),
@@ -131,37 +137,35 @@ class _AppBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       children: [
         Expanded(
           child: shrinkOffset < (maxExtent - minExtent) * 0.6
-              ? Container(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: (minExtent - shrinkOffset).clamp(20, 54),
-                      ),
-                      Text(
-                        'Список\nинтересных мест',
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).accentTextTheme.headline4,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(
-                        height: (minExtent - shrinkOffset).clamp(10, 24),
-                      ),
-                      if (shrinkOffset < (maxExtent - minExtent) * 0.4)
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Opacity(
-                              child: SearchBar(),
-                              opacity: 1 - shrinkOffset / 100,
-                            ),
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: (minExtent - shrinkOffset).clamp(20, 54),
+                    ),
+                    Text(
+                      'Список\nинтересных мест',
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).accentTextTheme.headline4,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(
+                      height: (minExtent - shrinkOffset).clamp(10, 24),
+                    ),
+                    if (shrinkOffset < (maxExtent - minExtent) * 0.4)
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Opacity(
+                            opacity: 1 - shrinkOffset / 100,
+                            child: SearchBar(),
                           ),
                         ),
-                      SizedBox(
-                        height: (minExtent - shrinkOffset).clamp(16, 24),
                       ),
-                    ],
-                  ),
+                    SizedBox(
+                      height: (minExtent - shrinkOffset).clamp(16, 24),
+                    ),
+                  ],
                 )
               : Container(
                   color: Theme.of(context).canvasColor,

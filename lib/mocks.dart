@@ -1,7 +1,8 @@
-import 'domain/sight.dart';
+import 'package:places/domain/sight.dart';
 
-final List mocks = [
+final List<Sight> mocks = [
   Sight(
+    id: '0000',
     name: 'Watkins Glen State Park',
     lat: 42.373537146218,
     lon: -76.88910484314,
@@ -17,8 +18,11 @@ final List mocks = [
     details:
         'A series of waterfalls and gorges. You will certainly enjoy hiking in the Glen gorge along the stream and admiring the 19 waterfalls along its course. You can also opt for a hike on the gorge rim for breathtaking views from above!',
     type: SightType.park,
+    isVisited: true,
+    isPlanned: false,
   ),
   Sight(
+    id: '0001',
     name: 'Mù Cang Chải',
     lat: 21.8528313,
     lon: 104.0836104,
@@ -27,8 +31,11 @@ final List mocks = [
     images: [],
     details: 'Terraced fields.',
     type: SightType.park,
+    isVisited: true,
+    isPlanned: false,
   ),
   Sight(
+    id: '0002',
     name: 'Bagan',
     lat: 21.166666,
     lon: 94.8833298,
@@ -37,8 +44,11 @@ final List mocks = [
     images: [],
     details: 'An ancient city.',
     type: SightType.museum,
+    isVisited: true,
+    isPlanned: false,
   ),
   Sight(
+    id: '0003',
     name: 'Test',
     lat: 37.4515504,
     lon: -122.054032,
@@ -47,5 +57,20 @@ final List mocks = [
     details: 'Test location.',
     images: [],
     type: SightType.park,
+    isVisited: false,
+    isPlanned: true,
+  ),
+  Sight(
+    id: '0004',
+    name: 'Test',
+    lat: 37.4515504,
+    lon: -122.054032,
+    url:
+    'https://windows10spotlight.com/wp-content/uploads/2019/12/a2c93088f3755e1fdd94a974cc4a06a5-768x432.jpg',
+    details: 'Test location.',
+    images: [],
+    type: SightType.park,
+    isVisited: false,
+    isPlanned: true,
   ),
 ];

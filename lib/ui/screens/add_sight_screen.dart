@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 String _selectedType = SightType.museum;
 String _name = '';
@@ -25,7 +25,7 @@ class _SightType {
 
   @override
   String toString() {
-    return this.title;
+    return title;
   }
 }
 
@@ -48,11 +48,11 @@ final _sightTypePark = _SightType(
 );
 final _sightTypeParticularPlace = _SightType(
   title: 'Особое место',
-  type: SightType.particular_place,
+  type: SightType.particularPlace,
 );
-final _sightTypeRestourant = _SightType(
+final _sightTypeRestaurant = _SightType(
   title: 'Ресторан',
-  type: SightType.restourant,
+  type: SightType.restaurant,
 );
 
 List<String> _imagesList = [
@@ -70,17 +70,15 @@ Map<_SightType, bool> _typesMap = {
   _sightTypeMuseum: false,
   _sightTypePark: false,
   _sightTypeParticularPlace: false,
-  _sightTypeRestourant: false,
+  _sightTypeRestaurant: false,
 };
 
 bool checkSight() =>
-    (_selectedType.isNotEmpty && _name.isNotEmpty && _desc.isNotEmpty)
-        ? true
-        : false;
+    _selectedType.isNotEmpty && _name.isNotEmpty && _desc.isNotEmpty;
 
 //экран добавления нового места
 class AddSightScreen extends StatefulWidget {
-  // const AddSightScreen({Key? key}) : super(key: key);
+  const AddSightScreen({Key? key}) : super(key: key);
 
   @override
   _AddSightScreenState createState() => _AddSightScreenState();
@@ -89,7 +87,7 @@ class AddSightScreen extends StatefulWidget {
 class _AddSightScreenState extends State<AddSightScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: _AppBar(),
       body: _NewSightBody(),
     );
@@ -98,9 +96,12 @@ class _AddSightScreenState extends State<AddSightScreen> {
 
 //AppBar экрана добавления нового места
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  // const _AppBar({Key? key}) : super(key: key);
   final double height;
-  _AppBar({this.height = 56});
+
+  const _AppBar({
+    this.height = 56,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -108,37 +109,36 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16, top: 18, bottom: 18),
-          child: Row(
-            children: [
-              Material(
-                child: InkWell(
-                  child: Ink(
-                    child: Text(
-                      'Отмена',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).primaryTextTheme.subtitle1,
-                    ),
+      title: Padding(
+        padding: const EdgeInsets.only(left: 16, top: 18, bottom: 18),
+        child: Row(
+          children: [
+            Material(
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Ink(
+                  child: Text(
+                    'Отмена',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).primaryTextTheme.subtitle1,
                   ),
-                  onTap: () {
-                    print('AddSightScreen/Cancel was tapped');
-                  },
                 ),
               ),
-              SizedBox(
-                width: 51,
-              ),
-              Text(
-                'Новое место',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).accentTextTheme.headline6,
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              width: 51,
+            ),
+            Text(
+              'Новое место',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).accentTextTheme.headline6,
+            ),
+          ],
         ),
       ),
+      automaticallyImplyLeading: false,
       toolbarHeight: height,
     );
   }
@@ -146,12 +146,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
 //Body экрана добавления нового места
 class _NewSightBody extends StatelessWidget {
-  // const _NewSightBody({ Key? key }) : super(key: key);
-  final FocusNode _focusNodeName = new FocusNode();
-  final FocusNode _focusNodeLat = new FocusNode();
-  final FocusNode _focusNodeLon = new FocusNode();
-  final FocusNode _focusNodeDesc = new FocusNode();
-  final FocusNode _focusNodeSave = new FocusNode();
+  const _NewSightBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -159,14 +154,14 @@ class _NewSightBody extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               left: 16,
               right: 24,
             ),
             child: Column(
               children: [
                 _ImagesRow(),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 Align(
@@ -179,34 +174,7 @@ class _NewSightBody extends StatelessWidget {
                             ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'Не выбрано',
-                      style: Theme.of(context).primaryTextTheme.bodyText2,
-                    ),
-                    Expanded(child: Container()),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                        onPressed: () {
-                          print('AddSightScreen/Category was tapped');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  SelectSightType(),
-                            ),
-                          );
-                        },
-                        icon: MyIcon(
-                          asset: AssetsStr.icon_view,
-                          color: Theme.of(context).primaryIconTheme.color,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                const _CategoryChoice(),
                 Container(
                   decoration: BoxDecoration(
                     border: Border(
@@ -222,97 +190,176 @@ class _NewSightBody extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
-            child: _InputBox(
-              title: 'НАЗВАНИЕ',
-              focusNode: _focusNodeName,
-              focusNodeNext: _focusNodeLat,
-            ),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
-                child: SizedBox(
-                  width: 172,
-                  child: _InputBox(
-                    title: 'ШИРОТА',
-                    focusNode: _focusNodeLat,
-                    focusNodeNext: _focusNodeLon,
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24, right: 16),
-                child: SizedBox(
-                  width: 172,
-                  child: _InputBox(
-                    title: 'ДОЛГОТА',
-                    focusNode: _focusNodeLon,
-                    focusNodeNext: _focusNodeDesc,
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 16),
-            alignment: Alignment.centerLeft,
-            height: 48,
-            child: TextButton(
-              child: Text('Указать на карте'),
-              style: ElevatedButton.styleFrom(
-                  onPrimary: Theme.of(context).buttonColor),
-              onPressed: () {
-                print('AddSightScreen\Location button was tapped');
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
-            child: _InputBox(
-              title: 'ОПИСАНИЕ',
-              focusNode: _focusNodeDesc,
-              focusNodeNext: _focusNodeSave,
-              maxLines: 4,
-              action: TextInputAction.done,
-            ),
-          ),
-          SizedBox(
+          _InputBoxes(),
+          const SizedBox(
             height: 116,
           ),
-          Align(
+          const Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              width: double.infinity,
-              height: 64,
-              padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-              child: ElevatedButton(
-                child: Text('Создать'),
-                onPressed: () {
-                  print('AddSightScreen\Create button was tapped');
-                  checkSight()
-                      ? mocks.add(
-                          Sight(
-                              name: _name,
-                              lat: _lat,
-                              lon: _long,
-                              url: _url,
-                              images: [],
-                              details: _desc,
-                              type: _selectedType),
-                        )
-                      : null;
-                },
-              ),
-            ),
+            child: _CreateButton(),
           ),
         ],
       ),
     );
+  }
+}
+
+//Выбор категории на экране добавления нового места
+class _CategoryChoice extends StatelessWidget {
+  const _CategoryChoice({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          'Не выбрано',
+          style: Theme.of(context).primaryTextTheme.bodyText2,
+        ),
+        Expanded(child: Container()),
+        Align(
+          alignment: Alignment.centerRight,
+          child: IconButton(
+            onPressed: () {
+              print('AddSightScreen/Category was tapped');
+              Navigator.push<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SelectSightType(),
+                ),
+              );
+            },
+            icon: MyIcon(
+              asset: AssetsStr.iconView,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// Группа полей ввода экрана добавления нового места
+class _InputBoxes extends StatelessWidget {
+  _InputBoxes({Key? key}) : super(key: key);
+
+  final FocusNode _focusNodeName = FocusNode();
+  final FocusNode _focusNodeLat = FocusNode();
+  final FocusNode _focusNodeLon = FocusNode();
+  final FocusNode _focusNodeDesc = FocusNode();
+  final FocusNode _focusNodeSave = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
+          child: _InputBox(
+            title: 'НАЗВАНИЕ',
+            focusNode: _focusNodeName,
+            focusNodeNext: _focusNodeLat,
+          ),
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
+              child: SizedBox(
+                width: 172,
+                child: _InputBox(
+                  title: 'ШИРОТА',
+                  focusNode: _focusNodeLat,
+                  focusNodeNext: _focusNodeLon,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 24, right: 16),
+              child: SizedBox(
+                width: 172,
+                child: _InputBox(
+                  title: 'ДОЛГОТА',
+                  focusNode: _focusNodeLon,
+                  focusNodeNext: _focusNodeDesc,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const _LocationButton(),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
+          child: _InputBox(
+            title: 'ОПИСАНИЕ',
+            focusNode: _focusNodeDesc,
+            focusNodeNext: _focusNodeSave,
+            maxLines: 4,
+            action: TextInputAction.done,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LocationButton extends StatelessWidget {
+  const _LocationButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 16),
+      alignment: Alignment.centerLeft,
+      height: 48,
+      child: TextButton(
+        style: ElevatedButton.styleFrom(
+          onPrimary: Theme.of(context).buttonColor,
+        ),
+        onPressed: () {
+          print('AddSightScreen/Location button was tapped');
+        },
+        child: const Text('Указать на карте'),
+      ),
+    );
+  }
+}
+
+class _CreateButton extends StatelessWidget {
+  const _CreateButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 64,
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: ElevatedButton(
+        onPressed: () => _onPressed(context),
+        child: const Text('Создать'),
+      ),
+    );
+  }
+
+  void _onPressed(BuildContext context) {
+    print('AddSightScreen/Create button was tapped');
+    if (checkSight()) {
+      mocks.add(
+        Sight(
+          name: _name,
+          lat: _lat,
+          lon: _long,
+          url: _url,
+          images: [],
+          details: _desc,
+          type: _selectedType,
+        ),
+      );
+    }
+    Navigator.of(context).pop();
   }
 }
 
@@ -325,9 +372,10 @@ class _InputBox extends StatefulWidget {
   final int maxLines;
   final TextInputAction action;
   final TextInputType keyboardType;
-  var value;
 
-  _InputBox({
+  // var value;
+
+  const _InputBox({
     required this.title,
     required this.focusNode,
     required this.focusNodeNext,
@@ -337,93 +385,85 @@ class _InputBox extends StatefulWidget {
   });
 
   @override
-  __InputBoxState createState() =>
-      __InputBoxState(this.focusNode, this.focusNodeNext);
+  __InputBoxState createState() => __InputBoxState();
 }
 
 class __InputBoxState extends State<_InputBox> {
-  final TextEditingController _controller = new TextEditingController();
-  final FocusNode focusNode;
-  final FocusNode focusNodeNext;
-
-  __InputBoxState(this.focusNode, this.focusNodeNext);
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    //var _focusNode = widget.focusNode;
-    focusNode.addListener(() {
+    widget.focusNode.addListener(() {
       setState(() {});
     });
   }
 
   @override
   void dispose() {
-    focusNode.dispose();
+    widget.focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(
-              bottom: 12,
-            ),
-            child: Text(
-              widget.title,
-              style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                    fontSize: 12,
-                  ),
-            ),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.only(
+            bottom: 12,
           ),
-          TextFormField(
-            controller: _controller,
-            focusNode: focusNode,
-            maxLines: widget.maxLines,
-            textInputAction: widget.action,
-            keyboardType: widget.keyboardType,
-            autofocus: true,
-            cursorHeight: 24,
-            cursorWidth: 1,
-            cursorColor: Theme.of(context).textTheme.bodyText1!.color,
-            onChanged: (newValue) {
-              setState(() {});
-            },
-            onFieldSubmitted: (v) {
-              FocusScope.of(context).requestFocus(focusNodeNext);
-            },
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 16,
-              ),
-              suffixIcon: focusNode.hasFocus && _controller.text.isNotEmpty
-                  ? IconButton(
-                      icon: MyIcon(
-                        asset: AssetsStr.icon_clear,
-                        color: Theme.of(context).textTheme.bodyText1!.color,
-                      ),
-                      onPressed: () {
-                        _controller.clear();
-                        setState(() {});
-                      },
-                    )
-                  : null,
-            ),
+          child: Text(
+            widget.title,
+            style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+                  fontSize: 12,
+                ),
           ),
-        ],
-      ),
+        ),
+        TextFormField(
+          controller: _controller,
+          focusNode: widget.focusNode,
+          maxLines: widget.maxLines,
+          textInputAction: widget.action,
+          keyboardType: widget.keyboardType,
+          autofocus: true,
+          cursorHeight: 24,
+          cursorWidth: 1,
+          cursorColor: Theme.of(context).textTheme.bodyText1!.color,
+          onChanged: (newValue) {
+            setState(() {});
+          },
+          onFieldSubmitted: (v) {
+            FocusScope.of(context).requestFocus(widget.focusNodeNext);
+          },
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 16,
+            ),
+            suffixIcon: widget.focusNode.hasFocus && _controller.text.isNotEmpty
+                ? IconButton(
+                    icon: MyIcon(
+                      asset: AssetsStr.iconClear,
+                      color: Theme.of(context).textTheme.bodyText1!.color,
+                    ),
+                    onPressed: () {
+                      _controller.clear();
+                      setState(() {});
+                    },
+                  )
+                : null,
+          ),
+        ),
+      ],
     );
   }
 }
 
 //Экран выбора типа места
 class SelectSightType extends StatefulWidget {
-  // const SelectSightType({ Key? key }) : super(key: key);
+  const SelectSightType({Key? key}) : super(key: key);
 
   @override
   _SelectSightTypeState createState() => _SelectSightTypeState();
@@ -433,14 +473,14 @@ class _SelectSightTypeState extends State<SelectSightType> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBarSightType(),
+      appBar: const _AppBarSightType(),
       body: ListView(
         children: [
           for (_SightType sight in _typesMap.keys)
             _TypeFilterBox(
               onTap: () {
                 setState(() {
-                  bool s = _typesMap[sight]!;
+                  final bool s = _typesMap[sight]!;
                   _typesMap.updateAll((key, value) => false);
                   _typesMap[sight] = !s;
                   print('AddSightScreen/SelectSightType/category was tapped');
@@ -450,19 +490,20 @@ class _SelectSightTypeState extends State<SelectSightType> {
             ),
         ],
       ),
-      bottomSheet: Container(
+      bottomSheet: SizedBox(
         height: 64,
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Container(
             width: double.infinity,
             height: 64,
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: ElevatedButton(
-              child: Text('Сохранить'),
               onPressed: () {
+                Navigator.of(context).pop();
                 print('AddSightScreen/SelectSightType/save button was tapped');
               },
+              child: const Text('Сохранить'),
             ),
           ),
         ),
@@ -473,9 +514,12 @@ class _SelectSightTypeState extends State<SelectSightType> {
 
 //AppBar экрана выбора типа нового места
 class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
-  // const _AppBar({Key? key}) : super(key: key);
   final double height;
-  _AppBarSightType({this.height = 56});
+
+  const _AppBarSightType({
+    this.height = 56,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -484,20 +528,21 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-          splashRadius: 28,
-          onPressed: () {
-            print('AddSightScreen/SelectSightType/back was tapped');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => AddSightScreen(),
-              ),
-            );
-          },
-          icon: MyIcon(asset: AssetsStr.icon_arrow)),
+        splashRadius: 28,
+        onPressed: () {
+          print('AddSightScreen/SelectSightType/back was tapped');
+          Navigator.push<void>(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const AddSightScreen(),
+            ),
+          );
+        },
+        icon: const MyIcon(asset: AssetsStr.iconArrow),
+      ),
       title: Row(
         children: [
-          SizedBox(
+          const SizedBox(
             width: 88,
           ),
           Container(
@@ -523,9 +568,10 @@ class _TypeFilterBox extends StatelessWidget {
   // final SightTypeIcon sightTypeIcon;
   final void Function() onTap;
   final _SightType sightType;
+
   // bool isSelected = false;
 
-  _TypeFilterBox({
+  const _TypeFilterBox({
     // required this.sightTypeIcon,
     required this.onTap,
     required this.sightType,
@@ -540,7 +586,7 @@ class _TypeFilterBox extends StatelessWidget {
             onTap: onTap,
             child: Ink(
               child: Container(
-                padding: EdgeInsets.only(left: 16),
+                padding: const EdgeInsets.only(left: 16),
                 alignment: Alignment.centerLeft,
                 height: 48,
                 width: double.infinity,
@@ -558,7 +604,7 @@ class _TypeFilterBox extends StatelessWidget {
             right: 20,
             bottom: 12,
             child: MyIcon(
-              asset: AssetsStr.icon_tick,
+              asset: AssetsStr.iconTick,
               color: Theme.of(context).accentIconTheme.color,
             ),
           ),
@@ -579,7 +625,7 @@ class __ImagesRowState extends State<_ImagesRow> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
+      child: SizedBox(
         height: 96,
         width: 360,
         child: ListView.builder(
@@ -598,7 +644,7 @@ class __ImagesRowState extends State<_ImagesRow> {
                       },
                       borderRadius: BorderRadius.circular(12),
                       child: MyIcon(
-                        asset: AssetsStr.button_white_plus,
+                        asset: AssetsStr.buttonWhitePlus,
                         color: Theme.of(context).buttonColor,
                         // height: 72,
                         // fit: BoxFit.fitHeight,
@@ -608,12 +654,13 @@ class __ImagesRowState extends State<_ImagesRow> {
                 : Padding(
                     padding: const EdgeInsets.only(left: 16.0, top: 24),
                     child: _ImageRowItem(
-                      // key: ValueKey(imageURL),
                       url: _imagesList[index - 1],
                       onRemove: () {
-                        setState(() {
-                          _imagesList.remove(_imagesList[index - 1]);
-                        });
+                        setState(
+                          () {
+                            _imagesList.remove(_imagesList[index - 1]);
+                          },
+                        );
                       },
                     ),
                   );
@@ -626,11 +673,12 @@ class __ImagesRowState extends State<_ImagesRow> {
 
 class _ImageRowItem extends StatelessWidget {
   final String url;
-  final Function onRemove;
+  final void Function() onRemove;
+
   const _ImageRowItem({
-    Key? key,
     required this.url,
     required this.onRemove,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -651,20 +699,7 @@ class _ImageRowItem extends StatelessWidget {
               // Dismissible(key: key, child: child);
               Image.network(
                 url,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                    ),
-                  );
-                },
+                loadingBuilder: loadingBuilder,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
@@ -676,20 +711,18 @@ class _ImageRowItem extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(10),
+                    onTap: onRemove,
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.transparent,
                       ),
-                      child: MyIcon(
-                        asset: AssetsStr.icon_clear,
+                      child: const MyIcon(
+                        asset: AssetsStr.iconClear,
                       ),
                       // width: 24,
                       // height: 24,
                     ),
-                    onTap: () {
-                      onRemove();
-                    },
                   ),
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:location/location.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/services/filters.dart';
@@ -31,27 +30,41 @@ class SightTypeIcon {
 
   @override
   String toString() {
-    return this.title;
+    return title;
   }
 }
 
 //типы мест для таблицы фильтров
 final sightTypeIconCafe = SightTypeIcon(
-    title: 'Кафе', type: SightType.cafe, icon: MyIcons.catalog_white_cafe);
+  title: 'Кафе',
+  type: SightType.cafe,
+  icon: MyIcons.catalogWhiteCafe,
+);
 final sightTypeIconHotel = SightTypeIcon(
-    title: 'Отель', type: SightType.hotel, icon: MyIcons.catalog_white_hotel);
+  title: 'Отель',
+  type: SightType.hotel,
+  icon: MyIcons.catalogWhiteHotel,
+);
 final sightTypeIconMuseum = SightTypeIcon(
-    title: 'Музей', type: SightType.museum, icon: MyIcons.catalog_white_museum);
+  title: 'Музей',
+  type: SightType.museum,
+  icon: MyIcons.catalogWhiteMuseum,
+);
 final sightTypeIconPark = SightTypeIcon(
-    title: 'Парк', type: SightType.park, icon: MyIcons.catalog_white_park);
+  title: 'Парк',
+  type: SightType.park,
+  icon: MyIcons.catalogWhitePark,
+);
 final sightTypeIconParticularPlace = SightTypeIcon(
-    title: 'Особое место',
-    type: SightType.particular_place,
-    icon: MyIcons.catalog_white_particular_place);
-final sightTypeIconRestourant = SightTypeIcon(
-    title: 'Ресторан',
-    type: SightType.restourant,
-    icon: MyIcons.catalog_white_restourant);
+  title: 'Особое место',
+  type: SightType.particularPlace,
+  icon: MyIcons.catalogWhiteParticularPlace,
+);
+final sightTypeIconRestaurant = SightTypeIcon(
+  title: 'Ресторан',
+  type: SightType.restaurant,
+  icon: MyIcons.catalogWhiteRestaurant,
+);
 
 //храним значение таблицы фильтров
 Map<SightTypeIcon, bool> filterMap = {
@@ -60,13 +73,13 @@ Map<SightTypeIcon, bool> filterMap = {
   sightTypeIconMuseum: false,
   sightTypeIconPark: false,
   sightTypeIconParticularPlace: false,
-  sightTypeIconRestourant: false,
+  sightTypeIconRestaurant: false,
 };
 List<String> filterList = [];
 
 //экран фильтров
 class FilterScreen extends StatefulWidget {
-// const FilterScreen({Key? key}) : super(key: key);
+  const FilterScreen({Key? key}) : super(key: key);
 
   @override
   _FilterScreenState createState() => _FilterScreenState();
@@ -87,14 +100,14 @@ class _FilterScreenState extends State<FilterScreen> {
               splashRadius: 16,
               onPressed: () {
                 print('filter_screen/back was tapped');
-                Navigator.push(
+                Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => SightListScreen(),
+                    builder: (_) => const SightListScreen(),
                   ),
                 );
               },
-              icon: MyIcons.icon_arrow,
+              icon: MyIcons.iconArrow,
             ),
           ),
         ),
@@ -122,7 +135,7 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
       body: Column(
         children: [
-          TypeFilter(onTap: (SightTypeIcon key) {
+          TypeFilter(onTap: (key) {
             setState(() {
               filterMap[key] = !filterMap[key]!;
               filterMap[key]!
@@ -130,8 +143,8 @@ class _FilterScreenState extends State<FilterScreen> {
                   : filterList.remove(key.type);
             });
           }),
-          DistanceFilter(),
-          ShowButton(),
+          const DistanceFilter(),
+          const ShowButton(),
         ],
       ),
     );
@@ -143,11 +156,13 @@ class TypeFilter extends StatelessWidget {
   // const TypeFilter({Key? key}) : super(key: key);
   final Function(SightTypeIcon) onTap;
 
-  TypeFilter({
+  const TypeFilter({
     required this.onTap,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
+  // ignore: long-method
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, top: 16, right: 24),
@@ -167,7 +182,7 @@ class TypeFilter extends StatelessWidget {
                         sightTypeIcon: sightTypeIconHotel,
                         onTap: () => onTap(sightTypeIconHotel),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -178,11 +193,11 @@ class TypeFilter extends StatelessWidget {
                             .copyWith(
                               fontSize: 12,
                             ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 ),
                 SizedBox(
@@ -191,25 +206,25 @@ class TypeFilter extends StatelessWidget {
                   child: Column(
                     children: [
                       TypeFilterBox(
-                        sightTypeIcon: sightTypeIconRestourant,
-                        onTap: () => onTap(sightTypeIconRestourant),
+                        sightTypeIcon: sightTypeIconRestaurant,
+                        onTap: () => onTap(sightTypeIconRestaurant),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
-                        sightTypeIconRestourant.title,
+                        sightTypeIconRestaurant.title,
                         style: Theme.of(context)
                             .accentTextTheme
                             .bodyText2!
                             .copyWith(
                               fontSize: 12,
                             ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 ),
                 SizedBox(
@@ -221,7 +236,7 @@ class TypeFilter extends StatelessWidget {
                         sightTypeIcon: sightTypeIconParticularPlace,
                         onTap: () => onTap(sightTypeIconParticularPlace),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -232,7 +247,7 @@ class TypeFilter extends StatelessWidget {
                             .copyWith(
                               fontSize: 12,
                             ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -253,7 +268,7 @@ class TypeFilter extends StatelessWidget {
                         sightTypeIcon: sightTypeIconPark,
                         onTap: () => onTap(sightTypeIconPark),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -264,11 +279,11 @@ class TypeFilter extends StatelessWidget {
                             .copyWith(
                               fontSize: 12,
                             ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 ),
                 SizedBox(
@@ -280,7 +295,7 @@ class TypeFilter extends StatelessWidget {
                         sightTypeIcon: sightTypeIconMuseum,
                         onTap: () => onTap(sightTypeIconMuseum),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -291,11 +306,11 @@ class TypeFilter extends StatelessWidget {
                             .copyWith(
                               fontSize: 12,
                             ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 ),
                 SizedBox(
@@ -307,7 +322,7 @@ class TypeFilter extends StatelessWidget {
                         sightTypeIcon: sightTypeIconCafe,
                         onTap: () => onTap(sightTypeIconCafe),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -318,7 +333,7 @@ class TypeFilter extends StatelessWidget {
                             .copyWith(
                               fontSize: 12,
                             ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -338,14 +353,15 @@ class TypeFilterBox extends StatelessWidget {
   final SightTypeIcon sightTypeIcon;
   final void Function() onTap;
 
-  TypeFilterBox({
+  const TypeFilterBox({
     required this.sightTypeIcon,
     required this.onTap,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 64,
       height: 64,
       child: Stack(
@@ -360,7 +376,7 @@ class TypeFilterBox extends StatelessWidget {
             Positioned(
               right: -4,
               bottom: -4,
-              child: MyIcons.icon_tick_choice,
+              child: MyIcons.iconTickChoice,
             ),
         ],
       ),
@@ -370,7 +386,7 @@ class TypeFilterBox extends StatelessWidget {
 
 //Фильтр по расстоянию
 class DistanceFilter extends StatefulWidget {
-  // const DistanceFilter({Key? key}) : super(key: key);
+  const DistanceFilter({Key? key}) : super(key: key);
 
   @override
   DistanceFilterState createState() => DistanceFilterState();
@@ -388,7 +404,7 @@ class DistanceFilterState extends State<DistanceFilter> {
         ' от ${_currentRangeValues.start / 1000} до ${_currentRangeValues.end / 1000} км';
   }
 
-  void renewTextRangeSlider(newRangeValues) {
+  void renewTextRangeSlider(RangeValues newRangeValues) {
     _currentRangeValues = newRangeValues;
     _textRangeValues =
         ' от ${(_currentRangeValues.start / 1000).toStringAsFixed(1)} до ${(_currentRangeValues.end / 1000).toStringAsFixed(1)} км';
@@ -401,18 +417,19 @@ class DistanceFilterState extends State<DistanceFilter> {
         children: [
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(top: 4, bottom: 16),
+            padding: const EdgeInsets.only(top: 4, bottom: 16),
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 24),
                   child: Row(
                     children: [
                       Text(
                         'Расстояние',
                         style: Theme.of(context).accentTextTheme.bodyText1,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 132,
                       ),
                       Align(
@@ -447,7 +464,7 @@ class DistanceFilterState extends State<DistanceFilter> {
 }
 
 class ShowButton extends StatefulWidget {
-  // const ShowButton({Key? key}) : super(key: key);
+  const ShowButton({Key? key}) : super(key: key);
 
   @override
   _ShowButtonState createState() => _ShowButtonState();
@@ -457,65 +474,38 @@ class _ShowButtonState extends State<ShowButton> {
   late String _textElevatedButton;
 
   void renewTextElevatedButton() {
-    _textElevatedButton = 'ПОКАЗАТЬ (${_amountFilteredPlaces})';
+    _textElevatedButton = 'ПОКАЗАТЬ ($_amountFilteredPlaces)';
   }
 
   @override
   void initState() {
     super.initState();
     getSights();
-    _textElevatedButton = 'ПОКАЗАТЬ (${_amountFilteredPlaces})';
+    _textElevatedButton = 'ПОКАЗАТЬ ($_amountFilteredPlaces)';
   }
 
-  getSights() async {
-    List<Sight> sights = [];
+  void getSights() async {
+    final List<Sight> sights = [];
+    bool isSuitable;
 
-    Location location = new Location();
 
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _currentPosition;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
+    setState(() async {
+      for (final Sight sight in mocks) {
+        isSuitable = await checkSight(
+          sight.lat,
+          sight.lon,
+          _searchMinDistance / 1000,
+          _searchMaxDistance / 1000,
+        );
+        if (filterList.isNotEmpty) {
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _currentPosition = await location.getLocation();
-
-    print(_currentPosition);
-    setState(() {
-      for (var sight in mocks) {
-        if (filterList.length > 0) {
-          if ((checkSight(
-                  sight.lat,
-                  sight.lon,
-                  _currentPosition.latitude!,
-                  _currentPosition.longitude!,
-                  _searchMinDistance / 1000,
-                  _searchMaxDistance / 1000)) &&
+          if (isSuitable &&
               (filterList.contains(sight.type))) {
             sights.add(sight);
           }
         } else {
-          if (checkSight(
-              sight.lat,
-              sight.lon,
-              _currentPosition.latitude!,
-              _currentPosition.longitude!,
-              _searchMinDistance / 1000,
-              _searchMaxDistance / 1000)) {
+          if (isSuitable) {
             sights.add(sight);
           }
         }
@@ -533,14 +523,14 @@ class _ShowButtonState extends State<ShowButton> {
         child: Container(
           width: double.infinity,
           height: 64,
-          padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
           child: ElevatedButton(
-            child: Text(_textElevatedButton),
             onPressed: () {
               getSights();
               print('show button was tapped');
               print(filterList);
             },
+            child: Text(_textElevatedButton),
           ),
         ),
       ),

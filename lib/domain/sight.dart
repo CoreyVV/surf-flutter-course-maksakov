@@ -1,13 +1,16 @@
+import 'package:places/mocks.dart';
+
 class SightType {
-  static final String cafe = 'cafe';
-  static final String hotel = 'hotel';
-  static final String museum = 'museum';
-  static final String park = 'park';
-  static final String particular_place = 'particular_place';
-  static final String restourant = 'restourant';
+  static const String cafe = 'cafe';
+  static const String hotel = 'hotel';
+  static const String museum = 'museum';
+  static const String park = 'park';
+  static const String particularPlace = 'particular_place';
+  static const String restaurant = 'restaurant';
 }
 
 class Sight {
+  final String id;
   final String name;
   final double lat;
   final double lon;
@@ -15,6 +18,8 @@ class Sight {
   final String details;
   final List<String> images;
   final String type;
+  final bool isVisited;
+  final bool isPlanned;
 
   Sight({
     required this.name,
@@ -24,5 +29,12 @@ class Sight {
     required this.images,
     required this.details,
     required this.type,
+    this.isVisited = false,
+    this.isPlanned = false,
+    this.id = '0005',
   });
+
+  static Sight? getSight(String id) {
+    return mocks.where((sight) => sight.id == id).first;
+  }
 }

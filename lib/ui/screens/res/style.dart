@@ -55,15 +55,17 @@ const TextStyle text2 = TextStyle(
 );
 
 const TextStyle text3 = TextStyle(
-    color: Colors.black,
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    fontStyle: FontStyle.normal,
-    fontFamily: 'Roboto');
+  color: Colors.black,
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+  fontStyle: FontStyle.normal,
+  fontFamily: 'Roboto',
+);
 
 const TextStyle text4 = TextStyle(
-    color: Colors.grey,
-    fontSize: 14,
-    fontWeight: FontWeight.w400,
-    fontStyle: FontStyle.normal,
-    fontFamily: 'Roboto');
+  color: Colors.grey,
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+  fontStyle: FontStyle.normal,
+  fontFamily: 'Roboto',
+);

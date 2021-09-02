@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screens/OnboardingScreen.dart';
+import 'package:places/ui/screens/onboarding_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     _isInitialized = Future<bool>.delayed(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       () => true,
     );
 
@@ -26,32 +26,28 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _navigateToNext() async {
-    try {
-      await Future.wait(
-        [
-          _isInitialized,
-          Future.delayed(
-            Duration(seconds: 2),
-          ),
-        ],
-        eagerError: true,
-      );
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) => OnboardingScreen(),
+    await Future.wait(
+      [
+        _isInitialized,
+        Future<bool>.delayed(
+          const Duration(seconds: 2),
+          () => true,
         ),
-      );
-    } catch (error) {
-      print('Error $error');
-    }
+      ],
+      eagerError: true,
+    );
+
+    await Navigator.of(context).pushReplacement<void, void>(
+      MaterialPageRoute(
+        builder: (_) => const OnboardingScreen(),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerRight,
           end: Alignment.centerLeft,
@@ -61,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
       ),
-      child: Center(
+      child: const Center(
         child: MyIcon(
           asset: AssetsStr.subtract,
         ),
