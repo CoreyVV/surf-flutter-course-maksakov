@@ -99,6 +99,7 @@ class AssetsStr {
   static const String iconListFull = 'res/icons/Icon-List Full.svg';
   static const String iconMapFull = 'res/icons/Icon-Map Full.svg';
   static const String iconSettingsFull = 'res/icons/Icon-Settings-fill.svg';
-
-
+  static const String iconPhoto = 'res/icons/Icon-Photo.svg';
+  static const String iconFail = 'res/icons/Icon-Fail.svg';
+  static const String iconCamera = 'res/icons/Icon-Camera.svg';
 }
