@@ -44,6 +44,10 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
+  bottomSheetTheme: const BottomSheetThemeData(
+    modalBackgroundColor: transparent,
+    backgroundColor: transparent,
+  ),
   brightness: Brightness.light,
   primaryColor: white,
   primaryColorDark: whiteDark,

@@ -15,64 +15,90 @@ class SightDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final Sight sight = Sight.getSight(id)!;
 
-    return Scaffold(
-      body: Material(
-        child: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-              delegate: _HeaderDelegate(
-                child: _SightsImages(
-                  sight: sight,
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+      child: Container(
+        color: Theme.of(context).primaryColor,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.9,
+          ),
+          child: CustomScrollView(
+            slivers: [
+              SliverPersistentHeader(
+                delegate: _HeaderDelegate(
+                  child: _SightsImages(
+                    sight: sight,
+                  ),
                 ),
               ),
+              _SightDetails(
+                sight: sight,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SightDetails extends StatelessWidget {
+  final Sight sight;
+
+  const _SightDetails({
+    required this.sight,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
+        child: Column(
+          children: [
+            _SightsTexts(sight: sight),
+            const Padding(
+              padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: 24,
+              ),
+              child: _ButtonGoTo(),
             ),
-            SliverFillRemaining(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
+            Container(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    width: 0.8,
+                    color: Theme.of(context).unselectedWidgetColor,
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    _SightsTexts(sight: sight),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        bottom: 24,
-                      ),
-                      child: _ButtonGoTo(),
+              ),
+              padding: const EdgeInsets.only(
+                left: 17,
+              ),
+              child: Container(
+                padding: const EdgeInsets.only(
+                  top: 19,
+                ),
+                child: Row(
+                  children: const [
+                    _Button(
+                      title: 'Запланировать',
+                      asset: AssetsStr.iconCalendar,
                     ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(
-                            width: 0.8,
-                            color: Theme.of(context).unselectedWidgetColor,
-                          ),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(
-                        left: 17,
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                          top: 19,
-                        ),
-                        child: Row(
-                          children: const [
-                            _Button(
-                              title: 'Запланировать',
-                              asset: AssetsStr.iconCalendar,
-                            ),
-                            SizedBox(width: 40),
-                            _Button(
-                              title: 'В избранное',
-                              asset: AssetsStr.iconHeart,
-                            ),
-                          ],
-                        ),
-                      ),
+                    SizedBox(width: 40),
+                    _Button(
+                      title: 'В избранное',
+                      asset: AssetsStr.iconHeart,
                     ),
                   ],
                 ),
@@ -122,22 +148,24 @@ class __SightsImagesState extends State<_SightsImages> {
             },
           ),
           Positioned(
-            top: 36,
-            left: 16,
+            top: 16,
+            right: 16,
             child: InkWell(
               onTap: () {
                 Navigator.of(context).pop();
               },
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                   color: Theme.of(context).primaryColor,
                 ),
-                width: 32,
-                height: 32,
+                width: 40,
+                height: 40,
                 child: MyIcon(
-                  asset: AssetsStr.headerIconArrow,
+                  asset: AssetsStr.iconClose,
                   color: Theme.of(context).primaryIconTheme.color,
+                  height: 12,
+                  fit: BoxFit.scaleDown,
                 ),
               ),
             ),
@@ -346,5 +374,6 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 0.0;
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => true;
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
 }

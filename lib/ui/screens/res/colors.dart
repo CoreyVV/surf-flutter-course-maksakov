@@ -12,4 +12,5 @@ const Color blackMain = Color(0xFF21222C),
     whiteMain = Color(0xFF252849),
     secondaryWhite = Color(0xFF3B3E5B),
     yellow = Color(0xFFFCDD3D),
-    red = Color(0xFFEF4343);
+    red = Color(0xFFEF4343),
+    transparent = Colors.transparent;
