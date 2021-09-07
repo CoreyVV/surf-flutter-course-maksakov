@@ -35,13 +35,14 @@ class SightCard extends StatelessWidget {
                   highlightColor: greenWhite.withOpacity(0.24),
                   splashColor: greenWhite.withOpacity(0.12),
                   onTap: () {
-                    Navigator.push<void>(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SightDetails(
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (_) {
+                        return SightDetails(
                           id: sight.id,
-                        ),
-                      ),
+                        );
+                      },
+                      isScrollControlled: true,
                     );
                   },
                 ),
@@ -69,7 +70,7 @@ class SightCard extends StatelessWidget {
                   highlightColor: greenWhite.withOpacity(0.24),
                   splashColor: greenWhite.withOpacity(0.12),
                   onTap: () {
-                   print('SightCard/iconHeart was tapped');
+                    print('SightCard/iconHeart was tapped');
                   },
                   child: Ink(
                     child: const MyIcon(

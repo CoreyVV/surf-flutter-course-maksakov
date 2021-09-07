@@ -640,7 +640,12 @@ class __ImagesRowState extends State<_ImagesRow> {
                     // padding: EdgeInsets.only(right: 16),
                     child: InkWell(
                       onTap: () {
-                        print('AddSightScreen/Plus was tapped');
+                        showDialog<void>(
+                          context: context,
+                          builder: (_) {
+                            return const _PhotoSelectDialog();
+                          },
+                        );
                       },
                       borderRadius: BorderRadius.circular(12),
                       child: MyIcon(
@@ -727,6 +732,199 @@ class _ImageRowItem extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PhotoSelectDialog extends StatelessWidget {
+  const _PhotoSelectDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                height: 152,
+                color: Theme.of(context).primaryColor,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const _DialogCameraButton(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14.57),
+                      child: Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .unselectedWidgetColor
+                            .withOpacity(0.56),
+                        thickness: 0.56,
+                      ),
+                    ),
+                    const _DialogPhotoButton(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14.57),
+                      child: Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .unselectedWidgetColor
+                            .withOpacity(0.56),
+                        thickness: 0.56,
+                      ),
+                    ),
+                    const _DialogFileButton(),
+                  ],
+                ),
+              ),
+            ),
+            const _DialogCancelButton(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DialogCameraButton extends StatelessWidget {
+  const _DialogCameraButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: InkWell(
+        onTap: () {
+          print('DialogCameraButton was tapped');
+        },
+        child: SizedBox(
+          height: 48,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 17, right: 13),
+                child: MyIcon(
+                  asset: AssetsStr.iconCamera,
+                  color: Theme.of(context).unselectedWidgetColor,
+                ),
+              ),
+              Text(
+                'Камера',
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subtitle1!
+                    .copyWith(fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DialogPhotoButton extends StatelessWidget {
+  const _DialogPhotoButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: InkWell(
+        onTap: () {
+          print('DialogPhotoButton was tapped');
+        },
+        child: SizedBox(
+          height: 48,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 17, right: 13),
+                child: MyIcon(
+                  asset: AssetsStr.iconPhoto,
+                  color: Theme.of(context).unselectedWidgetColor,
+                ),
+              ),
+              Text(
+                'Фотография',
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subtitle1!
+                    .copyWith(fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DialogFileButton extends StatelessWidget {
+  const _DialogFileButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: InkWell(
+        onTap: () {
+          print('DialogFileButton was tapped');
+        },
+        child: SizedBox(
+          height: 48,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 17, right: 13),
+                child: MyIcon(
+                  asset: AssetsStr.iconFail,
+                  color: Theme.of(context).unselectedWidgetColor,
+                ),
+              ),
+              Text(
+                'Файл',
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .subtitle1!
+                    .copyWith(fontWeight: FontWeight.w400),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DialogCancelButton extends StatelessWidget {
+  const _DialogCancelButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          height: 48,
+          width: 360,
+          color: Theme.of(context).primaryColor,
+          child: TextButton(
+            style: ElevatedButton.styleFrom(
+              onPrimary: Theme.of(context).buttonColor,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('ОТМЕНА'),
           ),
         ),
       ),

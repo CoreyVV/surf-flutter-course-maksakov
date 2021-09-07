@@ -21,13 +21,14 @@ class SightCardFavorite extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: () {
-          Navigator.push<void>(
-            context,
-            MaterialPageRoute(
-              builder: (_) => SightDetails(
+          showModalBottomSheet<void>(
+            context: context,
+            builder: (_) {
+              return SightDetails(
                 id: sight.id,
-              ),
-            ),
+              );
+            },
+            isScrollControlled: true,
           );
         },
         child: ClipRRect(
@@ -177,11 +178,9 @@ class _ImagePart extends StatelessWidget {
   final Sight sight;
   final VoidCallback onRemove;
 
-
   const _ImagePart({
     required this.sight,
     required this.onRemove,
-
     Key? key,
   }) : super(key: key);
 
