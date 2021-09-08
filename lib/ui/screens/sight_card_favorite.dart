@@ -98,8 +98,8 @@ class _IconCalendar extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          print('sight_planned/calendar was tapped');
+        onTap: () async {
+          DateTime? res = await _onCalendarPressed(context);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -114,6 +114,20 @@ class _IconCalendar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<DateTime?> _onCalendarPressed(BuildContext context) async {
+    DateTime? _date;
+    _date = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2120),
+      fieldLabelText: 'Visiting date',
+      helpText: 'Select date of visit',
+    );
+
+    return _date;
   }
 }
 
