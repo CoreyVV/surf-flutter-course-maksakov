@@ -88,6 +88,9 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
+    final bool isSmallScreenResolution =
+        MediaQuery.of(context).size.height <= 800;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -135,17 +138,198 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
       body: Column(
         children: [
-          TypeFilter(onTap: (key) {
-            setState(() {
-              filterMap[key] = !filterMap[key]!;
-              filterMap[key]!
-                  ? filterList.add(key.type)
-                  : filterList.remove(key.type);
-            });
-          }),
+          if (isSmallScreenResolution)
+            TypeFilterSmall(onTap: (key) {
+              setState(() {
+                filterMap[key] = !filterMap[key]!;
+                filterMap[key]!
+                    ? filterList.add(key.type)
+                    : filterList.remove(key.type);
+              });
+            })
+          else
+            TypeFilter(onTap: (key) {
+              setState(() {
+                filterMap[key] = !filterMap[key]!;
+                filterMap[key]!
+                    ? filterList.add(key.type)
+                    : filterList.remove(key.type);
+              });
+            }),
           const DistanceFilter(),
           const ShowButton(),
         ],
+      ),
+    );
+  }
+}
+
+//фильтр с таблицей типов мест для низких разрешений
+class TypeFilterSmall extends StatelessWidget {
+  // const TypeFilter({Key? key}) : super(key: key);
+  final Function(SightTypeIcon) onTap;
+
+  const TypeFilterSmall({
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  // ignore: long-method
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.only(left: 16, top: 16, right: 24),
+        height: 120,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [
+            SizedBox(
+              width: 96,
+              height: 92,
+              child: Column(
+                children: [
+                  TypeFilterBox(
+                    sightTypeIcon: sightTypeIconHotel,
+                    onTap: () => onTap(sightTypeIconHotel),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    sightTypeIconHotel.title,
+                    style:
+                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            SizedBox(
+              width: 96,
+              height: 92,
+              child: Column(
+                children: [
+                  TypeFilterBox(
+                    sightTypeIcon: sightTypeIconRestaurant,
+                    onTap: () => onTap(sightTypeIconRestaurant),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    sightTypeIconRestaurant.title,
+                    style:
+                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            SizedBox(
+              width: 96,
+              height: 92,
+              child: Column(
+                children: [
+                  TypeFilterBox(
+                    sightTypeIcon: sightTypeIconParticularPlace,
+                    onTap: () => onTap(sightTypeIconParticularPlace),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    sightTypeIconParticularPlace.title,
+                    style:
+                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 96,
+              height: 92,
+              child: Column(
+                children: [
+                  TypeFilterBox(
+                    sightTypeIcon: sightTypeIconPark,
+                    onTap: () => onTap(sightTypeIconPark),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    sightTypeIconPark.title,
+                    style:
+                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            SizedBox(
+              width: 96,
+              height: 92,
+              child: Column(
+                children: [
+                  TypeFilterBox(
+                    sightTypeIcon: sightTypeIconMuseum,
+                    onTap: () => onTap(sightTypeIconMuseum),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    sightTypeIconMuseum.title,
+                    style:
+                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            SizedBox(
+              width: 96,
+              height: 92,
+              child: Column(
+                children: [
+                  TypeFilterBox(
+                    sightTypeIcon: sightTypeIconCafe,
+                    onTap: () => onTap(sightTypeIconCafe),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    sightTypeIconCafe.title,
+                    style:
+                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -404,12 +588,6 @@ class DistanceFilterState extends State<DistanceFilter> {
         ' от ${_currentRangeValues.start / 1000} до ${_currentRangeValues.end / 1000} км';
   }
 
-  void renewTextRangeSlider(RangeValues newRangeValues) {
-    _currentRangeValues = newRangeValues;
-    _textRangeValues =
-        ' от ${(_currentRangeValues.start / 1000).toStringAsFixed(1)} до ${(_currentRangeValues.end / 1000).toStringAsFixed(1)} км';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -461,6 +639,12 @@ class DistanceFilterState extends State<DistanceFilter> {
       ),
     );
   }
+
+  void renewTextRangeSlider(RangeValues newRangeValues) {
+    _currentRangeValues = newRangeValues;
+    _textRangeValues =
+        ' от ${(_currentRangeValues.start / 1000).toStringAsFixed(1)} до ${(_currentRangeValues.end / 1000).toStringAsFixed(1)} км';
+  }
 }
 
 class ShowButton extends StatefulWidget {
@@ -472,48 +656,6 @@ class ShowButton extends StatefulWidget {
 
 class _ShowButtonState extends State<ShowButton> {
   late String _textElevatedButton;
-
-  void renewTextElevatedButton() {
-    _textElevatedButton = 'ПОКАЗАТЬ ($_amountFilteredPlaces)';
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getSights();
-    _textElevatedButton = 'ПОКАЗАТЬ ($_amountFilteredPlaces)';
-  }
-
-  void getSights() async {
-    final List<Sight> sights = [];
-    bool isSuitable;
-
-
-
-    setState(() async {
-      for (final Sight sight in mocks) {
-        isSuitable = await checkSight(
-          sight.lat,
-          sight.lon,
-          _searchMinDistance / 1000,
-          _searchMaxDistance / 1000,
-        );
-        if (filterList.isNotEmpty) {
-
-          if (isSuitable &&
-              (filterList.contains(sight.type))) {
-            sights.add(sight);
-          }
-        } else {
-          if (isSuitable) {
-            sights.add(sight);
-          }
-        }
-      }
-      _amountFilteredPlaces = sights.length;
-      renewTextElevatedButton();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -535,5 +677,41 @@ class _ShowButtonState extends State<ShowButton> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSights();
+    _textElevatedButton = 'ПОКАЗАТЬ ($_amountFilteredPlaces)';
+  }
+
+  void renewTextElevatedButton() {
+    _textElevatedButton = 'ПОКАЗАТЬ ($_amountFilteredPlaces)';
+  }
+
+  void getSights() async {
+    final List<Sight> sights = [];
+    bool isSuitable;
+    for (final Sight sight in mocks) {
+      isSuitable = await checkSight(
+        sight.lat,
+        sight.lon,
+        _searchMinDistance / 1000,
+        _searchMaxDistance / 1000,
+      );
+      if (filterList.isNotEmpty) {
+        if (isSuitable && (filterList.contains(sight.type))) {
+          sights.add(sight);
+        }
+      } else {
+        if (isSuitable) {
+          sights.add(sight);
+        }
+      }
+    }
+    _amountFilteredPlaces = sights.length;
+    renewTextElevatedButton();
+    setState(() {});
   }
 }
