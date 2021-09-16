@@ -10,13 +10,13 @@ import 'package:places/ui/screens/widgets/search_bar.dart';
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+
   const SightAppBar({
     required this.height,
     Key? key,
   }) : super(key: key);
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
@@ -44,37 +44,93 @@ class _SightListScreenState extends State<SightListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: CustomScrollView(
+      body: const _SightListWidget(),
+      bottomNavigationBar: MyBottomNavigationBar(
+        pageIndex: 0,
+      ),
+      floatingActionButton:
+          MediaQuery.of(context).orientation == Orientation.portrait
+              ? const _NewSightButton()
+              : const SizedBox.shrink(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+class _SightListWidget extends StatelessWidget {
+  const _SightListWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MediaQuery.of(context).orientation == Orientation.portrait
+        ? const _SightListPortraitWidget()
+        : const _SightListLandscapeWidget();
+  }
+}
+
+class _SightListPortraitWidget extends StatelessWidget {
+  const _SightListPortraitWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: CustomScrollView(
         slivers: [
           SliverPersistentHeader(
-            delegate: _AppBarHeaderDelegate(),
+            delegate: _AppBarPortraitHeaderDelegate(),
             pinned: true,
           ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 for (int i = 0; i < mocks.length; i++)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        SightCard(sight: mocks[i]),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    ),
+                  Column(
+                    children: [
+                      SightCard(sight: mocks[i]),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
                   ),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: MyBottomNavigationBar(
-        pageIndex: 0,
+    );
+  }
+}
+
+class _SightListLandscapeWidget extends StatelessWidget {
+  const _SightListLandscapeWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+            delegate: _AppBarLandscapeHeaderDelegate(),
+            pinned: true,
+          ),
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 30.0,
+              crossAxisSpacing: 36.0,
+              childAspectRatio: 1.645,
+            ),
+            delegate: SliverChildListDelegate(
+              [
+                for (int i = 0; i < mocks.length; i++)
+                  SightCard(sight: mocks[i]),
+              ],
+            ),
+          ),
+        ],
       ),
-      floatingActionButton: const _NewSightButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
@@ -126,7 +182,7 @@ class _NewSightButton extends StatelessWidget {
   }
 }
 
-class _AppBarHeaderDelegate extends SliverPersistentHeaderDelegate {
+class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
     BuildContext context,
@@ -154,12 +210,9 @@ class _AppBarHeaderDelegate extends SliverPersistentHeaderDelegate {
                     ),
                     if (shrinkOffset < (maxExtent - minExtent) * 0.4)
                       Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Opacity(
-                            opacity: 1 - shrinkOffset / 100,
-                            child: SearchBar(),
-                          ),
+                        child: Opacity(
+                          opacity: 1 - shrinkOffset / 100,
+                          child: SearchBar(),
                         ),
                       ),
                     SizedBox(
@@ -187,6 +240,74 @@ class _AppBarHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get minExtent => 80;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+  }
+}
+
+class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  double get maxExtent => 142;
+
+  @override
+  double get minExtent => 56;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Column(
+      children: [
+        Expanded(
+          child: shrinkOffset < (maxExtent - minExtent) * 0.3
+              ? Column(
+                  children: [
+                    const SizedBox(
+                      height:  40,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Список интересных мест',
+                        style: Theme.of(context).accentTextTheme.headline6,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    SizedBox(
+                      height: (minExtent - shrinkOffset).clamp(10, 22),
+                    ),
+                    if (shrinkOffset < (maxExtent - minExtent) * 0.2)
+                      Flexible(
+                        child: Opacity(
+                          opacity: 1 - shrinkOffset / 100,
+                          child: SearchBar(),
+                        ),
+                      ),
+                    SizedBox(
+                      height: (minExtent - shrinkOffset).clamp(10, 14),
+                    ),
+                  ],
+                )
+              : Container(
+                  color: Theme.of(context).canvasColor,
+                  height: minExtent,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Список интересных мест',
+                      style: Theme.of(context).accentTextTheme.headline6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {

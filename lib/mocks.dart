@@ -40,7 +40,7 @@ final List<Sight> mocks = [
     lat: 21.166666,
     lon: 94.8833298,
     url:
-        'https://windows10spotlight.com/wp-content/uploads/2019/12/a2c93088f3755e1fdd94a974cc4a06a5-768x432.jpg',
+        'https://w-t.com.ua/sites/default/files/bagan-436773-0_0.jpg',
     images: [],
     details: 'An ancient city.',
     type: SightType.museum,
@@ -53,7 +53,7 @@ final List<Sight> mocks = [
     lat: 37.4515504,
     lon: -122.054032,
     url:
-        'https://windows10spotlight.com/wp-content/uploads/2019/12/a2c93088f3755e1fdd94a974cc4a06a5-768x432.jpg',
+        'https://w-t.com.ua/sites/default/files/bagan-436773-0_0.jpg',
     details: 'Test location.',
     images: [],
     type: SightType.park,
@@ -66,7 +66,7 @@ final List<Sight> mocks = [
     lat: 37.4515504,
     lon: -122.054032,
     url:
-    'https://windows10spotlight.com/wp-content/uploads/2019/12/a2c93088f3755e1fdd94a974cc4a06a5-768x432.jpg',
+    'https://w-t.com.ua/sites/default/files/bagan-436773-0_0.jpg',
     details: 'Test location.',
     images: [],
     type: SightType.park,

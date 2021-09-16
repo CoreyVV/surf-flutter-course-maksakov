@@ -44,6 +44,7 @@ final darkTheme = ThemeData(
 );
 
 final lightTheme = ThemeData(
+  // platform: TargetPlatform.iOS,
   bottomSheetTheme: const BottomSheetThemeData(
     modalBackgroundColor: transparent,
     backgroundColor: transparent,
