@@ -120,7 +120,7 @@ class _SightListLandscapeWidget extends StatelessWidget {
               crossAxisCount: 2,
               mainAxisSpacing: 30.0,
               crossAxisSpacing: 36.0,
-              childAspectRatio: 1.645,
+              childAspectRatio: 1.77,
             ),
             delegate: SliverChildListDelegate(
               [

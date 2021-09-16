@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/ui/screens/res/colors.dart';
@@ -118,14 +121,37 @@ class _IconCalendar extends StatelessWidget {
 
   Future<DateTime?> _onCalendarPressed(BuildContext context) async {
     DateTime? _date;
-    _date = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2120),
-      fieldLabelText: 'Visiting date',
-      helpText: 'Select date of visit',
-    );
+    if (Platform.isIOS) {
+      _date = await showDialog(
+        context: context,
+        builder: (context) => Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [Container(
+            height: 240,
+            color: Theme.of(context).primaryColor,
+            child: CupertinoDatePicker(
+              initialDateTime: DateTime.now(),
+              onDateTimeChanged: (datetime) {},
+              minimumDate: DateTime.now().subtract(
+                const Duration(
+                  days: 1,
+                ),
+              ),
+            ),
+          )],
+        ),
+      );
+    } else {
+      _date = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2120),
+        fieldLabelText: 'Visiting date',
+        helpText: 'Select date of visit',
+      );
+    }
 
     return _date;
   }
