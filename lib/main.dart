@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:places/services/http_client.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
 import 'package:places/ui/screens/splash_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/themes.dart';
 
-void main() {
-  runApp(const _MaterialAppWithTheme());
+void main() async{
+
+  final dynamic data = await HttpClient().getUsers();
+  print(data);
+
+  // runApp(const _MaterialAppWithTheme());
 }
 
 class _MaterialAppWithTheme extends StatefulWidget {
