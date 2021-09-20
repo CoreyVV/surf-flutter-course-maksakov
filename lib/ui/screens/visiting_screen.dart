@@ -262,7 +262,7 @@ class _DraggableListState extends State<_DraggableList> {
       child: ListView.builder(
         itemCount: widget.listSight.length,
         itemBuilder: (context, index) {
-          final Sight sight = widget.listSight[index];
+          final sight = widget.listSight[index];
 
           return Column(
             children: [

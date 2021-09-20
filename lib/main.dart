@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:places/ui/screens/sight_list_screen.dart';
 import 'package:places/ui/screens/splash_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/themes.dart';
@@ -27,7 +28,8 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
 
     return MaterialApp(
       theme: themeNotifier.getTheme(),
-      home: const SplashScreen(),
+      // home: const SplashScreen(),
+      home: SightListScreen(),
       title: 'places',
     );
   }
