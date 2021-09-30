@@ -8,13 +8,6 @@ import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/themes.dart';
 
 void main() {
-  
-  // PlaceRepository().getPlaces().then((_listPlaces) {
-  //   for (final place in _listPlaces) {
-  //     print(place.name);
-  //   }
-  // });
-
   runApp(const _MaterialAppWithTheme());
 }
 

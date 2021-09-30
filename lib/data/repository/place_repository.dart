@@ -14,4 +14,10 @@ class PlaceRepository {
     return List<Place>.from(
         result.map<dynamic>((place) => PlaceMapper.fromApi(place)));
   }
+
+  Future<Place> getPlace(String id) async {
+    final result = await _testBackEndFlutterService.getPlace(id);
+
+    return PlaceMapper.fromApi(result);
+  }
 }
