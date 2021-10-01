@@ -6,8 +6,8 @@ class PlaceMapper {
     return Place(
       id: place.id,
       name: place.name,
-      lat: place.lat as double,
-      lon: place.lon as double,
+      lat: place.lat,
+      lon: place.lng,
       urls: place.urls,
       description: place.description,
       placeType: place.placeType,

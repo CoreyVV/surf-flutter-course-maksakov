@@ -1,5 +1,5 @@
 class Place {
-  String id;
+  int id;
   double lat;
   double lon;
   String name;

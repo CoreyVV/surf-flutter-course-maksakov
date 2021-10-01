@@ -15,9 +15,44 @@ class PlaceRepository {
         result.map<dynamic>((place) => PlaceMapper.fromApi(place)));
   }
 
-  Future<Place> getPlace(String id) async {
+  Future<Place> getPlace(int id) async {
     final result = await _testBackEndFlutterService.getPlace(id);
 
     return PlaceMapper.fromApi(result);
   }
+
+  Future<Place> postPlace(Place place) async {
+    final result = await _testBackEndFlutterService.postPlace(
+      place.id,
+      place.lat,
+      place.lon,
+      place.name,
+      place.urls,
+      place.placeType,
+      place.description,
+    );
+
+    return PlaceMapper.fromApi(result);
+  }
+
+  Future<int?> deletePlace(Place place) async {
+    final result = await _testBackEndFlutterService.deletePlace(place.id);
+
+    return result;
+  }
+
+  Future<Place> putPlace(Place place) async {
+    final result = await _testBackEndFlutterService.putPlace(
+      place.id,
+      place.lat,
+      place.lon,
+      place.name,
+      place.urls,
+      place.placeType,
+      place.description,
+    );
+
+    return PlaceMapper.fromApi(result);
+  }
+
 }
