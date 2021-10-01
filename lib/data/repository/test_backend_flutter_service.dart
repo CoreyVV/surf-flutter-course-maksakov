@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:places/data/repository/api_place.dart';
 import 'package:places/data/repository/api_urls.dart';
 import 'package:places/data/repository/get_place_body.dart';
+import 'package:places/data/repository/api_place_dto.dart';
+import 'package:places/data/repository/get_places_dto_body.dart';
 
 class TestBackEndFlutterService {
   static const _baseUrl = 'https://test-backend-flutter.surfstudio.ru';
@@ -95,6 +97,34 @@ class TestBackEndFlutterService {
     return ApiPlace.fromApi(response.data);
   }
 
+  Future<List<ApiPlaceDto>> getPlaceDto(
+      final double lat,
+      final double lng,
+      final double radius,
+      final List<String> typeFilter,
+      final String nameFilter,
+      ) async {
+    final body = GetPlaceDtoBody(
+      lat: lat,
+      lng: lng,
+      radius: radius,
+      typeFilter: typeFilter,
+      nameFilter: nameFilter,
+    );
+
+    final response = await _getDio().post<dynamic>(
+      ApiUrls.filteredPlaces,
+      queryParameters: body.toApi(),
+    );
+
+    List<ApiPlaceDto> _listApiPlacesDto = List<ApiPlaceDto>.from(
+      response.data.map(
+            (placeDto) => ApiPlaceDto.fromApi(placeDto),
+      ),
+    );
+
+    return _listApiPlacesDto;
+  }
 
   Dio _getDio() {
     _dio.interceptors.add(

@@ -12,7 +12,7 @@ class PlaceRepository {
     final result = await _testBackEndFlutterService.getPlaces();
 
     return List<Place>.from(
-        result.map<dynamic>((place) => PlaceMapper.fromApi(place)));
+        result.map<dynamic>(PlaceMapper.fromApi),);
   }
 
   Future<Place> getPlace(int id) async {
