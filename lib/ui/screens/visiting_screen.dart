@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_card_favorite.dart';
 
-List<Sight> _listVisitedSights = mocks.where((sight) => sight.isVisited).toList();
-List<Sight> _listPlannedSights = mocks.where((sight) => sight.isPlanned).toList();
+// List<Place> listVisitedPlaces = placeInteractor.getVisitedPlaces();
+// List<Place> listPlannedPlaces = placeInteractor.getFavoritesPlaces();
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key? key}) : super(key: key);
@@ -15,7 +15,24 @@ class VisitingScreen extends StatefulWidget {
   _VisitingScreenState createState() => _VisitingScreenState();
 }
 
+
+
 class _VisitingScreenState extends State<VisitingScreen> {
+
+  // @override
+  // void initState() {
+  //   listVisitedPlaces = placeInteractor.getVisitedPlaces();
+  //   listPlannedPlaces = placeInteractor.getFavoritesPlaces();
+  //   super.initState();
+  // }
+
+  // @override
+  // void setState(VoidCallback fn) {
+  //   listVisitedPlaces = placeInteractor.getVisitedPlaces();
+  //   listPlannedPlaces = placeInteractor.getFavoritesPlaces();
+  //   super.setState(fn);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -34,13 +51,13 @@ class _VisitingScreenState extends State<VisitingScreen> {
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+
   const _AppBar({
     this.height = 108,
     Key? key,
   }) : super(key: key);
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
@@ -125,14 +142,14 @@ class _BodyState extends State<_Body> {
       children: [
         SafeArea(
           child: _TabList(
-            listSight: _listPlannedSights,
+            listPlace: placeInteractor.getFavoritesPlaces(),
             asset: AssetsStr.card,
             bodyText: 'Отмечайте понравившиеся\nместа и они появиятся здесь.',
           ),
         ),
         SafeArea(
           child: _TabList(
-            listSight: _listVisitedSights,
+            listPlace: placeInteractor.getVisitedPlaces(),
             asset: AssetsStr.go,
             bodyText: 'Завершите маршрут,\nчтобы место попало сюда.',
           ),
@@ -189,12 +206,12 @@ class _EmptyList extends StatelessWidget {
 
 //Виджет закладки запланированных мест
 class _TabList extends StatefulWidget {
-  final List<Sight> listSight;
+  final List<Place> listPlace;
   final String asset;
   final String bodyText;
 
   const _TabList({
-    required this.listSight,
+    required this.listPlace,
     required this.asset,
     required this.bodyText,
     Key? key,
@@ -211,9 +228,9 @@ class _TabListState extends State<_TabList> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          if (widget.listSight.isNotEmpty)
+          if (widget.listPlace.isNotEmpty)
             _DraggableList(
-              listSight: widget.listSight,
+              listPlace: widget.listPlace,
               onEmptyList: () => {setState(() {})},
             )
           else
@@ -228,11 +245,11 @@ class _TabListState extends State<_TabList> {
 }
 
 class _DraggableList extends StatefulWidget {
-  final List<Sight> listSight;
+  final List<Place> listPlace;
   final VoidCallback onEmptyList;
 
   const _DraggableList({
-    required this.listSight,
+    required this.listPlace,
     required this.onEmptyList,
     Key? key,
   }) : super(key: key);
@@ -248,10 +265,10 @@ class _DraggableListState extends State<_DraggableList> {
   @override
   void initState() {
     _mapIsDrag = {
-      for (var item in widget.listSight) item.name: false,
+      for (var item in widget.listPlace) item.name: false,
     };
     _mapIsMove = {
-      for (var item in widget.listSight) item.name: false,
+      for (var item in widget.listPlace) item.name: false,
     };
     super.initState();
   }
@@ -260,54 +277,54 @@ class _DraggableListState extends State<_DraggableList> {
   Widget build(BuildContext context) {
     return Flexible(
       child: ListView.builder(
-        itemCount: widget.listSight.length,
+        itemCount: widget.listPlace.length,
         itemBuilder: (context, index) {
-          final sight = widget.listSight[index];
+          final place = widget.listPlace[index];
 
           return Column(
             children: [
               DragTarget(
-                key: ValueKey('${sight.name}dt'),
+                key: ValueKey('${place.name}dt'),
                 builder: (context, candidateData, rejectedData) {
                   return Container(
-                    height: _mapIsMove[sight.name]! ? 218 : 16,
+                    height: _mapIsMove[place.name]! ? 218 : 16,
                     width: 338,
                     color: Colors.transparent,
                   );
                 },
                 onWillAccept: (data) {
-                  return widget.listSight.contains(data);
+                  return widget.listPlace.contains(data);
                 },
-                onAccept: (Sight? data) {
-                  final int index = widget.listSight.indexOf(sight);
-                  if (index < widget.listSight.indexOf(data!)) {
-                    widget.listSight
+                onAccept: (Place? data) {
+                  final index = widget.listPlace.indexOf(place);
+                  if (index < widget.listPlace.indexOf(data!)) {
+                    widget.listPlace
                       ..remove(data)
                       ..insert(index, data);
                   } else {
-                    widget.listSight
+                    widget.listPlace
                       ..remove(data)
                       ..insert(index - 1, data);
                   }
-                  _onMove(sight, false);
+                  _onMove(place, false);
                 },
-                onMove: (data) => _onMove(sight, true),
-                onLeave: (data) => _onMove(sight, false),
+                onMove: (data) => _onMove(place, true),
+                onLeave: (data) => _onMove(place, false),
               ),
-              Draggable<Sight>(
-                data: sight,
-                onDragStarted: () => _onDrag(sight, true),
-                onDragEnd: (details) => _onDrag(sight, false),
-                feedback: SightCardFavorite(
-                  key: ValueKey(sight),
-                  sight: sight,
-                  onRemove: () => {_onRemove(sight)},
+              Draggable<Place>(
+                data: place,
+                onDragStarted: () => _onDrag(place, true),
+                onDragEnd: (details) => _onDrag(place, false),
+                feedback: PlaceCardFavorite(
+                  key: ValueKey(place),
+                  place: place,
+                  onRemove: () => {_onRemove(place)},
                 ),
-                child: _mapIsDrag[sight.name]!
+                child: _mapIsDrag[place.name]!
                     ? const SizedBox.shrink()
                     : _DismissibleStack(
-                        sight: sight,
-                        onRemove: () => {_onRemove(sight)},
+                        place: place,
+                        onRemove: () => {_onRemove(place)},
                       ),
               ),
             ],
@@ -317,24 +334,24 @@ class _DraggableListState extends State<_DraggableList> {
     );
   }
 
-  void _onRemove(Sight sight) {
+  void _onRemove(Place place) {
     setState(() {
-      widget.listSight.remove(sight);
-      if (widget.listSight.isEmpty) {
+      widget.listPlace.remove(place);
+      if (widget.listPlace.isEmpty) {
         widget.onEmptyList();
       }
     });
   }
 
-  void _onDrag(Sight sight, bool isDrag) {
+  void _onDrag(Place place, bool isDrag) {
     setState(() {
-      _mapIsDrag[sight.name] = isDrag;
+      _mapIsDrag[place.name] = isDrag;
     });
   }
 
-  void _onMove(Sight sight, bool isMove) {
+  void _onMove(Place place, bool isMove) {
     setState(() {
-      _mapIsMove[sight.name] = isMove;
+      _mapIsMove[place.name] = isMove;
     });
   }
 }
@@ -366,11 +383,11 @@ class _Bucket extends StatelessWidget {
 }
 
 class _DismissibleStack extends StatefulWidget {
-  final Sight sight;
+  final Place place;
   final VoidCallback onRemove;
 
   const _DismissibleStack({
-    required this.sight,
+    required this.place,
     required this.onRemove,
     Key? key,
   }) : super(key: key);
@@ -399,7 +416,7 @@ class _DismissibleStackState extends State<_DismissibleStack> {
         ),
         Dismissible(
           key: ValueKey(
-            '${widget.sight.name}ds_vs',
+            '${widget.place.name}ds_vs',
           ),
           direction: DismissDirection.endToStart,
           dismissThresholds: const {
@@ -408,9 +425,9 @@ class _DismissibleStackState extends State<_DismissibleStack> {
           onDismissed: (direction) => widget.onRemove(),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: SightCardFavorite(
-              key: ValueKey(widget.sight),
-              sight: widget.sight,
+            child: PlaceCardFavorite(
+              key: ValueKey(widget.place),
+              place: widget.place,
               onRemove: widget.onRemove,
             ),
           ),

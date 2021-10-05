@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/add_sight_screen.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_card.dart';
-import 'package:places/mocks.dart';
+
+// import 'package:places/mocks.dart';
 import 'package:places/ui/screens/widgets/search_bar.dart';
 
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -75,28 +78,38 @@ class _SightListPortraitWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            delegate: _AppBarPortraitHeaderDelegate(),
-            pinned: true,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                for (int i = 0; i < mocks.length; i++)
-                  Column(
-                    children: [
-                      SightCard(sight: mocks[i]),
-                      const SizedBox(
-                        height: 16,
+      child: FutureBuilder<List<Place>>(
+        future: placeInteractor.getPlaces(1, '1'),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final _listPlaces = snapshot.data!;
+
+          return CustomScrollView(
+            slivers: [
+              SliverPersistentHeader(
+                delegate: _AppBarPortraitHeaderDelegate(),
+                pinned: true,
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    for (int i = 0; i < _listPlaces.length; i++)
+                      Column(
+                        children: [
+                          PlaceCard(place: _listPlaces[i]),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-              ],
-            ),
-          ),
-        ],
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -109,27 +122,37 @@ class _SightListLandscapeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            delegate: _AppBarLandscapeHeaderDelegate(),
-            pinned: true,
-          ),
-          SliverGrid(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 30.0,
-              crossAxisSpacing: 36.0,
-              childAspectRatio: 1.77,
-            ),
-            delegate: SliverChildListDelegate(
-              [
-                for (int i = 0; i < mocks.length; i++)
-                  SightCard(sight: mocks[i]),
-              ],
-            ),
-          ),
-        ],
+      child: FutureBuilder<List<Place>>(
+        future: placeInteractor.getPlaces(1, '1'),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final _listPlaces = snapshot.data!;
+
+          return CustomScrollView(
+            slivers: [
+              SliverPersistentHeader(
+                delegate: _AppBarLandscapeHeaderDelegate(),
+                pinned: true,
+              ),
+              SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 30.0,
+                  crossAxisSpacing: 36.0,
+                  childAspectRatio: 1.77,
+                ),
+                delegate: SliverChildListDelegate(
+                  [
+                    for (int i = 0; i < _listPlaces.length; i++)
+                      PlaceCard(place: _listPlaces[i]),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -183,6 +206,13 @@ class _NewSightButton extends StatelessWidget {
 }
 
 class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
+
+  @override
+  double get maxExtent => 240;
+
+  @override
+  double get minExtent => 80;
+
   @override
   Widget build(
     BuildContext context,
@@ -235,11 +265,7 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
     );
   }
 
-  @override
-  double get maxExtent => 240;
 
-  @override
-  double get minExtent => 80;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
@@ -267,7 +293,7 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
               ? Column(
                   children: [
                     const SizedBox(
-                      height:  40,
+                      height: 40,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,

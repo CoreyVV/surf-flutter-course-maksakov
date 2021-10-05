@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
-import 'package:places/mocks.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
@@ -24,7 +23,7 @@ class SightSearchScreen extends StatefulWidget {
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _focusNode = FocusNode();
-  List<Sight> _foundSight = [];
+  final _foundSight = <Place>[];
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -89,7 +88,9 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: MyBottomNavigationBar(pageIndex: 0,),
+      bottomNavigationBar: MyBottomNavigationBar(
+        pageIndex: 0,
+      ),
     );
   }
 
@@ -104,13 +105,13 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
 
   void _getSight() {
     if (_controller.text != '') {
-      _foundSight = mocks
-          .where(
-            (element) => element.name.toLowerCase().contains(
-                  _controller.text.trim(),
-                ),
-          )
-          .toList();
+      // _foundSight = mocks
+      //     .where(
+      //       (element) => element.name.toLowerCase().contains(
+      //             _controller.text.trim(),
+      //           ),
+      //     )
+      //     .toList();
     } else {
       _foundSight.clear();
     }
@@ -233,11 +234,12 @@ class _History extends StatelessWidget {
                 const SizedBox(
                   height: 13,
                 ),
-                (i != (_historyQueries.length - 1))
-                    ? const Divider(
-                        height: 1,
-                      )
-                    : Container(),
+                if (i != (_historyQueries.length - 1))
+                  const Divider(
+                    height: 1,
+                  )
+                else
+                  Container(),
               ],
             ),
           ),
@@ -295,7 +297,7 @@ class _NothingFound extends StatelessWidget {
 //Виджет отображения списка найденных мест
 class _FoundSights extends StatelessWidget {
   // const _ShowFound({ Key? key }) : super(key: key);
-  final List<Sight> listFound;
+  final List<Place> listFound;
 
   const _FoundSights({
     required this.listFound,
@@ -311,11 +313,12 @@ class _FoundSights extends StatelessWidget {
         for (var i = 0; i < listFound.length; i++)
           Column(children: [
             _Item(sight: listFound[i]),
-            (i != (listFound.length - 1))
-                ? const Divider(
-                    height: 1,
-                  )
-                : Container(),
+            if (i != (listFound.length - 1))
+              const Divider(
+                height: 1,
+              )
+            else
+              Container(),
           ]),
       ],
     );
@@ -325,7 +328,7 @@ class _FoundSights extends StatelessWidget {
 //Виджет элемента списка найденных мест
 class _Item extends StatelessWidget {
   // const _Item({ Key? key }) : super(key: key);
-  final Sight sight;
+  final Place sight;
 
   const _Item({required this.sight});
 
@@ -342,7 +345,7 @@ class _Item extends StatelessWidget {
             Navigator.push<void>(
               context,
               MaterialPageRoute(
-                builder: (_) => SightDetails(
+                builder: (_) => PlaceDetails(
                   id: sight.id,
                 ),
               ),
@@ -358,7 +361,7 @@ class _Item extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     clipBehavior: Clip.hardEdge,
                     child: Image.network(
-                      sight.url,
+                      sight.urls[0],
                       loadingBuilder: loadingBuilder,
                       fit: BoxFit.cover,
                     ),
@@ -373,7 +376,7 @@ class _Item extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      Text(sight.type),
+                      Text(sight.placeType),
                     ],
                   ),
                 ),

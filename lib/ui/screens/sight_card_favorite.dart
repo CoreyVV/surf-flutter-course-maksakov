@@ -2,19 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
-class SightCardFavorite extends StatelessWidget {
-  final Sight sight;
+class PlaceCardFavorite extends StatelessWidget {
+  final Place place;
   final void Function() onRemove;
 
-  const SightCardFavorite({
+  const PlaceCardFavorite({
     required Key key,
-    required this.sight,
+    required this.place,
     required this.onRemove,
   }) : super(key: key);
 
@@ -27,8 +28,8 @@ class SightCardFavorite extends StatelessWidget {
           showModalBottomSheet<void>(
             context: context,
             builder: (_) {
-              return SightDetails(
-                id: sight.id,
+              return PlaceDetails(
+                id: place.id,
               );
             },
             isScrollControlled: true,
@@ -39,7 +40,7 @@ class SightCardFavorite extends StatelessWidget {
           child: Column(
             children: [
               _ImagePart(
-                sight: sight,
+                place: place,
                 onRemove: onRemove,
               ),
               Container(
@@ -52,7 +53,7 @@ class SightCardFavorite extends StatelessWidget {
                       top: 16,
                       left: 16,
                       child: Text(
-                        sight.name,
+                        place.name,
                         style: Theme.of(context).accentTextTheme.bodyText1,
                         maxLines: 2,
                       ),
@@ -60,7 +61,7 @@ class SightCardFavorite extends StatelessWidget {
                     Positioned(
                       top: 38,
                       left: 16,
-                      child: sight.isVisited
+                      child: placeInteractor.isVisited(place)
                           ? Text(
                               'Цель достигнута 12 окт. 2020',
                               style:
@@ -102,7 +103,7 @@ class _IconCalendar extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
-          DateTime? res = await _onCalendarPressed(context);
+          final res = await _onCalendarPressed(context);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -215,11 +216,11 @@ class _IconRemove extends StatelessWidget {
 }
 
 class _ImagePart extends StatelessWidget {
-  final Sight sight;
+  final Place place;
   final VoidCallback onRemove;
 
   const _ImagePart({
-    required this.sight,
+    required this.place,
     required this.onRemove,
     Key? key,
   }) : super(key: key);
@@ -237,7 +238,7 @@ class _ImagePart extends StatelessWidget {
             ),
           ),
           Image.network(
-            sight.url,
+            place.urls[0],
             loadingBuilder: loadingBuilder,
             fit: BoxFit.cover,
             width: 360,
@@ -247,7 +248,7 @@ class _ImagePart extends StatelessWidget {
             top: 16,
             left: 16,
             child: Text(
-              sight.type,
+              place.placeType,
               style: Theme.of(context)
                   .accentTextTheme
                   .button!
@@ -261,7 +262,7 @@ class _ImagePart extends StatelessWidget {
               onTap: onRemove,
             ),
           ),
-          if (sight.isVisited)
+          if (placeInteractor.isVisited(place))
             const Positioned(
               top: 16,
               right: 56,

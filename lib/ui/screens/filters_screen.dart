@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/services/filters.dart';
+import 'package:places/services/location_service.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
@@ -694,12 +694,14 @@ class _ShowButtonState extends State<ShowButton> {
     final List<Sight> sights = [];
     bool isSuitable;
     for (final Sight sight in mocks) {
-      isSuitable = await checkSight(
-        sight.lat,
-        sight.lon,
-        _searchMinDistance / 1000,
-        _searchMaxDistance / 1000,
-      );
+      isSuitable = true
+      // await checkSight(
+      //   sight.lat,
+      //   sight.lon,
+      //   _searchMinDistance / 1000,
+      //   _searchMaxDistance / 1000,
+      // )
+      ;
       if (filterList.isNotEmpty) {
         if (isSuitable && (filterList.contains(sight.type))) {
           sights.add(sight);

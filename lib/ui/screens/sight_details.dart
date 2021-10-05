@@ -1,56 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
-class SightDetails extends StatelessWidget {
-  final String id;
+class PlaceDetails extends StatelessWidget {
+  final int id;
 
-  const SightDetails({
+  const PlaceDetails({
     required this.id,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Sight sight = Sight.getSight(id)!;
+    return FutureBuilder<Place>(
+      future: placeInteractor.getPlaceDetails(id),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        final place = snapshot.data!;
 
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(20),
-        topRight: Radius.circular(20),
-      ),
-      child: Container(
-        color: Theme.of(context).primaryColor,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.9,
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
-          child: CustomScrollView(
-            slivers: [
-              SliverPersistentHeader(
-                delegate: _HeaderDelegate(
-                  child: _SightsImages(
-                    sight: sight,
+          child: Container(
+            color: Theme.of(context).primaryColor,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.9,
+              ),
+              child: CustomScrollView(
+                slivers: [
+                  SliverPersistentHeader(
+                    delegate: _HeaderDelegate(
+                      child: _PlaceImages(
+                        place: place,
+                      ),
+                    ),
                   ),
-                ),
+                  _PlaceDetails(
+                    place: place,
+                  ),
+                ],
               ),
-              _SightDetails(
-                sight: sight,
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
-class _SightDetails extends StatelessWidget {
-  final Sight sight;
+class _PlaceDetails extends StatelessWidget {
+  final Place place;
 
-  const _SightDetails({
-    required this.sight,
+  const _PlaceDetails({
+    required this.place,
     Key? key,
   }) : super(key: key);
 
@@ -63,7 +72,7 @@ class _SightDetails extends StatelessWidget {
         ),
         child: Column(
           children: [
-            _SightsTexts(sight: sight),
+            _PlaceTexts(place: place),
             const Padding(
               padding: EdgeInsets.only(
                 left: 16,
@@ -90,15 +99,24 @@ class _SightDetails extends StatelessWidget {
                   top: 19,
                 ),
                 child: Row(
-                  children: const [
+                  children: [
                     _Button(
                       title: 'Запланировать',
                       asset: AssetsStr.iconCalendar,
+                      onTap: () {
+                        print('SightDetails/iconCalendar was tapped');
+                      },
                     ),
-                    SizedBox(width: 40),
+                    const SizedBox(width: 40),
                     _Button(
                       title: 'В избранное',
                       asset: AssetsStr.iconHeart,
+                      onTap: () {
+                        print('SightDetails/iconHeart was tapped');
+                        placeInteractor.isFavorite(place)
+                            ? placeInteractor.removeFromFavorites(place)
+                            : placeInteractor.addToFavorites(place);
+                      },
                     ),
                   ],
                 ),
@@ -111,26 +129,21 @@ class _SightDetails extends StatelessWidget {
   }
 }
 
-class _SightsImages extends StatefulWidget {
-  final Sight sight;
+class _PlaceImages extends StatefulWidget {
+  final Place place;
 
-  const _SightsImages({
-    required this.sight,
+  const _PlaceImages({
+    required this.place,
     Key? key,
   }) : super(key: key);
 
   @override
-  __SightsImagesState createState() => __SightsImagesState();
+  _PlaceImagesState createState() => _PlaceImagesState();
 }
 
-class __SightsImagesState extends State<_SightsImages> {
+class _PlaceImagesState extends State<_PlaceImages> {
   final PageController _pageController = PageController();
   int _currentPageValue = 0;
-
-  void _getChangedPageAndMoveBar(int page) {
-    _currentPageValue = page;
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,10 +154,10 @@ class __SightsImagesState extends State<_SightsImages> {
         children: [
           PageView.builder(
             controller: _pageController,
-            itemCount: widget.sight.images.length,
+            itemCount: widget.place.urls.length,
             onPageChanged: _getChangedPageAndMoveBar,
             itemBuilder: (context, index) {
-              return _Image(url: widget.sight.images[index]);
+              return _Image(url: widget.place.urls[index]);
             },
           ),
           Positioned(
@@ -175,10 +188,10 @@ class __SightsImagesState extends State<_SightsImages> {
             bottom: 0,
             child: Row(
               children: [
-                for (int i = 0; i < widget.sight.images.length; i++)
+                for (int i = 0; i < widget.place.urls.length; i++)
                   _MyIndicator(
                     isActive: i == _currentPageValue,
-                    width: 392 / widget.sight.images.length,
+                    width: 392 / widget.place.urls.length,
                   ),
               ],
             ),
@@ -186,6 +199,11 @@ class __SightsImagesState extends State<_SightsImages> {
         ],
       ),
     );
+  }
+
+  void _getChangedPageAndMoveBar(int page) {
+    _currentPageValue = page;
+    setState(() {});
   }
 }
 
@@ -258,20 +276,19 @@ class _ButtonGoTo extends StatelessWidget {
 class _Button extends StatelessWidget {
   final String title;
   final String asset;
+  final VoidCallback onTap;
 
   const _Button({
     required this.title,
     required this.asset,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        final String strInfo = 'sight_details/ $title was tapped';
-        print(strInfo);
-      },
+      onTap: onTap,
       child: RichText(
         text: TextSpan(
           children: [
@@ -295,11 +312,11 @@ class _Button extends StatelessWidget {
   }
 }
 
-class _SightsTexts extends StatelessWidget {
-  final Sight sight;
+class _PlaceTexts extends StatelessWidget {
+  final Place place;
 
-  const _SightsTexts({
-    required this.sight,
+  const _PlaceTexts({
+    required this.place,
     Key? key,
   }) : super(key: key);
 
@@ -314,14 +331,14 @@ class _SightsTexts extends StatelessWidget {
             bottom: 2,
           ),
           child: Text(
-            sight.name,
+            place.name,
             style: Theme.of(context).accentTextTheme.headline5,
           ),
         ),
         Row(
           children: [
             Text(
-              sight.type,
+              place.placeType,
               style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -343,7 +360,7 @@ class _SightsTexts extends StatelessWidget {
           ),
           height: 112,
           child: Text(
-            sight.details,
+            place.description,
             style: Theme.of(context).accentTextTheme.bodyText2,
             maxLines: 4,
           ),
@@ -356,6 +373,12 @@ class _SightsTexts extends StatelessWidget {
 class _HeaderDelegate extends SliverPersistentHeaderDelegate {
   Widget child;
 
+  @override
+  double get maxExtent => 360.0;
+
+  @override
+  double get minExtent => 0.0;
+
   _HeaderDelegate({required this.child});
 
   @override
@@ -366,12 +389,6 @@ class _HeaderDelegate extends SliverPersistentHeaderDelegate {
   ) {
     return child;
   }
-
-  @override
-  double get maxExtent => 360.0;
-
-  @override
-  double get minExtent => 0.0;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>

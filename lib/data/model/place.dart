@@ -7,6 +7,9 @@ class Place {
   String placeType;
   String description;
 
+  @override
+  int get hashCode => super.hashCode;
+
   Place({
     required this.id,
     required this.lat,
@@ -16,4 +19,9 @@ class Place {
     required this.placeType,
     required this.description,
   });
+
+
+  @override bool operator ==(Object other) {
+    return other is Place && id == other.id;
+  }
 }
