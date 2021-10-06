@@ -123,7 +123,7 @@ class _SightListLandscapeWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: FutureBuilder<List<Place>>(
-        future: placeInteractor.getPlaces(1, '1'),
+        future: placeInteractor.getPlaces(0, ''),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());

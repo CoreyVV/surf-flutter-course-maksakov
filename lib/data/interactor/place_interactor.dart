@@ -16,14 +16,54 @@ class PlaceInteractor {
 
   Future<List<Place>> getPlaces(int radius, String category) async {
     final currentPosition = await LocationService().getCurrentPosition();
-    final listPlaces = await placeRepository.getPlaces();
-    listPlaces.sort((a, b) => LocationService().distanceTo(currentPosition, LocationData.fromMap(
-      <String, dynamic>{'latitude': a.lat, 'longitude': a.lon},
-    )).compareTo(LocationService().distanceTo(currentPosition, LocationData.fromMap(
-      <String, dynamic>{'latitude': b.lat, 'longitude': b.lon},
-    ))));
+    if (radius == 0) {
+      final listPlaces = await placeRepository.getPlaces();
+      listPlaces.sort((a, b) => LocationService()
+          .distanceTo(
+            currentPosition,
+            LocationData.fromMap(
+              <String, dynamic>{'latitude': a.lat, 'longitude': a.lon},
+            ),
+          )
+          .compareTo(LocationService().distanceTo(
+            currentPosition,
+            LocationData.fromMap(
+              <String, dynamic>{'latitude': b.lat, 'longitude': b.lon},
+            ),
+          )));
 
-    return listPlaces;
+      return listPlaces;
+    } else {
+      final listPlaces = await placeRepository.getPlaces();
+      listPlaces
+          .where((place) =>
+              LocationService().distanceTo(
+                currentPosition,
+                LocationData.fromMap(
+                  <String, dynamic>{
+                    'latitude': place.lat,
+                    'longitude': place.lon,
+                  },
+                ),
+              ) <=
+              radius)
+          .toList()
+          .sort((a, b) => LocationService()
+              .distanceTo(
+                currentPosition,
+                LocationData.fromMap(
+                  <String, dynamic>{'latitude': a.lat, 'longitude': a.lon},
+                ),
+              )
+              .compareTo(LocationService().distanceTo(
+                currentPosition,
+                LocationData.fromMap(
+                  <String, dynamic>{'latitude': b.lat, 'longitude': b.lon},
+                ),
+              )));
+
+      return listPlaces;
+    }
   }
 
   Future<Place> getPlaceDetails(int id) {
