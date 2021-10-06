@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:places/data/model/place.dart';
-import 'package:places/data/repository/place_repository.dart';
+import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
 import 'package:places/ui/screens/splash_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/themes.dart';
+
+final settingsInteractor = SettingsInteractor();
 
 void main() {
   runApp(const _MaterialAppWithTheme());
@@ -22,58 +23,39 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
+      SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        systemNavigationBarColor: white,
+        systemNavigationBarColor:
+            settingsInteractor.isDarkTheme ? blackMain : white,
       ),
     );
 
     return MaterialApp(
-      theme: themeNotifier.getTheme(),
+      theme: settingsInteractor.isDarkTheme ? darkTheme : lightTheme,
       // home: const SplashScreen(),
       home: SightListScreen(),
       title: 'places',
     );
   }
 
-  void _changeTheme() {
-    setState(() {});
-  }
-
   @override
   void initState() {
+    settingsInteractor.addListener(() => setState(() {
+          final style = SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            systemNavigationBarColor:
+                settingsInteractor.isDarkTheme ? blackMain : white,
+          );
+
+          SystemChrome.setSystemUIOverlayStyle(style);
+        }));
     super.initState();
-    themeNotifier.addListener(_changeTheme);
   }
 
   @override
   void dispose() {
+    settingsInteractor.removeListener(() => setState(() {}));
     super.dispose();
-    themeNotifier.removeListener(_changeTheme);
   }
 }
 
-class ThemeNotifier extends ChangeNotifier {
-  ThemeData _themeData;
-
-  ThemeNotifier(this._themeData);
-
-  ThemeData getTheme() => _themeData;
-
-  Color getPrimaryColor() => _themeData.primaryColor;
-
-  void setTheme(ThemeData themeData) async {
-    _themeData = themeData;
-
-    final style = SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: themeNotifier.getPrimaryColor(),
-    );
-
-    SystemChrome.setSystemUIOverlayStyle(style);
-
-    notifyListeners();
-  }
-}
-
-final themeNotifier = ThemeNotifier(lightTheme);
