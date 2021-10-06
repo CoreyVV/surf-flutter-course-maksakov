@@ -88,8 +88,8 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   @override
   Widget build(BuildContext context) {
-    final bool isSmallScreenResolution =
-        MediaQuery.of(context).size.height <= 800;
+    final isSmallScreenResolution =
+        MediaQuery.of(context).size.height <= 600;
 
     return Scaffold(
       appBar: AppBar(

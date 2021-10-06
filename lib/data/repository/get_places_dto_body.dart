@@ -15,10 +15,11 @@ class GetPlaceDtoBody {
 
   Map<String, dynamic> toApi() {
     return <String, dynamic>{
-      'lat': lat,
-      'lon': lng,
-      'distance': radius,
-      'typeFilter': typeFilter,
+      //не смог выполнить запрос с полным списком параметров
+      // 'lat': lat,
+      // 'lng': lng,
+      // 'radius': radius,
+      // 'typeFilter': typeFilter,
       'nameFilter': nameFilter,
     };
   }

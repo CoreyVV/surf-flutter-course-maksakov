@@ -71,14 +71,14 @@ class TestBackEndFlutterService {
   }
 
   Future<ApiPlace> putPlace(
-      final int id,
-      final double lat,
-      final double lng,
-      final String name,
-      final List<String> urls,
-      final String placeType,
-      final String description,
-      ) async {
+    final int id,
+    final double lat,
+    final double lng,
+    final String name,
+    final List<String> urls,
+    final String placeType,
+    final String description,
+  ) async {
     final body = GetPlaceBody(
       id: id,
       lat: lat,
@@ -98,12 +98,12 @@ class TestBackEndFlutterService {
   }
 
   Future<List<ApiPlaceDto>> getPlaceDto(
-      final double lat,
-      final double lng,
-      final double radius,
-      final List<String> typeFilter,
-      final String nameFilter,
-      ) async {
+    final double lat,
+    final double lng,
+    final double radius,
+    final List<String> typeFilter,
+    final String nameFilter,
+  ) async {
     final body = GetPlaceDtoBody(
       lat: lat,
       lng: lng,
@@ -111,17 +111,22 @@ class TestBackEndFlutterService {
       typeFilter: typeFilter,
       nameFilter: nameFilter,
     );
-
+    final List<ApiPlaceDto> _listApiPlacesDto;
     final response = await _getDio().post<dynamic>(
       ApiUrls.filteredPlaces,
-      queryParameters: body.toApi(),
+      data: body.toApi(),
     );
+    if (response.statusCode == 200) {
+      _listApiPlacesDto = List<ApiPlaceDto>.from(
+        response.data.map(
+              (placeDto) => ApiPlaceDto.fromApi(placeDto),
+        ),
+      );
+    }else {
+      _listApiPlacesDto = <ApiPlaceDto>[];
+    }
 
-    List<ApiPlaceDto> _listApiPlacesDto = List<ApiPlaceDto>.from(
-      response.data.map(
-            (placeDto) => ApiPlaceDto.fromApi(placeDto),
-      ),
-    );
+
 
     return _listApiPlacesDto;
   }
@@ -137,7 +142,7 @@ class TestBackEndFlutterService {
         },
         onRequest: (options, handler) {
           print(
-            'REQUEST  [${options.method}] => PATH:${options.baseUrl}${options.path}',
+            'REQUEST  [${options.method}] => PATH:${options.baseUrl}${options.path}  BODY: ${options.data}',
           );
           return handler.next(options);
         },

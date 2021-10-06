@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/model/place.dart';
+import 'package:places/data/interactor/search_interactor.dart';
+import 'package:places/data/model/place_dto.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
@@ -23,11 +24,12 @@ class SightSearchScreen extends StatefulWidget {
 
 class _SightSearchScreenState extends State<SightSearchScreen> {
   final FocusNode _focusNode = FocusNode();
-  final _foundSight = <Place>[];
   final TextEditingController _controller = TextEditingController();
+  List<PlaceDto> _foundSight = <PlaceDto>[];
 
   @override
   void initState() {
+    _historyQueries = searchInteractor.getHistory;
     _currentState = _historyQueries.isNotEmpty ? _State.history : _State.empty;
     super.initState();
     _controller.addListener(_getSight);
@@ -73,13 +75,15 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
                   controller: _controller,
                   onRemovePressed: (value) {
                     setState(() {
-                      _historyQueries.remove(value);
+                      searchInteractor.removeFromHistory(value);
+                      _historyQueries = searchInteractor.getHistory;
                       if (_historyQueries.isEmpty) _currentState = _State.empty;
                     });
                   },
                   onCleanPressed: () {
                     setState(() {
-                      _historyQueries.clear();
+                      searchInteractor.clearHistory();
+                      _historyQueries = searchInteractor.getHistory;
                       _currentState = _State.empty;
                     });
                   },
@@ -103,15 +107,10 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     setState(() {});
   }
 
-  void _getSight() {
-    if (_controller.text != '') {
-      // _foundSight = mocks
-      //     .where(
-      //       (element) => element.name.toLowerCase().contains(
-      //             _controller.text.trim(),
-      //           ),
-      //     )
-      //     .toList();
+  void _getSight() async {
+    if (_controller.text.isNotEmpty) {
+      _foundSight =
+          await searchInteractor.searchPlacesByName(_controller.text.trim());
     } else {
       _foundSight.clear();
     }
@@ -123,9 +122,8 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
   }
 
   void _addHistory() {
-    if ((_controller.text != '') &&
-        (!_historyQueries.contains(_controller.text))) {
-      _historyQueries.add(_controller.text);
+    if (_controller.text.isNotEmpty) {
+      searchInteractor.addToHistory(_controller.text);
     }
   }
 }
@@ -297,7 +295,7 @@ class _NothingFound extends StatelessWidget {
 //Виджет отображения списка найденных мест
 class _FoundSights extends StatelessWidget {
   // const _ShowFound({ Key? key }) : super(key: key);
-  final List<Place> listFound;
+  final List<PlaceDto> listFound;
 
   const _FoundSights({
     required this.listFound,
@@ -328,7 +326,7 @@ class _FoundSights extends StatelessWidget {
 //Виджет элемента списка найденных мест
 class _Item extends StatelessWidget {
   // const _Item({ Key? key }) : super(key: key);
-  final Place sight;
+  final PlaceDto sight;
 
   const _Item({required this.sight});
 

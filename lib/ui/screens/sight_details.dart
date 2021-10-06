@@ -22,30 +22,32 @@ class PlaceDetails extends StatelessWidget {
         }
         final place = snapshot.data!;
 
-        return ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-          child: Container(
-            color: Theme.of(context).primaryColor,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.9,
-              ),
-              child: CustomScrollView(
-                slivers: [
-                  SliverPersistentHeader(
-                    delegate: _HeaderDelegate(
-                      child: _PlaceImages(
-                        place: place,
+        return Material(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            child: Container(
+              color: Theme.of(context).primaryColor,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.9,
+                ),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverPersistentHeader(
+                      delegate: _HeaderDelegate(
+                        child: _PlaceImages(
+                          place: place,
+                        ),
                       ),
                     ),
-                  ),
-                  _PlaceDetails(
-                    place: place,
-                  ),
-                ],
+                    _PlaceDetails(
+                      place: place,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -287,25 +289,27 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: RichText(
-        text: TextSpan(
-          children: [
-            WidgetSpan(
-              child: MyIcon(
-                asset: asset, //AssetsStr.icon_heart,
-                color: Theme.of(context).accentColor,
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        child: RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: MyIcon(
+                  asset: asset, //AssetsStr.icon_heart,
+                  color: Theme.of(context).accentColor,
+                ),
               ),
-            ),
-            const WidgetSpan(
-              child: SizedBox(width: 9),
-            ),
-            TextSpan(
-              text: title, //'В Избранное',
-              style: Theme.of(context).accentTextTheme.bodyText2,
-            ),
-          ],
+              const WidgetSpan(
+                child: SizedBox(width: 9),
+              ),
+              TextSpan(
+                text: title, //'В Избранное',
+                style: Theme.of(context).accentTextTheme.bodyText2,
+              ),
+            ],
+          ),
         ),
       ),
     );
