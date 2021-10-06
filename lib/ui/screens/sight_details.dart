@@ -22,12 +22,12 @@ class PlaceDetails extends StatelessWidget {
         }
         final place = snapshot.data!;
 
-        return Material(
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          child: Material(
             child: Container(
               color: Theme.of(context).primaryColor,
               child: ConstrainedBox(
