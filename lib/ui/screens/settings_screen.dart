@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/main.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/onboarding_screen.dart';
@@ -145,16 +146,15 @@ class DarkModeSwitcher extends StatefulWidget {
 }
 
 class _DarkModeSwitcherState extends State<DarkModeSwitcher> {
-  bool isSwitched = false;
+  // bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoSwitch(
-      value: isSwitched,
+      value: settingsInteractor.isDarkTheme,
       onChanged: (newValue) {
         setState(() {
-          isSwitched = newValue;
-          themeNotifier.setTheme(isSwitched ? darkTheme : lightTheme);
+          settingsInteractor.isDarkTheme = newValue;
         });
       },
     );

@@ -80,7 +80,7 @@ class AssetsStr {
   static const String search = 'res/icons/Search.svg';
   static const String filter = 'res/icons/Filter.svg';
   static const String delete = 'res/icons/Delete.svg';
-  static const String card = 'res/icons/Card.svg';
+  static const String card = 'res/icons/card.svg';
   static const String go = 'res/icons/GO.svg';
   static const String buttonWhitePlus = 'res/icons/Button-White-Plus.svg';
   static const String iconBucket = 'res/icons/Icon-Bucket.svg';

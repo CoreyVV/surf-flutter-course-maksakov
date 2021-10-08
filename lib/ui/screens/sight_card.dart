@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:places/domain/sight.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
-class SightCard extends StatelessWidget {
-  final Sight sight;
+class PlaceCard extends StatelessWidget {
+  final Place place;
 
-  const SightCard({
-    required this.sight,
+  const PlaceCard({
+    required this.place,
     Key? key,
   }) : super(key: key);
 
@@ -24,7 +25,7 @@ class SightCard extends StatelessWidget {
         child: Stack(
           children: [
             _Base(
-              sight: sight,
+              place: place,
             ),
             Material(
               color: Colors.transparent,
@@ -38,8 +39,8 @@ class SightCard extends StatelessWidget {
                     showModalBottomSheet<void>(
                       context: context,
                       builder: (_) {
-                        return SightDetails(
-                          id: sight.id,
+                        return PlaceDetails(
+                          id: place.id,
                         );
                       },
                       isScrollControlled: true,
@@ -52,7 +53,7 @@ class SightCard extends StatelessWidget {
               top: 16,
               left: 16,
               child: Text(
-                sight.type,
+                place.placeType,
                 style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
                       fontWeight: FontWeight.w700,
                       color: white,
@@ -71,6 +72,9 @@ class SightCard extends StatelessWidget {
                   splashColor: greenWhite.withOpacity(0.12),
                   onTap: () {
                     print('SightCard/iconHeart was tapped');
+                    placeInteractor.isFavorite(place)
+                        ? placeInteractor.removeFromFavorites(place)
+                        : placeInteractor.addToFavorites(place);
                   },
                   child: Ink(
                     child: const MyIcon(
@@ -88,10 +92,10 @@ class SightCard extends StatelessWidget {
 }
 
 class _Base extends StatelessWidget {
-  final Sight sight;
+  final Place place;
 
   const _Base({
-    required this.sight,
+    required this.place,
     Key? key,
   }) : super(key: key);
 
@@ -102,7 +106,7 @@ class _Base extends StatelessWidget {
         SizedBox(
           height: 96,
           child: Image.network(
-            sight.url,
+            place.urls[0],
             loadingBuilder: loadingBuilder,
             fit: BoxFit.cover,
             width: double.infinity,
@@ -122,7 +126,7 @@ class _Base extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints.tightFor(width: 328),
                   child: Text(
-                    sight.name,
+                    place.name,
                     maxLines: 2,
                     style: Theme.of(context).accentTextTheme.bodyText1,
                   ),
@@ -136,7 +140,7 @@ class _Base extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints.tightFor(width: 328),
                   child: Text(
-                    sight.details,
+                    place.description,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: Theme.of(context).primaryTextTheme.bodyText2,
