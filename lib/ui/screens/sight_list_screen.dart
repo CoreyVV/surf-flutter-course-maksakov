@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
@@ -6,8 +8,6 @@ import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_card.dart';
-
-// import 'package:places/mocks.dart';
 import 'package:places/ui/screens/widgets/search_bar.dart';
 
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -71,15 +71,29 @@ class _SightListWidget extends StatelessWidget {
   }
 }
 
-class _SightListPortraitWidget extends StatelessWidget {
+class _SightListPortraitWidget extends StatefulWidget {
   const _SightListPortraitWidget({Key? key}) : super(key: key);
+
+  @override
+  __SightListPortraitWidgetState createState() =>
+      __SightListPortraitWidgetState();
+}
+
+class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
+  final _placeListController = StreamController<List<Place>>();
+
+  @override
+  void initState() {
+    _loadListPlace();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: FutureBuilder<List<Place>>(
-        future: placeInteractor.getPlaces(1, '1'),
+      child: StreamBuilder<List<Place>>(
+        stream: _placeListController.stream,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -113,17 +127,42 @@ class _SightListPortraitWidget extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _placeListController.close();
+    super.dispose();
+  }
+
+  void _loadListPlace() async {
+    final listPlace = await placeInteractor.getPlaces(1, '1');
+    _placeListController.sink.add(listPlace);
+  }
 }
 
-class _SightListLandscapeWidget extends StatelessWidget {
+class _SightListLandscapeWidget extends StatefulWidget {
   const _SightListLandscapeWidget({Key? key}) : super(key: key);
+
+  @override
+  __SightListLandscapeWidgetState createState() =>
+      __SightListLandscapeWidgetState();
+}
+
+class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
+  final  _placeListController = StreamController<List<Place>>();
+
+  @override
+  void initState() {
+    _loadListPlace();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: FutureBuilder<List<Place>>(
-        future: placeInteractor.getPlaces(0, ''),
+      child: StreamBuilder<List<Place>>(
+        stream: _placeListController.stream,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -155,6 +194,17 @@ class _SightListLandscapeWidget extends StatelessWidget {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _placeListController.close();
+    super.dispose();
+  }
+
+  void _loadListPlace() async {
+    final listPlace = await placeInteractor.getPlaces(1, '1');
+    _placeListController.sink.add(listPlace);
   }
 }
 
@@ -206,7 +256,6 @@ class _NewSightButton extends StatelessWidget {
 }
 
 class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
-
   @override
   double get maxExtent => 240;
 
@@ -264,8 +313,6 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
       ],
     );
   }
-
-
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {

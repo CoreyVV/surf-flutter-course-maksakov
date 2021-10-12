@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
@@ -6,13 +7,20 @@ import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
-class PlaceCard extends StatelessWidget {
+class PlaceCard extends StatefulWidget {
   final Place place;
 
   const PlaceCard({
     required this.place,
     Key? key,
   }) : super(key: key);
+
+  @override
+  _PlaceCardState createState() => _PlaceCardState();
+}
+
+class _PlaceCardState extends State<PlaceCard> {
+  final _btnFavoriteController = StreamController<bool>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,7 @@ class PlaceCard extends StatelessWidget {
         child: Stack(
           children: [
             _Base(
-              place: place,
+              place: widget.place,
             ),
             Material(
               color: Colors.transparent,
@@ -40,7 +48,7 @@ class PlaceCard extends StatelessWidget {
                       context: context,
                       builder: (_) {
                         return PlaceDetails(
-                          id: place.id,
+                          id: widget.place.id,
                         );
                       },
                       isScrollControlled: true,
@@ -53,7 +61,7 @@ class PlaceCard extends StatelessWidget {
               top: 16,
               left: 16,
               child: Text(
-                place.placeType,
+                widget.place.placeType,
                 style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
                       fontWeight: FontWeight.w700,
                       color: white,
@@ -72,13 +80,21 @@ class PlaceCard extends StatelessWidget {
                   splashColor: greenWhite.withOpacity(0.12),
                   onTap: () {
                     print('SightCard/iconHeart was tapped');
-                    placeInteractor.isFavorite(place)
-                        ? placeInteractor.removeFromFavorites(place)
-                        : placeInteractor.addToFavorites(place);
+                    _onBtnFavorite();
                   },
                   child: Ink(
-                    child: const MyIcon(
-                      asset: AssetsStr.iconHeart,
+    //Не совсем понял как использовать стрим
+    // при обработке нажатия на "добавить в избранное".
+    // В текущем варианте после перерисовки состояние иконки не сохранится
+                    child: StreamBuilder<Object>(
+                      stream: _btnFavoriteController.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.data == true) {
+                          return const MyIcon(asset: AssetsStr.iconHeartFull);
+                        } else {
+                          return const MyIcon(asset: AssetsStr.iconHeart);
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -88,6 +104,22 @@ class PlaceCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _btnFavoriteController.close();
+    super.dispose();
+  }
+
+  void _onBtnFavorite() {
+    if (placeInteractor.isFavorite(widget.place)) {
+      placeInteractor.removeFromFavorites(widget.place);
+      _btnFavoriteController.sink.add(false);
+    } else {
+      placeInteractor.addToFavorites(widget.place);
+      _btnFavoriteController.sink.add(true);
+    }
   }
 }
 
