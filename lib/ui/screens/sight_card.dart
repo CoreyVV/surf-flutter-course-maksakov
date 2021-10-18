@@ -1,26 +1,20 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/main.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
+import 'package:places/ui/screens/widgets/favorite_button.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
-class PlaceCard extends StatefulWidget {
+class PlaceCard extends StatelessWidget {
   final Place place;
 
   const PlaceCard({
     required this.place,
     Key? key,
   }) : super(key: key);
-
-  @override
-  _PlaceCardState createState() => _PlaceCardState();
-}
-
-class _PlaceCardState extends State<PlaceCard> {
-  final _btnFavoriteController = StreamController<bool>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +27,7 @@ class _PlaceCardState extends State<PlaceCard> {
         child: Stack(
           children: [
             _Base(
-              place: widget.place,
+              place: place,
             ),
             Material(
               color: Colors.transparent,
@@ -48,7 +42,7 @@ class _PlaceCardState extends State<PlaceCard> {
                       context: context,
                       builder: (_) {
                         return PlaceDetails(
-                          id: widget.place.id,
+                          id: place.id,
                         );
                       },
                       isScrollControlled: true,
@@ -61,7 +55,7 @@ class _PlaceCardState extends State<PlaceCard> {
               top: 16,
               left: 16,
               child: Text(
-                widget.place.placeType,
+                place.placeType,
                 style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
                       fontWeight: FontWeight.w700,
                       color: white,
@@ -71,55 +65,14 @@ class _PlaceCardState extends State<PlaceCard> {
             Positioned(
               top: 19,
               right: 18,
-              child: Material(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(6),
-                clipBehavior: Clip.hardEdge,
-                child: InkWell(
-                  highlightColor: greenWhite.withOpacity(0.24),
-                  splashColor: greenWhite.withOpacity(0.12),
-                  onTap: () {
-                    print('SightCard/iconHeart was tapped');
-                    _onBtnFavorite();
-                  },
-                  child: Ink(
-    //Не совсем понял как использовать стрим
-    // при обработке нажатия на "добавить в избранное".
-    // В текущем варианте после перерисовки состояние иконки не сохранится
-                    child: StreamBuilder<Object>(
-                      stream: _btnFavoriteController.stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.data == true) {
-                          return const MyIcon(asset: AssetsStr.iconHeartFull);
-                        } else {
-                          return const MyIcon(asset: AssetsStr.iconHeart);
-                        }
-                      },
-                    ),
-                  ),
-                ),
+              child: FavoriteButton(
+                place: place,
               ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _btnFavoriteController.close();
-    super.dispose();
-  }
-
-  void _onBtnFavorite() {
-    if (placeInteractor.isFavorite(widget.place)) {
-      placeInteractor.removeFromFavorites(widget.place);
-      _btnFavoriteController.sink.add(false);
-    } else {
-      placeInteractor.addToFavorites(widget.place);
-      _btnFavoriteController.sink.add(true);
-    }
   }
 }
 
@@ -186,3 +139,5 @@ class _Base extends StatelessWidget {
     );
   }
 }
+
+

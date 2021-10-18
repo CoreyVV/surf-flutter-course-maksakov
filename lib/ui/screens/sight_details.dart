@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/main.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
@@ -115,9 +116,7 @@ class _PlaceDetails extends StatelessWidget {
                       asset: AssetsStr.iconHeart,
                       onTap: () {
                         print('SightDetails/iconHeart was tapped');
-                        placeInteractor.isFavorite(place)
-                            ? placeInteractor.removeFromFavorites(place)
-                            : placeInteractor.addToFavorites(place);
+                        favoritePlaceInteractor.setFavorite(place);
                       },
                     ),
                   ],

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/main.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_card_favorite.dart';
 
-// List<Place> listVisitedPlaces = placeInteractor.getVisitedPlaces();
-// List<Place> listPlannedPlaces = placeInteractor.getFavoritesPlaces();
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key? key}) : super(key: key);
@@ -18,20 +16,6 @@ class VisitingScreen extends StatefulWidget {
 
 
 class _VisitingScreenState extends State<VisitingScreen> {
-
-  // @override
-  // void initState() {
-  //   listVisitedPlaces = placeInteractor.getVisitedPlaces();
-  //   listPlannedPlaces = placeInteractor.getFavoritesPlaces();
-  //   super.initState();
-  // }
-
-  // @override
-  // void setState(VoidCallback fn) {
-  //   listVisitedPlaces = placeInteractor.getVisitedPlaces();
-  //   listPlannedPlaces = placeInteractor.getFavoritesPlaces();
-  //   super.setState(fn);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +126,7 @@ class _BodyState extends State<_Body> {
       children: [
         SafeArea(
           child: _TabList(
-            listPlace: placeInteractor.getFavoritesPlaces(),
+            listPlace: favoritePlaceInteractor.getFavoritesPlaces,
             asset: AssetsStr.card,
             bodyText: 'Отмечайте понравившиеся\nместа и они появиятся здесь.',
           ),

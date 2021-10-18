@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/main.dart';
 import 'package:places/ui/screens/add_sight_screen.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/colors.dart';
@@ -80,12 +79,16 @@ class _SightListPortraitWidget extends StatefulWidget {
 }
 
 class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
-  final _placeListController = StreamController<List<Place>>();
-
   @override
   void initState() {
-    _loadListPlace();
+    placeInteractor.getListPlaces;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    placeInteractor.dispose();
+    super.dispose();
   }
 
   @override
@@ -93,7 +96,7 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: StreamBuilder<List<Place>>(
-        stream: _placeListController.stream,
+        stream: placeInteractor.getListPlaces,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -127,17 +130,6 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    _placeListController.close();
-    super.dispose();
-  }
-
-  void _loadListPlace() async {
-    final listPlace = await placeInteractor.getPlaces(1, '1');
-    _placeListController.sink.add(listPlace);
-  }
 }
 
 class _SightListLandscapeWidget extends StatefulWidget {
@@ -149,12 +141,16 @@ class _SightListLandscapeWidget extends StatefulWidget {
 }
 
 class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
-  final  _placeListController = StreamController<List<Place>>();
-
   @override
   void initState() {
-    _loadListPlace();
+    placeInteractor.getListPlaces;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    placeInteractor.dispose();
+    super.dispose();
   }
 
   @override
@@ -162,7 +158,7 @@ class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: StreamBuilder<List<Place>>(
-        stream: _placeListController.stream,
+        stream: placeInteractor.getListPlaces,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -194,17 +190,6 @@ class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _placeListController.close();
-    super.dispose();
-  }
-
-  void _loadListPlace() async {
-    final listPlace = await placeInteractor.getPlaces(1, '1');
-    _placeListController.sink.add(listPlace);
   }
 }
 
