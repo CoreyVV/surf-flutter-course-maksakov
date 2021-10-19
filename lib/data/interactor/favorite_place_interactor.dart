@@ -27,6 +27,7 @@ class FavoritePlaceInteractor {
   }
   //обрабатываем
   void _listen(Place place) {
+    print('on listen');
     !isFavorite(place) ? _addToFavorites(place) : _removeFromFavorites(place);
   }
 
