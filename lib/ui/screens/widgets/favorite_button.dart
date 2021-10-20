@@ -49,6 +49,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
               highlightColor: greenWhite.withOpacity(0.24),
               splashColor: greenWhite.withOpacity(0.12),
               onTap: () {
+                //TODO: убрать print
                 print('SightCard/iconHeart was tapped');
                 _streamController.sink.add(!_isFavoriteNow);
                 favoritePlaceInteractor.setFavorite(widget.place);

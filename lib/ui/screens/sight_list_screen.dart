@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/main.dart';
 import 'package:places/ui/screens/add_sight_screen.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
@@ -24,7 +24,7 @@ class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        'Список\nинтересных мест',
+        AppStrings.appBarText2Str,
         textAlign: TextAlign.left,
         style: Theme.of(context).accentTextTheme.headline4,
         maxLines: 2,
@@ -86,12 +86,6 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
   }
 
   @override
-  void dispose() {
-    placeInteractor.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -145,12 +139,6 @@ class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
   void initState() {
     placeInteractor.getListPlaces;
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    placeInteractor.dispose();
-    super.dispose();
   }
 
   @override
@@ -230,7 +218,7 @@ class _NewSightButton extends StatelessWidget {
                 SizedBox(
                   width: 13.64,
                 ),
-                Text('НОВОЕ МЕСТО'),
+                Text(AppStrings.newSightButtonTextUppercase),
               ],
             ),
           ),
@@ -263,7 +251,7 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
                       height: (minExtent - shrinkOffset).clamp(20, 54),
                     ),
                     Text(
-                      'Список\nинтересных мест',
+                      AppStrings.appBarText2Str,
                       textAlign: TextAlign.left,
                       style: Theme.of(context).accentTextTheme.headline4,
                       maxLines: 2,
@@ -289,7 +277,7 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
                   height: minExtent,
                   child: Center(
                     child: Text(
-                      'Список интересных мест',
+                      AppStrings.appBarText1Str,
                       style: Theme.of(context).accentTextTheme.headline6,
                     ),
                   ),
@@ -330,7 +318,7 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Список интересных мест',
+                        AppStrings.appBarText1Str,
                         style: Theme.of(context).accentTextTheme.headline6,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -356,7 +344,7 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Список интересных мест',
+                      AppStrings.appBarText1Str,
                       style: Theme.of(context).accentTextTheme.headline6,
                       overflow: TextOverflow.ellipsis,
                     ),

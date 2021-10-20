@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -76,7 +77,7 @@ class _FirstPage extends StatelessWidget {
           height: 42.6,
         ),
         Text(
-          'Добро пожаловать\nв Путеводитель',
+          AppStrings.welcomeOnboardingScreen,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline5,
         ),
@@ -84,7 +85,7 @@ class _FirstPage extends StatelessWidget {
           height: 8,
         ),
         Text(
-          'Ищи новые локации и сохраняй\nсамые любимые.',
+          AppStrings.lookForOnboardingScreen,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyText2,
         ),
@@ -112,7 +113,7 @@ class _SecondPage extends StatelessWidget {
           height: 47.48,
         ),
         Text(
-          'Построй маршрут\nи отправляйся в путь',
+          AppStrings.createRouteOnboardingScreen,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline5,
         ),
@@ -120,7 +121,7 @@ class _SecondPage extends StatelessWidget {
           height: 8,
         ),
         Text(
-          'Достигай цели максимально\nбыстро и комфортно.',
+          AppStrings.reachGoalOnboardingScreen,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyText2,
         ),
@@ -147,7 +148,7 @@ class _ThirdPage extends StatelessWidget {
           height: 47.78,
         ),
         Text(
-          'Добавляй места,\nкоторые нашёл сам',
+          AppStrings.addPlacesOnboardingScreen,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline5,
         ),
@@ -155,7 +156,7 @@ class _ThirdPage extends StatelessWidget {
           height: 8,
         ),
         Text(
-          'Делись самыми интересными\nи помоги нам стать лучше!',
+          AppStrings.sharePlacesOnboardingScreen,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodyText2,
         ),
@@ -170,6 +171,7 @@ class _ThirdPage extends StatelessWidget {
 
 class _MyIndicator extends StatelessWidget {
   final bool isActive;
+
   const _MyIndicator({
     required this.isActive,
     Key? key,
@@ -209,7 +211,7 @@ class _ButtonStart extends StatelessWidget {
             ),
           );
         },
-        child: const Text('НА СТАРТ'),
+        child: const Text(AppStrings.onStartUppercase),
       ),
     );
   }
@@ -237,7 +239,7 @@ class _ButtonSkip extends StatelessWidget {
             );
           },
           child: Text(
-            'Пропустить',
+            AppStrings.skip,
             style: Theme.of(context)
                 .textTheme
                 .bodyText1!

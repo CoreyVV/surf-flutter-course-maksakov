@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/main.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
 import 'package:places/ui/screens/widgets/favorite_button.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';

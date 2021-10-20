@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/main.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_card_favorite.dart';
@@ -12,9 +13,6 @@ class VisitingScreen extends StatefulWidget {
   @override
   _VisitingScreenState createState() => _VisitingScreenState();
 }
-
-
-
 class _VisitingScreenState extends State<VisitingScreen> {
 
   @override
@@ -55,7 +53,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          'Избранное',
+          AppStrings.favorite,
           textAlign: TextAlign.center,
           style: Theme.of(context).accentTextTheme.headline6,
           maxLines: 2,
@@ -90,7 +88,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                 ),
-                child: const Center(child: Text('Хочу посетить')),
+                child: const Center(child: Text(AppStrings.wantToVisit)),
               ),
               Container(
                 width: 184,
@@ -98,7 +96,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                 ),
-                child: const Center(child: Text('Посетил')),
+                child: const Center(child: Text(AppStrings.visited)),
               ),
             ],
           ),
@@ -128,14 +126,14 @@ class _BodyState extends State<_Body> {
           child: _TabList(
             listPlace: favoritePlaceInteractor.getFavoritesPlaces,
             asset: AssetsStr.card,
-            bodyText: 'Отмечайте понравившиеся\nместа и они появиятся здесь.',
+            bodyText: AppStrings.markFavorite,
           ),
         ),
         SafeArea(
           child: _TabList(
             listPlace: placeInteractor.getVisitedPlaces(),
             asset: AssetsStr.go,
-            bodyText: 'Завершите маршрут,\nчтобы место попало сюда.',
+            bodyText: AppStrings.finishRoute,
           ),
         ),
       ],
@@ -145,7 +143,6 @@ class _BodyState extends State<_Body> {
 
 //Виджет отображения пустого списка
 class _EmptyList extends StatelessWidget {
-  // const _EmptyList({ Key? key }) : super(key: key);
   final String asset;
   final String bodyText;
 
@@ -171,7 +168,7 @@ class _EmptyList extends StatelessWidget {
             height: 32,
           ),
           Text(
-            'Пусто',
+            AppStrings.empty,
             style: Theme.of(context).primaryTextTheme.headline6,
           ),
           const SizedBox(
@@ -354,7 +351,7 @@ class _Bucket extends StatelessWidget {
           height: 8,
         ),
         Text(
-          'Удалить',
+          AppStrings.delete,
           style: Theme.of(context).accentTextTheme.bodyText1!.copyWith(
                 color: Theme.of(
                   context,
