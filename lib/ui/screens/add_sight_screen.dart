@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 String _selectedType = SightType.museum;
@@ -31,30 +32,30 @@ class _SightType {
 
 //типы мест
 final _sightTypeCafe = _SightType(
-  title: 'Кафе',
+  title: AppStrings.sightTypeCafeTitle,
   type: SightType.cafe,
 );
 final _sightTypeHotel = _SightType(
-  title: 'Отель',
+  title: AppStrings.sightTypeHotelTitle,
   type: SightType.hotel,
 );
 final _sightTypeMuseum = _SightType(
-  title: 'Музей',
+  title: AppStrings.sightTypeMuseumTitle,
   type: SightType.museum,
 );
 final _sightTypePark = _SightType(
-  title: 'Парк',
+  title: AppStrings.sightTypeParkTitle,
   type: SightType.park,
 );
 final _sightTypeParticularPlace = _SightType(
-  title: 'Особое место',
+  title: AppStrings.sightTypeParticularPlaceTitle,
   type: SightType.particularPlace,
 );
 final _sightTypeRestaurant = _SightType(
-  title: 'Ресторан',
+  title: AppStrings.sightTypeRestaurantTitle,
   type: SightType.restaurant,
 );
-
+//TODO: убрать после доработки выбора фотографий
 List<String> _imagesList = [
   'https://cdn.theatlantic.com/thumbor/gHSN4W8eC4AnkdqA-v7NJUABcBo=/1500x1001/media/img/photo/2016/09/the-beauty-of-terraced-fields/t01_82594302/original.jpg',
   'https://cdn.theatlantic.com/thumbor/jlBbH8ql4PADBerveJ9yyWJZLU0=/1500x908/media/img/photo/2016/09/the-beauty-of-terraced-fields/t02_154921930/original.jpg',
@@ -131,7 +132,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
               width: 51,
             ),
             Text(
-              'Новое место',
+              AppStrings.newSightButtonText,
               textAlign: TextAlign.center,
               style: Theme.of(context).accentTextTheme.headline6,
             ),
@@ -167,7 +168,7 @@ class _NewSightBody extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Категория',
+                    AppStrings.category,
                     style:
                         Theme.of(context).accentTextTheme.bodyText2!.copyWith(
                               fontSize: 12,
@@ -213,7 +214,7 @@ class _CategoryChoice extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'Не выбрано',
+          AppStrings.notChosen,
           style: Theme.of(context).primaryTextTheme.bodyText2,
         ),
         Expanded(child: Container()),
@@ -221,6 +222,7 @@ class _CategoryChoice extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: IconButton(
             onPressed: () {
+              //TODO: убрать print
               print('AddSightScreen/Category was tapped');
               Navigator.push<void>(
                 context,
@@ -269,7 +271,7 @@ class _InputBoxes extends StatelessWidget {
               child: SizedBox(
                 width: 172,
                 child: _InputBox(
-                  title: 'ШИРОТА',
+                  title: AppStrings.latitudeUppercase,
                   focusNode: _focusNodeLat,
                   focusNodeNext: _focusNodeLon,
                   keyboardType: TextInputType.number,
@@ -281,7 +283,7 @@ class _InputBoxes extends StatelessWidget {
               child: SizedBox(
                 width: 172,
                 child: _InputBox(
-                  title: 'ДОЛГОТА',
+                  title: AppStrings.longitudeUppercase,
                   focusNode: _focusNodeLon,
                   focusNodeNext: _focusNodeDesc,
                   keyboardType: TextInputType.number,
@@ -294,7 +296,7 @@ class _InputBoxes extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 24, right: 16),
           child: _InputBox(
-            title: 'ОПИСАНИЕ',
+            title: AppStrings.descriptionUppercase,
             focusNode: _focusNodeDesc,
             focusNodeNext: _focusNodeSave,
             maxLines: 4,
@@ -320,9 +322,10 @@ class _LocationButton extends StatelessWidget {
           onPrimary: Theme.of(context).buttonColor,
         ),
         onPressed: () {
+          //TODO: убрать print
           print('AddSightScreen/Location button was tapped');
         },
-        child: const Text('Указать на карте'),
+        child: const Text(AppStrings.markOnMap),
       ),
     );
   }
@@ -339,12 +342,13 @@ class _CreateButton extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: ElevatedButton(
         onPressed: () => _onPressed(context),
-        child: const Text('Создать'),
+        child: const Text(AppStrings.create),
       ),
     );
   }
 
   void _onPressed(BuildContext context) {
+    //TODO: убрать print
     print('AddSightScreen/Create button was tapped');
     if (checkSight()) {
       mocks.add(
@@ -365,7 +369,6 @@ class _CreateButton extends StatelessWidget {
 
 //TextField
 class _InputBox extends StatefulWidget {
-  // const _InputBox({Key? key}) : super(key: key);
   final String title;
   final FocusNode focusNode;
   final FocusNode focusNodeNext;
@@ -483,6 +486,7 @@ class _SelectSightTypeState extends State<SelectSightType> {
                   final bool s = _typesMap[sight]!;
                   _typesMap.updateAll((key, value) => false);
                   _typesMap[sight] = !s;
+                  //TODO: убрать print
                   print('AddSightScreen/SelectSightType/category was tapped');
                 });
               },
@@ -501,9 +505,10 @@ class _SelectSightTypeState extends State<SelectSightType> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                //TODO: убрать print
                 print('AddSightScreen/SelectSightType/save button was tapped');
               },
-              child: const Text('Сохранить'),
+              child: const Text(AppStrings.save),
             ),
           ),
         ),
@@ -530,6 +535,7 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         splashRadius: 28,
         onPressed: () {
+          //TODO: убрать print
           print('AddSightScreen/SelectSightType/back was tapped');
           Navigator.push<void>(
             context,
@@ -549,7 +555,7 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
             alignment: Alignment.centerLeft,
             // padding: const EdgeInsets.only(left: 16, top: 18, bottom: 18),
             child: Text(
-              'Категория',
+              AppStrings.category,
               textAlign: TextAlign.center,
               style: Theme.of(context).accentTextTheme.headline6,
             ),
@@ -802,6 +808,7 @@ class _DialogCameraButton extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
+          //TODO: убрать print
           print('DialogCameraButton was tapped');
         },
         child: SizedBox(
@@ -816,7 +823,7 @@ class _DialogCameraButton extends StatelessWidget {
                 ),
               ),
               Text(
-                'Камера',
+                AppStrings.camera,
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle1!
@@ -838,6 +845,7 @@ class _DialogPhotoButton extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
+          //TODO: убрать print
           print('DialogPhotoButton was tapped');
         },
         child: SizedBox(
@@ -852,7 +860,7 @@ class _DialogPhotoButton extends StatelessWidget {
                 ),
               ),
               Text(
-                'Фотография',
+                AppStrings.photo,
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle1!
@@ -874,6 +882,7 @@ class _DialogFileButton extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
+          //TODO: убрать print
           print('DialogFileButton was tapped');
         },
         child: SizedBox(
@@ -888,7 +897,7 @@ class _DialogFileButton extends StatelessWidget {
                 ),
               ),
               Text(
-                'Файл',
+                AppStrings.file,
                 style: Theme.of(context)
                     .primaryTextTheme
                     .subtitle1!
@@ -924,7 +933,7 @@ class _DialogCancelButton extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('ОТМЕНА'),
+            child: const Text(AppStrings.cancelUppercase),
           ),
         ),
       ),

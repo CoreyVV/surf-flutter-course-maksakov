@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/search_interactor.dart';
 import 'package:places/data/model/place_dto.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
@@ -48,7 +49,7 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Список интересных мест'),
+        title: const Text(AppStrings.listInterestingPlaces),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -211,7 +212,7 @@ class _History extends StatelessWidget {
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.only(top: 32, bottom: 4),
           child: Text(
-            'ВЫ ИСКАЛИ',
+            AppStrings.lookingForUppercase,
             style: Theme.of(context)
                 .primaryTextTheme
                 .bodyText2!
@@ -248,7 +249,7 @@ class _History extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               onPrimary: Theme.of(context).buttonColor,
             ),
-            child: const Text('Очистить историю'),
+            child: const Text(AppStrings.clearHistory),
           ),
         ),
       ],
@@ -276,14 +277,14 @@ class _NothingFound extends StatelessWidget {
           height: 24,
         ),
         Text(
-          'Ничего не найденою',
+          AppStrings.foundNothing,
           style: Theme.of(context).primaryTextTheme.headline6,
         ),
         const SizedBox(
           height: 8,
         ),
         Text(
-          'Попробуйте изменить параметры\nпоиска.',
+          AppStrings.tryChange,
           style: Theme.of(context).primaryTextTheme.bodyText2,
           textAlign: TextAlign.center,
         ),
@@ -294,7 +295,6 @@ class _NothingFound extends StatelessWidget {
 
 //Виджет отображения списка найденных мест
 class _FoundSights extends StatelessWidget {
-  // const _ShowFound({ Key? key }) : super(key: key);
   final List<PlaceDto> listFound;
 
   const _FoundSights({
@@ -325,7 +325,6 @@ class _FoundSights extends StatelessWidget {
 
 //Виджет элемента списка найденных мест
 class _Item extends StatelessWidget {
-  // const _Item({ Key? key }) : super(key: key);
   final PlaceDto sight;
 
   const _Item({required this.sight});
@@ -335,7 +334,6 @@ class _Item extends StatelessWidget {
     return SizedBox(
       height: 78,
       width: double.infinity,
-      // padding: EdgeInsets.only(top: 11),
       child: Material(
         child: InkWell(
           onTap: () {
@@ -404,7 +402,6 @@ class _HistoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      // width: double.infinity,
       child: Stack(
         children: [
           SizedBox(

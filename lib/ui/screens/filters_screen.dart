@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/services/location_service.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
 
 int _amountFilteredPlaces = 0;
@@ -36,32 +36,32 @@ class SightTypeIcon {
 
 //типы мест для таблицы фильтров
 final sightTypeIconCafe = SightTypeIcon(
-  title: 'Кафе',
+  title: AppStrings.sightTypeCafeTitle,
   type: SightType.cafe,
   icon: MyIcons.catalogWhiteCafe,
 );
 final sightTypeIconHotel = SightTypeIcon(
-  title: 'Отель',
+  title: AppStrings.sightTypeHotelTitle,
   type: SightType.hotel,
   icon: MyIcons.catalogWhiteHotel,
 );
 final sightTypeIconMuseum = SightTypeIcon(
-  title: 'Музей',
+  title: AppStrings.sightTypeMuseumTitle,
   type: SightType.museum,
   icon: MyIcons.catalogWhiteMuseum,
 );
 final sightTypeIconPark = SightTypeIcon(
-  title: 'Парк',
+  title: AppStrings.sightTypeParkTitle,
   type: SightType.park,
   icon: MyIcons.catalogWhitePark,
 );
 final sightTypeIconParticularPlace = SightTypeIcon(
-  title: 'Особое место',
+  title: AppStrings.sightTypeParticularPlaceTitle,
   type: SightType.particularPlace,
   icon: MyIcons.catalogWhiteParticularPlace,
 );
 final sightTypeIconRestaurant = SightTypeIcon(
-  title: 'Ресторан',
+  title: AppStrings.sightTypeRestaurantTitle,
   type: SightType.restaurant,
   icon: MyIcons.catalogWhiteRestaurant,
 );
@@ -102,6 +102,7 @@ class _FilterScreenState extends State<FilterScreen> {
             child: IconButton(
               splashRadius: 16,
               onPressed: () {
+                //TODO: убрать print
                 print('filter_screen/back was tapped');
                 Navigator.push<void>(
                   context,
@@ -119,6 +120,7 @@ class _FilterScreenState extends State<FilterScreen> {
             padding: const EdgeInsets.only(top: 16, right: 16),
             child: TextButton(
               onPressed: () {
+                //TODO: убрать print
                 print('filter_screen/clear was tapped');
                 setState(() {
                   filterMap.updateAll((key, value) => false);
@@ -126,7 +128,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 });
               },
               child: Text(
-                'Очистить',
+                AppStrings.clear,
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
@@ -337,7 +339,6 @@ class TypeFilterSmall extends StatelessWidget {
 
 //фильтр с таблицей типов мест
 class TypeFilter extends StatelessWidget {
-  // const TypeFilter({Key? key}) : super(key: key);
   final Function(SightTypeIcon) onTap;
 
   const TypeFilter({
@@ -532,8 +533,6 @@ class TypeFilter extends StatelessWidget {
 
 //элемент таблицы фильтров по типам мест
 class TypeFilterBox extends StatelessWidget {
-  // const TypeFilterBox({ Key? key }) : super(key: key);
-
   final SightTypeIcon sightTypeIcon;
   final void Function() onTap;
 
@@ -604,7 +603,7 @@ class DistanceFilterState extends State<DistanceFilter> {
                   child: Row(
                     children: [
                       Text(
-                        'Расстояние',
+                        AppStrings.distance,
                         style: Theme.of(context).accentTextTheme.bodyText1,
                       ),
                       const SizedBox(
@@ -669,6 +668,7 @@ class _ShowButtonState extends State<ShowButton> {
           child: ElevatedButton(
             onPressed: () {
               getSights();
+              //TODO: убрать print
               print('show button was tapped');
               print(filterList);
             },
@@ -695,12 +695,6 @@ class _ShowButtonState extends State<ShowButton> {
     bool isSuitable;
     for (final Sight sight in mocks) {
       isSuitable = true
-      // await checkSight(
-      //   sight.lat,
-      //   sight.lon,
-      //   _searchMinDistance / 1000,
-      //   _searchMaxDistance / 1000,
-      // )
       ;
       if (filterList.isNotEmpty) {
         if (isSuitable && (filterList.contains(sight.type))) {

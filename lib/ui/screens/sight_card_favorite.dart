@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/main.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/sight_details.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
@@ -128,19 +129,21 @@ class _IconCalendar extends StatelessWidget {
         builder: (context) => Column(
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.min,
-          children: [Container(
-            height: 240,
-            color: Theme.of(context).primaryColor,
-            child: CupertinoDatePicker(
-              initialDateTime: DateTime.now(),
-              onDateTimeChanged: (datetime) {},
-              minimumDate: DateTime.now().subtract(
-                const Duration(
-                  days: 1,
+          children: [
+            Container(
+              height: 240,
+              color: Theme.of(context).primaryColor,
+              child: CupertinoDatePicker(
+                initialDateTime: DateTime.now(),
+                onDateTimeChanged: (datetime) {},
+                minimumDate: DateTime.now().subtract(
+                  const Duration(
+                    days: 1,
+                  ),
                 ),
               ),
-            ),
-          )],
+            )
+          ],
         ),
       );
     } else {
@@ -149,8 +152,8 @@ class _IconCalendar extends StatelessWidget {
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
         lastDate: DateTime(2120),
-        fieldLabelText: 'Visiting date',
-        helpText: 'Select date of visit',
+        fieldLabelText: AppStrings.dataPickerLabelText,
+        helpText: AppStrings.dataPickerHelpText,
       );
     }
 
@@ -167,12 +170,12 @@ class _IconShare extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
+          //TODO: убрать print
           print('sight_planned/share was tapped');
         },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            // color: Colors.transparent,
           ),
           width: 24,
           height: 24,
@@ -242,7 +245,6 @@ class _ImagePart extends StatelessWidget {
             loadingBuilder: loadingBuilder,
             fit: BoxFit.cover,
             width: 360,
-            // height: double.infinity,
           ),
           Positioned(
             top: 16,

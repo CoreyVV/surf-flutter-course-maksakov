@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/sight_search_screen.dart';
 import 'package:places/ui/screens/filters_screen.dart';
 import 'package:places/ui/screens/res/icons.dart';
@@ -42,7 +43,7 @@ class SearchBar extends StatelessWidget {
               ),
               fillColor: Theme.of(context).primaryColorDark,
               filled: true,
-              hintText: ' Поиск',
+              hintText: AppStrings.searchBarHintText,
               contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
               prefixIcon: MyIcon(
                 asset: AssetsStr.search,

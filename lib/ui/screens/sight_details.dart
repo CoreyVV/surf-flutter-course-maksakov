@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/main.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 class PlaceDetails extends StatelessWidget {
@@ -103,21 +104,21 @@ class _PlaceDetails extends StatelessWidget {
                 child: Row(
                   children: [
                     _Button(
-                      title: 'Запланировать',
+                      title: AppStrings.schedule,
                       asset: AssetsStr.iconCalendar,
                       onTap: () {
+                        //TODO: убрать print
                         print('SightDetails/iconCalendar was tapped');
                       },
                     ),
                     const SizedBox(width: 40),
                     _Button(
-                      title: 'В избранное',
+                      title: AppStrings.addToFavorites,
                       asset: AssetsStr.iconHeart,
                       onTap: () {
+                        //TODO: убрать print
                         print('SightDetails/iconHeart was tapped');
-                        placeInteractor.isFavorite(place)
-                            ? placeInteractor.removeFromFavorites(place)
-                            : placeInteractor.addToFavorites(place);
+                        favoritePlaceInteractor.setFavorite(place);
                       },
                     ),
                   ],
@@ -262,13 +263,14 @@ class _ButtonGoTo extends StatelessWidget {
       width: 328,
       child: ElevatedButton.icon(
         onPressed: () {
+          //TODO: убрать print
           print('sight_details/go was tapped');
         },
         icon: const MyIcon(
           asset: AssetsStr.buttonWhiteIconGo,
         ),
         label: const Text(
-          'ПОСТРОИТЬ МАРШРУТ',
+          AppStrings.createRouteUppercase,
         ),
       ),
     );
@@ -297,7 +299,7 @@ class _Button extends StatelessWidget {
             children: [
               WidgetSpan(
                 child: MyIcon(
-                  asset: asset, //AssetsStr.icon_heart,
+                  asset: asset,
                   color: Theme.of(context).accentColor,
                 ),
               ),
@@ -305,7 +307,7 @@ class _Button extends StatelessWidget {
                 child: SizedBox(width: 9),
               ),
               TextSpan(
-                text: title, //'В Избранное',
+                text: title,
                 style: Theme.of(context).accentTextTheme.bodyText2,
               ),
             ],

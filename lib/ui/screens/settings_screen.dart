@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/main.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/onboarding_screen.dart';
 import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/res/themes.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -43,7 +42,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             const EdgeInsets.only(left: 134, top: 16, right: 133, bottom: 16),
         alignment: Alignment.topCenter,
         child: Text(
-          'Настройки',
+          AppStrings.settings,
           textAlign: TextAlign.center,
           style: Theme.of(context).accentTextTheme.headline6,
         ),
@@ -80,7 +79,7 @@ class _Body extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Тёмная тема',
+                AppStrings.darkTheme,
                 style: Theme.of(context).accentTextTheme.bodyText1,
               ),
               Expanded(
@@ -107,7 +106,7 @@ class _Body extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Смотреть туториал',
+                AppStrings.studyGuide,
                 style: Theme.of(context).accentTextTheme.bodyText1,
               ),
               Expanded(
@@ -146,8 +145,6 @@ class DarkModeSwitcher extends StatefulWidget {
 }
 
 class _DarkModeSwitcherState extends State<DarkModeSwitcher> {
-  // bool isSwitched = false;
-
   @override
   Widget build(BuildContext context) {
     return CupertinoSwitch(

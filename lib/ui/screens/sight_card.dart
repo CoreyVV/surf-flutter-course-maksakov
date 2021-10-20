@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/sight_details.dart';
+import 'package:places/ui/screens/widgets/favorite_button.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 class PlaceCard extends StatelessWidget {
@@ -63,25 +62,8 @@ class PlaceCard extends StatelessWidget {
             Positioned(
               top: 19,
               right: 18,
-              child: Material(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(6),
-                clipBehavior: Clip.hardEdge,
-                child: InkWell(
-                  highlightColor: greenWhite.withOpacity(0.24),
-                  splashColor: greenWhite.withOpacity(0.12),
-                  onTap: () {
-                    print('SightCard/iconHeart was tapped');
-                    placeInteractor.isFavorite(place)
-                        ? placeInteractor.removeFromFavorites(place)
-                        : placeInteractor.addToFavorites(place);
-                  },
-                  child: Ink(
-                    child: const MyIcon(
-                      asset: AssetsStr.iconHeart,
-                    ),
-                  ),
-                ),
+              child: FavoriteButton(
+                place: place,
               ),
             ),
           ],
@@ -154,3 +136,5 @@ class _Base extends StatelessWidget {
     );
   }
 }
+
+
