@@ -92,6 +92,9 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
       child: StreamBuilder<List<Place>>(
         stream: placeInteractor.getListPlaces,
         builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            print(snapshot.error);
+          }
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }

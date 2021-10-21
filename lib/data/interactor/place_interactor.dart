@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:location/location.dart';
+import 'package:places/data/exception/network_exception.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_repository.dart';
 import 'package:places/services/location_service.dart';
@@ -98,7 +99,11 @@ class PlaceInteractor {
   }
 
   void _loadListPlace() async {
-    final listPlace = await _getPlaces(1, '1');
-    _placeListController.sink.add(listPlace);
+    try {
+      final listPlace = await _getPlaces(1, '1');
+      _placeListController.sink.add(listPlace);
+    } on NetworkException catch (e) {
+      _placeListController.sink.addError(e);
+    }
   }
 }
