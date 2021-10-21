@@ -93,7 +93,7 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
         stream: placeInteractor.getListPlaces,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print(snapshot.error);
+            return const _ErrorPlaceHolder();
           }
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -361,5 +361,41 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return false;
+  }
+}
+
+//Виджет отображения ошибки
+class _ErrorPlaceHolder extends StatelessWidget {
+  const _ErrorPlaceHolder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          MyIcon(
+            asset: AssetsStr.errorPlaceHolder,
+            color: Theme.of(context).unselectedWidgetColor,
+            height: 64,
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          Text(
+            AppStrings.error,
+            style: Theme.of(context).primaryTextTheme.headline6,
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            AppStrings.errorPlaceHolderText,
+            style: Theme.of(context).primaryTextTheme.bodyText2,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 }
