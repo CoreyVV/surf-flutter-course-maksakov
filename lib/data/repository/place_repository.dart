@@ -13,9 +13,9 @@ class PlaceRepository {
     try {
     final result = await _testBackEndFlutterService.getPlaces();
 
-    return List<Place>.from(
-      result.map<dynamic>(PlaceMapper.fromApi),
-    );} on NetworkException catch (e) {
+    return
+      result.map<Place>(PlaceMapper.fromApi).toList();
+    } on NetworkException catch (e) {
       rethrow;
     }
   }

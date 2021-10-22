@@ -23,11 +23,12 @@ class TestBackEndFlutterService {
       final response = await _getDio().get<dynamic>(
         ApiUrls.place,
       );
-      List<ApiPlace> _listApiPlaces = List<ApiPlace>.from(
-        response.data.map(
-          (place) => ApiPlace.fromApi(place),
-        ),
-      );
+      List<ApiPlace> _listApiPlaces = response.data
+          .whereType<Map<String, dynamic>>()
+          .map<ApiPlace>(
+            (place) => ApiPlace.fromApi(place),
+          )
+          .toList();
 
       return _listApiPlaces;
     } on DioError catch (e) {
@@ -143,11 +144,12 @@ class TestBackEndFlutterService {
         data: body.toApi(),
       );
       if (response.statusCode == 200) {
-        _listApiPlacesDto = List<ApiPlaceDto>.from(
-          response.data.map(
-            (placeDto) => ApiPlaceDto.fromApi(placeDto),
-          ),
-        );
+        _listApiPlacesDto = response.data
+            .whereType<Map<String, dynamic>>()
+            .map<ApiPlace>(
+              (placeDto) => ApiPlaceDto.fromApi(placeDto),
+            )
+            .toList();
       } else {
         _listApiPlacesDto = <ApiPlaceDto>[];
       }

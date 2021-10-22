@@ -15,7 +15,7 @@ class GetPlaceDtoBody {
 
   Map<String, dynamic> toApi() {
     return <String, dynamic>{
-      //не смог выполнить запрос с полным списком параметров
+      //todo: не смог выполнить запрос с полным списком параметров
       // 'lat': lat,
       // 'lng': lng,
       // 'radius': radius,
