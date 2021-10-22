@@ -1,3 +1,4 @@
+import 'package:places/data/exception/network_exception.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/data/repository/place_mapper.dart';
 import 'package:places/data/repository/test_backend_flutter_service.dart';
@@ -9,10 +10,14 @@ class PlaceRepository {
   PlaceRepository();
 
   Future<List<Place>> getPlaces() async {
+    try {
     final result = await _testBackEndFlutterService.getPlaces();
 
-    return List<Place>.from(
-        result.map<dynamic>(PlaceMapper.fromApi),);
+    return
+      result.map<Place>(PlaceMapper.fromApi).toList();
+    } on NetworkException catch (e) {
+      rethrow;
+    }
   }
 
   Future<Place> getPlace(int id) async {
@@ -54,5 +59,4 @@ class PlaceRepository {
 
     return PlaceMapper.fromApi(result);
   }
-
 }

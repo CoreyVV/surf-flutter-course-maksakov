@@ -102,4 +102,5 @@ class AssetsStr {
   static const String iconPhoto = 'res/icons/Icon-Photo.svg';
   static const String iconFail = 'res/icons/Icon-Fail.svg';
   static const String iconCamera = 'res/icons/Icon-Camera.svg';
+  static const String errorPlaceHolder = 'res/icons/error_place_holder.svg';
 }

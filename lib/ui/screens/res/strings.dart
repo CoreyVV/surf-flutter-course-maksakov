@@ -62,4 +62,6 @@ class AppStrings {
       'Завершите маршрут,\nчтобы место попало сюда.';
   static const String empty = 'Пусто';
   static const String delete = 'Удалить';
+  static const String error = 'Ошибка';
+  static const String errorPlaceHolderText = 'Что то пошло не так\nПопробуйте позже.';
 }

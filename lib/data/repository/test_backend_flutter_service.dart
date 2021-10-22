@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:places/data/exception/network_exception.dart';
 import 'package:places/data/repository/api_place.dart';
 import 'package:places/data/repository/api_urls.dart';
 import 'package:places/data/repository/get_place_body.dart';
@@ -18,23 +19,36 @@ class TestBackEndFlutterService {
   );
 
   Future<List<ApiPlace>> getPlaces() async {
-    final response = await _getDio().get<dynamic>(
-      ApiUrls.place,
-    );
+    try {
+      final response = await _getDio().get<dynamic>(
+        ApiUrls.place,
+      );
+      List<ApiPlace> _listApiPlaces = response.data
+          .whereType<Map<String, dynamic>>()
+          .map<ApiPlace>(
+            (place) => ApiPlace.fromApi(place),
+          )
+          .toList();
 
-    List<ApiPlace> _listApiPlaces = List<ApiPlace>.from(
-      response.data.map(
-        (place) => ApiPlace.fromApi(place),
-      ),
-    );
+      return _listApiPlaces;
+    } on DioError catch (e) {
+      final options = e.requestOptions;
 
-    return _listApiPlaces;
+      throw NetworkException(
+        request: '${options.baseUrl}${options.path}',
+        description: e.message,
+      );
+    }
   }
 
   Future<ApiPlace> getPlace(int id) async {
-    final response = await _getDio().get<dynamic>('${ApiUrls.place}/$id');
+    try {
+      final response = await _getDio().get<dynamic>('${ApiUrls.place}/$id');
 
-    return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data);
+    } on DioError catch (e) {
+      throw NetworkException.fromDioError(e);
+    }
   }
 
   Future<ApiPlace> postPlace(
@@ -46,28 +60,36 @@ class TestBackEndFlutterService {
     final String placeType,
     final String description,
   ) async {
-    final body = GetPlaceBody(
-      id: id,
-      lat: lat,
-      lng: lng,
-      name: name,
-      urls: urls,
-      placeType: placeType,
-      description: description,
-    );
+    try {
+      final body = GetPlaceBody(
+        id: id,
+        lat: lat,
+        lng: lng,
+        name: name,
+        urls: urls,
+        placeType: placeType,
+        description: description,
+      );
 
-    final response = await _getDio().post<dynamic>(
-      ApiUrls.place,
-      queryParameters: body.toApi(),
-    );
+      final response = await _getDio().post<dynamic>(
+        ApiUrls.place,
+        queryParameters: body.toApi(),
+      );
 
-    return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data);
+    } on DioError catch (e) {
+      throw NetworkException.fromDioError(e);
+    }
   }
 
   Future<int?> deletePlace(int id) async {
-    final response = await _getDio().delete<dynamic>('${ApiUrls.place}/$id');
+    try {
+      final response = await _getDio().delete<dynamic>('${ApiUrls.place}/$id');
 
-    return response.statusCode;
+      return response.statusCode;
+    } on DioError catch (e) {
+      throw NetworkException.fromDioError(e);
+    }
   }
 
   Future<ApiPlace> putPlace(
@@ -79,22 +101,26 @@ class TestBackEndFlutterService {
     final String placeType,
     final String description,
   ) async {
-    final body = GetPlaceBody(
-      id: id,
-      lat: lat,
-      lng: lng,
-      name: name,
-      urls: urls,
-      placeType: placeType,
-      description: description,
-    );
+    try {
+      final body = GetPlaceBody(
+        id: id,
+        lat: lat,
+        lng: lng,
+        name: name,
+        urls: urls,
+        placeType: placeType,
+        description: description,
+      );
 
-    final response = await _getDio().put<dynamic>(
-      '${ApiUrls.place}/$id',
-      queryParameters: body.toApi(),
-    );
+      final response = await _getDio().put<dynamic>(
+        '${ApiUrls.place}/$id',
+        queryParameters: body.toApi(),
+      );
 
-    return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data);
+    } on DioError catch (e) {
+      throw NetworkException.fromDioError(e);
+    }
   }
 
   Future<List<ApiPlaceDto>> getPlaceDto(
@@ -104,31 +130,34 @@ class TestBackEndFlutterService {
     final List<String> typeFilter,
     final String nameFilter,
   ) async {
-    final body = GetPlaceDtoBody(
-      lat: lat,
-      lng: lng,
-      radius: radius,
-      typeFilter: typeFilter,
-      nameFilter: nameFilter,
-    );
-    final List<ApiPlaceDto> _listApiPlacesDto;
-    final response = await _getDio().post<dynamic>(
-      ApiUrls.filteredPlaces,
-      data: body.toApi(),
-    );
-    if (response.statusCode == 200) {
-      _listApiPlacesDto = List<ApiPlaceDto>.from(
-        response.data.map(
-              (placeDto) => ApiPlaceDto.fromApi(placeDto),
-        ),
+    try {
+      final body = GetPlaceDtoBody(
+        lat: lat,
+        lng: lng,
+        radius: radius,
+        typeFilter: typeFilter,
+        nameFilter: nameFilter,
       );
-    }else {
-      _listApiPlacesDto = <ApiPlaceDto>[];
+      final List<ApiPlaceDto> _listApiPlacesDto;
+      final response = await _getDio().post<dynamic>(
+        ApiUrls.filteredPlaces,
+        data: body.toApi(),
+      );
+      if (response.statusCode == 200) {
+        _listApiPlacesDto = response.data
+            .whereType<Map<String, dynamic>>()
+            .map<ApiPlace>(
+              (placeDto) => ApiPlaceDto.fromApi(placeDto),
+            )
+            .toList();
+      } else {
+        _listApiPlacesDto = <ApiPlaceDto>[];
+      }
+
+      return _listApiPlacesDto;
+    } on DioError catch (e) {
+      throw NetworkException.fromDioError(e);
     }
-
-
-
-    return _listApiPlacesDto;
   }
 
   Dio _getDio() {
