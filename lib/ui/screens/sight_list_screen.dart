@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/main.dart';
+import 'package:provider/provider.dart';
 import 'package:places/ui/screens/add_sight_screen.dart';
 import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
@@ -81,7 +82,7 @@ class _SightListPortraitWidget extends StatefulWidget {
 class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
   @override
   void initState() {
-    placeInteractor.getListPlaces;
+    context.read<PlaceInteractor>().getListPlaces;
     super.initState();
   }
 
@@ -90,7 +91,7 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: StreamBuilder<List<Place>>(
-        stream: placeInteractor.getListPlaces,
+        stream: context.read<PlaceInteractor>().getListPlaces,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const _ErrorPlaceHolder();
@@ -140,7 +141,7 @@ class _SightListLandscapeWidget extends StatefulWidget {
 class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
   @override
   void initState() {
-    placeInteractor.getListPlaces;
+    context.read<PlaceInteractor>().getListPlaces;
     super.initState();
   }
 
@@ -149,7 +150,7 @@ class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: StreamBuilder<List<Place>>(
-        stream: placeInteractor.getListPlaces,
+        stream: context.read<PlaceInteractor>().getListPlaces,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());

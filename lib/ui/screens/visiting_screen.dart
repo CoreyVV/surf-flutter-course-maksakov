@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/favorite_place_interactor.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/main.dart';
+import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/icons.dart';
@@ -124,14 +126,14 @@ class _BodyState extends State<_Body> {
       children: [
         SafeArea(
           child: _TabList(
-            listPlace: favoritePlaceInteractor.getFavoritesPlaces,
+            listPlace: context.read<FavoritePlaceInteractor>().getFavoritesPlaces,
             asset: AssetsStr.card,
             bodyText: AppStrings.markFavorite,
           ),
         ),
         SafeArea(
           child: _TabList(
-            listPlace: placeInteractor.getVisitedPlaces(),
+            listPlace: context.read<PlaceInteractor>().getVisitedPlaces(),
             asset: AssetsStr.go,
             bodyText: AppStrings.finishRoute,
           ),
