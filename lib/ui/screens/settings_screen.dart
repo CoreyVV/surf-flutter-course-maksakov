@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:places/main.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
+import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/ui/screens/onboarding_screen.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/strings.dart';
+import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -147,13 +148,11 @@ class DarkModeSwitcher extends StatefulWidget {
 class _DarkModeSwitcherState extends State<DarkModeSwitcher> {
   @override
   Widget build(BuildContext context) {
+    final settingsInteractor =  Provider.of<SettingsInteractor>(context);
+
     return CupertinoSwitch(
       value: settingsInteractor.isDarkTheme,
-      onChanged: (newValue) {
-        setState(() {
-          settingsInteractor.isDarkTheme = newValue;
-        });
-      },
+      onChanged: settingsInteractor.setDarkTheme,
     );
   }
 }

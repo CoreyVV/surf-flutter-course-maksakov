@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:places/main.dart';
+import 'package:places/data/interactor/place_interactor.dart';
+import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/settings_screen.dart';
 import 'package:places/ui/screens/sight_list_screen.dart';
@@ -64,7 +65,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
         });
         if (index == 1) {
-          placeInteractor.getListPlaces;
+          context.read<PlaceInteractor>().getListPlaces;
         }
         _navigate(index);
       },

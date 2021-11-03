@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/favorite_place_interactor.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/main.dart';
+import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
@@ -16,7 +18,7 @@ class PlaceDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Place>(
-      future: placeInteractor.getPlaceDetails(id),
+      future: context.read<PlaceInteractor>().getPlaceDetails(id),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(child: CircularProgressIndicator());
@@ -118,7 +120,7 @@ class _PlaceDetails extends StatelessWidget {
                       onTap: () {
                         //TODO: убрать print
                         print('SightDetails/iconHeart was tapped');
-                        favoritePlaceInteractor.setFavorite(place);
+                        context.read<FavoritePlaceInteractor>().setFavorite(place);
                       },
                     ),
                   ],

@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/main.dart';
+import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 import 'package:places/ui/screens/res/strings.dart';
@@ -62,7 +63,7 @@ class PlaceCardFavorite extends StatelessWidget {
                     Positioned(
                       top: 38,
                       left: 16,
-                      child: placeInteractor.isVisited(place)
+                      child: context.read<PlaceInteractor>().isVisited(place)
                           ? Text(
                               'Цель достигнута 12 окт. 2020',
                               style:
@@ -264,7 +265,7 @@ class _ImagePart extends StatelessWidget {
               onTap: onRemove,
             ),
           ),
-          if (placeInteractor.isVisited(place))
+          if (context.read<PlaceInteractor>().isVisited(place))
             const Positioned(
               top: 16,
               right: 56,

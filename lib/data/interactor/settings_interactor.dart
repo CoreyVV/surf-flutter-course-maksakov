@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class SettingsInteractor with ChangeNotifier {
   bool get isDarkTheme => _isDarkTheme;
 
-  set isDarkTheme(bool value) {
+  bool _isDarkTheme = false;
+
+  void setDarkTheme(bool value) {
     _isDarkTheme = value;
+    print(value);
     notifyListeners();
   }
-
-  bool _isDarkTheme = false;
 }

@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/main.dart';
+import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
 
@@ -19,10 +20,12 @@ class FavoriteButton extends StatefulWidget {
 class _FavoriteButtonState extends State<FavoriteButton> {
   final StreamController<bool> _streamController = StreamController();
   late bool _isFavoriteNow;
+  late FavoritePlaceInteractor _favoritePlaceInteractor;
 
   @override
   void initState() {
-    _isFavoriteNow = favoritePlaceInteractor.isFavorite(widget.place);
+    _favoritePlaceInteractor = context.read<FavoritePlaceInteractor>();
+    _isFavoriteNow = _favoritePlaceInteractor.isFavorite(widget.place);
     super.initState();
   }
 
@@ -52,7 +55,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                 //TODO: убрать print
                 print('SightCard/iconHeart was tapped');
                 _streamController.sink.add(!_isFavoriteNow);
-                favoritePlaceInteractor.setFavorite(widget.place);
+                _favoritePlaceInteractor.setFavorite(widget.place);
               },
               child: Ink(
                 child: MyIcon(

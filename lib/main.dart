@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/data/interactor/favorite_place_interactor.dart';
@@ -8,10 +9,9 @@ import 'package:places/ui/screens/sight_list_screen.dart';
 import 'package:places/ui/screens/splash_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/themes.dart';
+import 'package:provider/provider.dart';
 
-final settingsInteractor = SettingsInteractor();
-final placeInteractor = PlaceInteractor(placeRepository: PlaceRepository());
-final favoritePlaceInteractor = FavoritePlaceInteractor();
+// final _favoritePlaceInteractor = FavoritePlaceInteractor();
 
 void main() {
   runApp(const _MaterialAppWithTheme());
@@ -27,41 +27,49 @@ class _MaterialAppWithTheme extends StatefulWidget {
 class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor:
-            settingsInteractor.isDarkTheme ? blackMain : white,
-      ),
-    );
-    favoritePlaceInteractor.init();
-
-    return MaterialApp(
-      theme: settingsInteractor.isDarkTheme ? darkTheme : lightTheme,
-      // home: const SplashScreen(),
-      home: SightListScreen(),
-      title: 'places',
-    );
-  }
-
-  @override
-  void initState() {
-    settingsInteractor.addListener(() => setState(() {
+    return MultiProvider(
+      providers: [
+        Provider<PlaceInteractor>(
+          create: (context) =>
+              PlaceInteractor(placeRepository: PlaceRepository()),
+          dispose: (context, interactor) {
+            interactor.dispose();
+          },
+        ),
+        ChangeNotifierProvider<SettingsInteractor>(
+          create: (context) => SettingsInteractor(),
+        ),
+        Provider<FavoritePlaceInteractor>(
+          create: (context) => FavoritePlaceInteractor(),
+          dispose: (context, interactor) {
+            interactor.dispose();
+          },
+        ),
+      ],
+      child: Builder(
+        builder: (context) {
+          final settingsInteractor = Provider.of<SettingsInteractor>(context);
           final style = SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
             systemNavigationBarColor:
-                settingsInteractor.isDarkTheme ? blackMain : white,
+            settingsInteractor.isDarkTheme ? blackMain : white,
           );
+          Provider.of<FavoritePlaceInteractor>(context).init();
 
-          SystemChrome.setSystemUIOverlayStyle(style);
-        }));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    settingsInteractor.removeListener(() => setState(() {}));
-    super.dispose();
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: style,
+            child: MaterialApp(
+              theme: settingsInteractor.isDarkTheme
+                  ? darkTheme
+                  : lightTheme,
+              // home: const SplashScreen(),
+              home: SightListScreen(),
+              title: 'places',
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 
