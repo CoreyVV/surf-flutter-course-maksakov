@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:provider/provider.dart';
+import 'package:places/store/place_list/place_list_store.dart';
 import 'package:places/ui/screens/add_sight_screen.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/strings.dart';
 import 'package:places/ui/screens/sight_card.dart';
+import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
 import 'package:places/ui/screens/widgets/search_bar.dart';
+import 'package:provider/provider.dart';
 
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -80,9 +83,13 @@ class _SightListPortraitWidget extends StatefulWidget {
 }
 
 class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
+  late PlaceListStore _store;
+
   @override
   void initState() {
-    context.read<PlaceInteractor>().getListPlaces;
+    _store = PlaceListStore(context.read<PlaceInteractor>());
+    _store.getListPlaces();
+
     super.initState();
   }
 
@@ -90,40 +97,50 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: StreamBuilder<List<Place>>(
-        stream: context.read<PlaceInteractor>().getListPlaces,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const _ErrorPlaceHolder();
-          }
-          if (!snapshot.hasData) {
+      child: Observer(
+        builder: (context) {
+          final future = _store.getListPlacesFuture;
+          if (future == null) {
             return const Center(child: CircularProgressIndicator());
           }
-          final _listPlaces = snapshot.data!;
+          switch (future.status) {
+            case FutureStatus.pending:
+              {
+                return const Center(child: CircularProgressIndicator());
+              }
+            case FutureStatus.rejected:
+              {
+                return const _ErrorPlaceHolder();
+              }
+            case FutureStatus.fulfilled:
+              {
+                final _listPlaces = future.value!;
 
-          return CustomScrollView(
-            slivers: [
-              SliverPersistentHeader(
-                delegate: _AppBarPortraitHeaderDelegate(),
-                pinned: true,
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    for (int i = 0; i < _listPlaces.length; i++)
-                      Column(
-                        children: [
-                          PlaceCard(place: _listPlaces[i]),
-                          const SizedBox(
-                            height: 16,
-                          ),
+                return CustomScrollView(
+                  slivers: [
+                    SliverPersistentHeader(
+                      delegate: _AppBarPortraitHeaderDelegate(),
+                      pinned: true,
+                    ),
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          for (int i = 0; i < _listPlaces.length; i++)
+                            Column(
+                              children: [
+                                PlaceCard(place: _listPlaces[i]),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                              ],
+                            ),
                         ],
                       ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          );
+                );
+              }
+          }
         },
       ),
     );
@@ -139,9 +156,13 @@ class _SightListLandscapeWidget extends StatefulWidget {
 }
 
 class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
+  late PlaceListStore _store;
+
   @override
   void initState() {
-    context.read<PlaceInteractor>().getListPlaces;
+    _store = PlaceListStore(context.read<PlaceInteractor>());
+    _store.getListPlaces();
+
     super.initState();
   }
 
@@ -149,36 +170,50 @@ class __SightListLandscapeWidgetState extends State<_SightListLandscapeWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
-      child: StreamBuilder<List<Place>>(
-        stream: context.read<PlaceInteractor>().getListPlaces,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+      child: Observer(
+        builder: (context) {
+          final future = _store.getListPlacesFuture;
+          if (future == null) {
             return const Center(child: CircularProgressIndicator());
           }
-          final _listPlaces = snapshot.data!;
+          switch (future.status) {
+            case FutureStatus.pending:
+              {
+                return const Center(child: CircularProgressIndicator());
+              }
+            case FutureStatus.rejected:
+              {
+                return const _ErrorPlaceHolder();
+              }
+            case FutureStatus.fulfilled:
+              {
+                final _listPlaces = future.value!;
 
-          return CustomScrollView(
-            slivers: [
-              SliverPersistentHeader(
-                delegate: _AppBarLandscapeHeaderDelegate(),
-                pinned: true,
-              ),
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 30.0,
-                  crossAxisSpacing: 36.0,
-                  childAspectRatio: 1.77,
-                ),
-                delegate: SliverChildListDelegate(
-                  [
-                    for (int i = 0; i < _listPlaces.length; i++)
-                      PlaceCard(place: _listPlaces[i]),
+                return CustomScrollView(
+                  slivers: [
+                    SliverPersistentHeader(
+                      delegate: _AppBarLandscapeHeaderDelegate(),
+                      pinned: true,
+                    ),
+                    SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 30.0,
+                        crossAxisSpacing: 36.0,
+                        childAspectRatio: 1.77,
+                      ),
+                      delegate: SliverChildListDelegate(
+                        [
+                          for (int i = 0; i < _listPlaces.length; i++)
+                            PlaceCard(place: _listPlaces[i]),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-          );
+                );
+              }
+          }
         },
       ),
     );

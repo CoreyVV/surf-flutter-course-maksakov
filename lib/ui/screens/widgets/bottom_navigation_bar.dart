@@ -65,7 +65,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
         });
         if (index == 1) {
-          context.read<PlaceInteractor>().getListPlaces;
+          context.read<PlaceInteractor>().getListPlacesStream;
         }
         _navigate(index);
       },

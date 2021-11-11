@@ -12,9 +12,13 @@ class PlaceInteractor {
       StreamController.broadcast();
   final _listVisitedPlaces = <Place>[];
 
-  Stream<List<Place>> get getListPlaces {
+  Stream<List<Place>> get getListPlacesStream {
     _loadListPlace();
     return _placeListController.stream;
+  }
+
+  Future<List<Place>> get getListPlaces {
+    return _getPlaces(1, '1');
   }
 
   PlaceInteractor({
