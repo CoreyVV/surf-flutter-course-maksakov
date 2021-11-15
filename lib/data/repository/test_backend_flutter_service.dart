@@ -23,14 +23,12 @@ class TestBackEndFlutterService {
       final response = await _getDio().get<dynamic>(
         ApiUrls.place,
       );
-      List<ApiPlace> _listApiPlaces = response.data
+      final listApiPlaces = (response.data as List)
           .whereType<Map<String, dynamic>>()
-          .map<ApiPlace>(
-            (place) => ApiPlace.fromApi(place),
-          )
+          .map((place) => ApiPlace.fromApi(place))
           .toList();
 
-      return _listApiPlaces;
+      return listApiPlaces;
     } on DioError catch (e) {
       final options = e.requestOptions;
 
@@ -45,7 +43,7 @@ class TestBackEndFlutterService {
     try {
       final response = await _getDio().get<dynamic>('${ApiUrls.place}/$id');
 
-      return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       throw NetworkException.fromDioError(e);
     }
@@ -76,7 +74,7 @@ class TestBackEndFlutterService {
         queryParameters: body.toApi(),
       );
 
-      return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       throw NetworkException.fromDioError(e);
     }
@@ -117,7 +115,7 @@ class TestBackEndFlutterService {
         queryParameters: body.toApi(),
       );
 
-      return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       throw NetworkException.fromDioError(e);
     }
@@ -131,7 +129,7 @@ class TestBackEndFlutterService {
     final String nameFilter,
   ) async {
     try {
-      final body = GetPlaceDtoBody(
+      final body = GetPlacesDtoBody(
         lat: lat,
         lng: lng,
         radius: radius,
@@ -144,9 +142,9 @@ class TestBackEndFlutterService {
         data: body.toApi(),
       );
       if (response.statusCode == 200) {
-        _listApiPlacesDto = response.data
+        _listApiPlacesDto = (response.data as List)
             .whereType<Map<String, dynamic>>()
-            .map<ApiPlace>(
+            .map(
               (placeDto) => ApiPlaceDto.fromApi(placeDto),
             )
             .toList();

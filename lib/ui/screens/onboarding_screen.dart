@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/sight_list_screen.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/place_list_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -207,7 +207,7 @@ class _ButtonStart extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushReplacement<void, void>(
             MaterialPageRoute(
-              builder: (_) => const SightListScreen(),
+              builder: (_) => const PlaceListScreen(),
             ),
           );
         },
@@ -234,7 +234,7 @@ class _ButtonSkip extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushReplacement<void, void>(
               MaterialPageRoute(
-                builder: (_) => const SightListScreen(),
+                builder: (_) => const PlaceListScreen(),
               ),
             );
           },

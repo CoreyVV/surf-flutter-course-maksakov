@@ -3,10 +3,10 @@ import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:provider/provider.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/sight_card_favorite.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/place_card_favorite.dart';
 
 
 class VisitingScreen extends StatefulWidget {

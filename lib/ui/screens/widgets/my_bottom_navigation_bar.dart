@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:provider/provider.dart';
-import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/settings_screen.dart';
-import 'package:places/ui/screens/sight_list_screen.dart';
+import 'package:places/ui/screens/place_list_screen.dart';
 import 'package:places/ui/screens/visiting_screen.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
@@ -78,7 +78,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         {
           Navigator.of(context).pushReplacement<void, void>(
             MaterialPageRoute(
-              builder: (_) => const SightListScreen(),
+              builder: (_) => const PlaceListScreen(),
             ),
           );
           break;
@@ -87,7 +87,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         {
           Navigator.of(context).pushReplacement<void, void>(
             MaterialPageRoute(
-              builder: (_) => const SightListScreen(),
+              builder: (_) => const PlaceListScreen(),
             ),
           );
           break;

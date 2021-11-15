@@ -25,11 +25,8 @@ class NetworkException implements Exception {
   @override
   String toString() {
     var message = 'В запросе $request возникла ошибка:';
-    if (code != null) {
-      message += ' $code $description';
-    } else {
-      message += ' $description';
-    }
+    message = code != null ? ' $code $description' : ' $description';
+
     return message;
   }
 }

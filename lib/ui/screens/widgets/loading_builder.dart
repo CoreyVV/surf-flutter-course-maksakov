@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget loadingBuilder(
-  BuildContext context,
+  // BuildContext context,
   Widget child,
   ImageChunkEvent? loadingProgress,
 ) {

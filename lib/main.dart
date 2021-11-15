@@ -5,7 +5,7 @@ import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/data/repository/place_repository.dart';
-import 'package:places/ui/screens/sight_list_screen.dart';
+import 'package:places/ui/screens/place_list_screen.dart';
 import 'package:places/ui/screens/splash_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/themes.dart';
@@ -63,7 +63,7 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
                   ? darkTheme
                   : lightTheme,
               // home: const SplashScreen(),
-              home: SightListScreen(),
+              home: PlaceListScreen(),
               title: 'places',
             ),
           );

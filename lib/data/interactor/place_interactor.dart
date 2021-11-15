@@ -14,6 +14,7 @@ class PlaceInteractor {
 
   Stream<List<Place>> get getListPlacesStream {
     _loadListPlace();
+
     return _placeListController.stream;
   }
 
@@ -47,6 +48,7 @@ class PlaceInteractor {
 
   Future<Place> addNewPlace(Place place) {
     final result = placeRepository.postPlace(place);
+
     return result;
   }
 

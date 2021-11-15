@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screens/res/strings.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/sight_search_screen.dart';
 import 'package:places/ui/screens/filters_screen.dart';
-import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
 
 class SearchBar extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -66,7 +66,7 @@ class SearchBar extends StatelessWidget {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const FilterScreen(),
+                    builder: (_) => const FiltersScreen(),
                   ),
                 );
               },

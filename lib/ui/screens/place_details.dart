@@ -3,8 +3,8 @@ import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:provider/provider.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/res/strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 class PlaceDetails extends StatelessWidget {
@@ -247,7 +247,7 @@ class _Image extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       url,
-      loadingBuilder: loadingBuilder,
+      // loadingBuilder: loadingBuilder,
       fit: BoxFit.cover,
       width: 397,
       height: 360,

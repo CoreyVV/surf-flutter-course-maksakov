@@ -5,7 +5,7 @@ import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
 
 class FavoriteButton extends StatefulWidget {
   final Place place;

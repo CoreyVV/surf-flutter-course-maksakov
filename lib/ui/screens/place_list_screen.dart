@@ -6,12 +6,37 @@ import 'package:places/data/model/place.dart';
 import 'package:places/store/place_list/place_list_store.dart';
 import 'package:places/ui/screens/add_sight_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/sight_card.dart';
-import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/place_card.dart';
+import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
 import 'package:places/ui/screens/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
+
+class PlaceListScreen extends StatefulWidget {
+  const PlaceListScreen({Key? key}) : super(key: key);
+
+  @override
+  _PlaceListScreenState createState() => _PlaceListScreenState();
+}
+
+class _PlaceListScreenState extends State<PlaceListScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: const _SightListWidget(),
+      bottomNavigationBar: MyBottomNavigationBar(
+        pageIndex: 0,
+      ),
+      floatingActionButton:
+          MediaQuery.of(context).orientation == Orientation.portrait
+              ? const _NewSightButton()
+              : const SizedBox.shrink(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
 
 class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -34,31 +59,6 @@ class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
         maxLines: 2,
       ),
       toolbarHeight: height,
-    );
-  }
-}
-
-class SightListScreen extends StatefulWidget {
-  const SightListScreen({Key? key}) : super(key: key);
-
-  @override
-  _SightListScreenState createState() => _SightListScreenState();
-}
-
-class _SightListScreenState extends State<SightListScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: const _SightListWidget(),
-      bottomNavigationBar: MyBottomNavigationBar(
-        pageIndex: 0,
-      ),
-      floatingActionButton:
-          MediaQuery.of(context).orientation == Orientation.portrait
-              ? const _NewSightButton()
-              : const SizedBox.shrink(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

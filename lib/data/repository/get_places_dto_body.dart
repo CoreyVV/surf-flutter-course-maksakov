@@ -1,11 +1,11 @@
-class GetPlaceDtoBody {
+class GetPlacesDtoBody {
   final double lat;
   final double lng;
   final double radius;
   final List<String> typeFilter;
   final String nameFilter;
 
-  GetPlaceDtoBody({
+  GetPlacesDtoBody({
     required this.lat,
     required this.lng,
     required this.radius,

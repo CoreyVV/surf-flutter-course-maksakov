@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/sight_details.dart';
+import 'package:places/ui/screens/place_details.dart';
 import 'package:places/ui/screens/widgets/favorite_button.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
@@ -89,7 +89,7 @@ class _Base extends StatelessWidget {
           height: 96,
           child: Image.network(
             place.urls[0],
-            loadingBuilder: loadingBuilder,
+            // loadingBuilder: loadingBuilder,
             fit: BoxFit.cover,
             width: double.infinity,
           ),

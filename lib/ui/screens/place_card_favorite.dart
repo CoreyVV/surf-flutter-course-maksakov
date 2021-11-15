@@ -6,9 +6,9 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/sight_details.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/place_details.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 class PlaceCardFavorite extends StatelessWidget {
@@ -143,7 +143,7 @@ class _IconCalendar extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       );
@@ -243,7 +243,7 @@ class _ImagePart extends StatelessWidget {
           ),
           Image.network(
             place.urls[0],
-            loadingBuilder: loadingBuilder,
+            // loadingBuilder: loadingBuilder,
             fit: BoxFit.cover,
             width: 360,
           ),

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/res/strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 String _selectedType = SightType.museum;
@@ -710,7 +710,7 @@ class _ImageRowItem extends StatelessWidget {
               // Dismissible(key: key, child: child);
               Image.network(
                 url,
-                loadingBuilder: loadingBuilder,
+                // loadingBuilder: loadingBuilder,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
