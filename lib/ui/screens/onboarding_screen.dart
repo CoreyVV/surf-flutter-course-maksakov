@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screens/res/my_icons.dart';
-import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/place_list_screen.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -23,11 +23,6 @@ class _Body extends StatefulWidget {
 
 class __BodyState extends State<_Body> {
   int _currentPageValue = 0;
-
-  void _getChangedPageAndMoveBar(int page) {
-    _currentPageValue = page;
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +50,11 @@ class __BodyState extends State<_Body> {
         ),
       ],
     );
+  }
+
+  void _getChangedPageAndMoveBar(int page) {
+    _currentPageValue = page;
+    setState(() {});
   }
 }
 
@@ -186,9 +186,9 @@ class _MyIndicator extends StatelessWidget {
       height: 8,
       width: isActive ? 24 : 8,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         color: isActive
-            ? Theme.of(context).accentIconTheme.color
+            ? Theme.of(context).colorScheme.secondary
             : Theme.of(context).unselectedWidgetColor,
       ),
     );
@@ -243,7 +243,7 @@ class _ButtonSkip extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyText1!
-                .copyWith(color: Theme.of(context).buttonColor),
+                .copyWith(color: Theme.of(context).secondaryHeaderColor),
           ),
         ),
       ),

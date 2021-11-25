@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:places/data/exception/network_exception.dart';
 import 'package:places/data/repository/api_place.dart';
+import 'package:places/data/repository/api_place_dto.dart';
 import 'package:places/data/repository/api_urls.dart';
 import 'package:places/data/repository/get_place_body.dart';
-import 'package:places/data/repository/api_place_dto.dart';
 import 'package:places/data/repository/get_places_dto_body.dart';
 
 class TestBackEndFlutterService {
@@ -141,16 +141,12 @@ class TestBackEndFlutterService {
         ApiUrls.filteredPlaces,
         data: body.toApi(),
       );
-      if (response.statusCode == 200) {
-        _listApiPlacesDto = (response.data as List)
-            .whereType<Map<String, dynamic>>()
-            .map(
-              (placeDto) => ApiPlaceDto.fromApi(placeDto),
-            )
-            .toList();
-      } else {
-        _listApiPlacesDto = <ApiPlaceDto>[];
-      }
+      _listApiPlacesDto = response.statusCode == 200
+          ? (response.data as List)
+              .whereType<Map<String, dynamic>>()
+              .map((placeDto) => ApiPlaceDto.fromApi(placeDto))
+              .toList()
+          : <ApiPlaceDto>[];
 
       return _listApiPlacesDto;
     } on DioError catch (e) {
@@ -165,20 +161,24 @@ class TestBackEndFlutterService {
           print(
             'ERROR $e',
           );
+
           return handler.next(e);
         },
         onRequest: (options, handler) {
           print(
             'REQUEST  [${options.method}] => PATH:${options.baseUrl}${options.path}  BODY: ${options.data}',
           );
+
           return handler.next(options);
         },
         onResponse: (response, handler) {
           print('RESPONSE [${response.statusCode}]');
+
           return handler.next(response);
         },
       ),
     );
+
     return _dio;
   }
 }

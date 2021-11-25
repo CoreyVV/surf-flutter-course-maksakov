@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:provider/provider.dart';
-import 'package:places/ui/screens/res/app_strings.dart';
-import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
-import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/place_card_favorite.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 
 class VisitingScreen extends StatefulWidget {
@@ -57,7 +57,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text(
           AppStrings.favorite,
           textAlign: TextAlign.center,
-          style: Theme.of(context).accentTextTheme.headline6,
+          style: Theme.of(context).textTheme.headline6!.copyWith(
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
           maxLines: 2,
         ),
       ),
@@ -72,7 +74,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColorDark,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: const BorderRadius.all(Radius.circular(25)),
           ),
           child: TabBar(
             labelPadding: EdgeInsets.zero,
@@ -80,23 +82,23 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             unselectedLabelColor: Theme.of(context).unselectedWidgetColor,
             indicatorSize: TabBarIndicatorSize.label,
             indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: Theme.of(context).accentColor,
+              borderRadius: const BorderRadius.all(Radius.circular(40)),
+              color: Theme.of(context).colorScheme.secondary,
             ),
             tabs: [
               Container(
                 width: 184,
                 height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
                 child: const Center(child: Text(AppStrings.wantToVisit)),
               ),
               Container(
                 width: 184,
                 height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
                 child: const Center(child: Text(AppStrings.visited)),
               ),
@@ -354,11 +356,7 @@ class _Bucket extends StatelessWidget {
         ),
         Text(
           AppStrings.delete,
-          style: Theme.of(context).accentTextTheme.bodyText1!.copyWith(
-                color: Theme.of(
-                  context,
-                ).primaryColor,
-              ),
+          style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
     );
@@ -385,7 +383,7 @@ class _DismissibleStackState extends State<_DismissibleStack> {
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
           child: Container(
             width: 360,
             height: 218,
@@ -407,7 +405,7 @@ class _DismissibleStackState extends State<_DismissibleStack> {
           },
           onDismissed: (direction) => widget.onRemove(),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             child: PlaceCardFavorite(
               key: ValueKey(widget.place),
               place: widget.place,

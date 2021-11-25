@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:places/data/interactor/place_interactor.dart';
-import 'package:places/data/model/place.dart';
 import 'package:places/store/place_list/place_list_store.dart';
 import 'package:places/ui/screens/add_sight_screen.dart';
+import 'package:places/ui/screens/place_card.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
-import 'package:places/ui/screens/res/app_strings.dart';
-import 'package:places/ui/screens/place_card.dart';
 import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
 import 'package:places/ui/screens/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +54,9 @@ class SightAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         AppStrings.appBarText2Str,
         textAlign: TextAlign.left,
-        style: Theme.of(context).accentTextTheme.headline4,
+        style: Theme.of(context).textTheme.headline4!.copyWith(
+              color: Theme.of(context).colorScheme.onSecondary,
+            ),
         maxLines: 2,
       ),
       toolbarHeight: height,
@@ -238,9 +239,9 @@ class _NewSightButton extends StatelessWidget {
           );
         },
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            gradient: const LinearGradient(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            gradient: LinearGradient(
               colors: <Color>[
                 yellow,
                 greenWhite,
@@ -292,7 +293,9 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
                     Text(
                       AppStrings.appBarText2Str,
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).accentTextTheme.headline4,
+                      style: Theme.of(context).textTheme.headline4!.copyWith(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -317,7 +320,9 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
                   child: Center(
                     child: Text(
                       AppStrings.appBarText1Str,
-                      style: Theme.of(context).accentTextTheme.headline6,
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          ),
                     ),
                   ),
                 ),
@@ -358,7 +363,9 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         AppStrings.appBarText1Str,
-                        style: Theme.of(context).accentTextTheme.headline6,
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -384,7 +391,9 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       AppStrings.appBarText1Str,
-                      style: Theme.of(context).accentTextTheme.headline6,
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
+                            color: Theme.of(context).colorScheme.onSecondary,
+                          ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

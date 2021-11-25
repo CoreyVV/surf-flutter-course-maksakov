@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/search_interactor.dart';
 import 'package:places/data/model/place_dto.dart';
-import 'package:places/ui/screens/res/app_strings.dart';
-import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
-import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/place_details.dart';
-import 'package:places/ui/screens/widgets/loading_builder.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
 
 enum _State {
   history,
@@ -153,17 +152,17 @@ class _SearchBar extends StatelessWidget {
       textInputAction: TextInputAction.search,
       onEditingComplete: onEditingComplete,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.transparent),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderSide: BorderSide(color: Colors.transparent),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.transparent),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderSide: BorderSide(color: Colors.transparent),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.transparent),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderSide: BorderSide(color: Colors.transparent),
         ),
         fillColor: Theme.of(context).primaryColorDark,
         filled: true,
@@ -180,7 +179,7 @@ class _SearchBar extends StatelessWidget {
           child: IconButton(
             icon: MyIcon(
               asset: AssetsStr.iconClear,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
             iconSize: 18,
             splashRadius: 20,
@@ -246,9 +245,9 @@ class _History extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: TextButton(
             onPressed: onCleanPressed,
-            style: ElevatedButton.styleFrom(
-              onPrimary: Theme.of(context).buttonColor,
-            ),
+            // style: ElevatedButton.styleFrom(
+            //   onPrimary: Theme.of(context).elevatedButtonTheme.style!.backgroundColor,
+            // ),
             child: const Text(AppStrings.clearHistory),
           ),
         ),
@@ -354,10 +353,10 @@ class _Item extends StatelessWidget {
                   height: 56,
                   width: 56,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
                     clipBehavior: Clip.hardEdge,
                     child: Image.network(
-                      sight.urls[0],
+                      sight.urls.first,
                       // loadingBuilder: loadingBuilder,
                       fit: BoxFit.cover,
                     ),

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:provider/provider.dart';
-import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
-import 'package:places/ui/screens/widgets/loading_builder.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:provider/provider.dart';
 
 class PlaceDetails extends StatelessWidget {
   final int id;
@@ -118,9 +117,11 @@ class _PlaceDetails extends StatelessWidget {
                       title: AppStrings.addToFavorites,
                       asset: AssetsStr.iconHeart,
                       onTap: () {
-                        //TODO: убрать print
+                        //TODO(vv): убрать print, See https://link/todo.
                         print('SightDetails/iconHeart was tapped');
-                        context.read<FavoritePlaceInteractor>().setFavorite(place);
+                        context
+                            .read<FavoritePlaceInteractor>()
+                            .setFavorite(place);
                       },
                     ),
                   ],
@@ -174,7 +175,7 @@ class _PlaceImagesState extends State<_PlaceImages> {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
                   color: Theme.of(context).primaryColor,
                 ),
                 width: 40,
@@ -228,7 +229,7 @@ class _MyIndicator extends StatelessWidget {
       height: 7,
       width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         color: isActive ? Theme.of(context).indicatorColor : Colors.transparent,
       ),
     );
@@ -302,7 +303,7 @@ class _Button extends StatelessWidget {
               WidgetSpan(
                 child: MyIcon(
                   asset: asset,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               const WidgetSpan(
@@ -310,7 +311,9 @@ class _Button extends StatelessWidget {
               ),
               TextSpan(
                 text: title,
-                style: Theme.of(context).accentTextTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
               ),
             ],
           ),
@@ -340,14 +343,17 @@ class _PlaceTexts extends StatelessWidget {
           ),
           child: Text(
             place.name,
-            style: Theme.of(context).accentTextTheme.headline5,
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
           ),
         ),
         Row(
           children: [
             Text(
               place.placeType,
-              style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    color: Theme.of(context).colorScheme.onSecondary,
                     fontWeight: FontWeight.w700,
                   ),
             ),
@@ -369,7 +375,9 @@ class _PlaceTexts extends StatelessWidget {
           height: 112,
           child: Text(
             place.description,
-            style: Theme.of(context).accentTextTheme.bodyText2,
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
             maxLines: 4,
           ),
         ),

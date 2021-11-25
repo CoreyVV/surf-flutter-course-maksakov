@@ -46,7 +46,7 @@ dart_code_metrics:
           - test/**
     - prefer-first
     - prefer-last
-    - prefer-single-widget-per-file
+#    - prefer-single-widget-per-file
     - prefer-conditional-expressions
     - prefer-intl-name
     - provide-correct-intl-args
@@ -61,3 +61,4 @@ linter:
     use_test_throws_matchers: true
 
     avoid_print: false
+    flutter_style_todos: false

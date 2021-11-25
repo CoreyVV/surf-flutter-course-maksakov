@@ -15,7 +15,7 @@ class PlaceRepository {
 
     return
       result.map<Place>(PlaceMapper.fromApi).toList();
-    } on NetworkException catch (e) {
+    } on NetworkException {
       rethrow;
     }
   }

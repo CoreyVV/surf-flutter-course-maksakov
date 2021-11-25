@@ -1,11 +1,11 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
-import 'package:places/ui/screens/widgets/loading_builder.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
 
 String _selectedType = SightType.museum;
 String _name = '';
@@ -99,13 +99,13 @@ class _AddSightScreenState extends State<AddSightScreen> {
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+
   const _AppBar({
     this.height = 56,
     Key? key,
   }) : super(key: key);
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             Text(
               AppStrings.newSightButtonText,
               textAlign: TextAlign.center,
-              style: Theme.of(context).accentTextTheme.headline6,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
             ),
           ],
         ),
@@ -169,10 +171,10 @@ class _NewSightBody extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Text(
                     AppStrings.category,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontSize: 12,
+                        ),
                   ),
                 ),
                 const _CategoryChoice(),
@@ -244,13 +246,13 @@ class _CategoryChoice extends StatelessWidget {
 
 // Группа полей ввода экрана добавления нового места
 class _InputBoxes extends StatelessWidget {
-  _InputBoxes({Key? key}) : super(key: key);
-
   final FocusNode _focusNodeName = FocusNode();
   final FocusNode _focusNodeLat = FocusNode();
   final FocusNode _focusNodeLon = FocusNode();
   final FocusNode _focusNodeDesc = FocusNode();
   final FocusNode _focusNodeSave = FocusNode();
+
+  _InputBoxes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -318,9 +320,9 @@ class _LocationButton extends StatelessWidget {
       alignment: Alignment.centerLeft,
       height: 48,
       child: TextButton(
-        style: ElevatedButton.styleFrom(
-          onPrimary: Theme.of(context).buttonColor,
-        ),
+        // style: ElevatedButton.styleFrom(
+        //   onPrimary: Theme.of(context).buttonColor,
+        // ),
         onPressed: () {
           //TODO: убрать print
           print('AddSightScreen/Location button was tapped');
@@ -419,7 +421,8 @@ class __InputBoxState extends State<_InputBox> {
           ),
           child: Text(
             widget.title,
-            style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondary,
                   fontSize: 12,
                 ),
           ),
@@ -483,7 +486,7 @@ class _SelectSightTypeState extends State<SelectSightType> {
             _TypeFilterBox(
               onTap: () {
                 setState(() {
-                  final bool s = _typesMap[sight]!;
+                  final s = _typesMap[sight]!;
                   _typesMap.updateAll((key, value) => false);
                   _typesMap[sight] = !s;
                   //TODO: убрать print
@@ -521,13 +524,13 @@ class _SelectSightTypeState extends State<SelectSightType> {
 class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+
   const _AppBarSightType({
     this.height = 56,
     Key? key,
   }) : super(key: key);
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
@@ -557,7 +560,9 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
             child: Text(
               AppStrings.category,
               textAlign: TextAlign.center,
-              style: Theme.of(context).accentTextTheme.headline6,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
             ),
           ),
         ],
@@ -611,7 +616,7 @@ class _TypeFilterBox extends StatelessWidget {
             bottom: 12,
             child: MyIcon(
               asset: AssetsStr.iconTick,
-              color: Theme.of(context).accentIconTheme.color,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
       ],
@@ -653,10 +658,10 @@ class __ImagesRowState extends State<_ImagesRow> {
                           },
                         );
                       },
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
                       child: MyIcon(
                         asset: AssetsStr.buttonWhitePlus,
-                        color: Theme.of(context).buttonColor,
+                        color: Theme.of(context).secondaryHeaderColor,
                         // height: 72,
                         // fit: BoxFit.fitHeight,
                       ),
@@ -704,7 +709,7 @@ class _ImageRowItem extends StatelessWidget {
         width: 72,
         height: 72,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           child: Stack(
             children: [
               // Dismissible(key: key, child: child);
@@ -721,11 +726,11 @@ class _ImageRowItem extends StatelessWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                     onTap: onRemove,
                     child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                         color: Colors.transparent,
                       ),
                       child: const MyIcon(
@@ -758,7 +763,7 @@ class _PhotoSelectDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
               child: Container(
                 height: 152,
                 color: Theme.of(context).primaryColor,
@@ -921,15 +926,15 @@ class _DialogCancelButton extends StatelessWidget {
         vertical: 8,
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
         child: Container(
           height: 48,
           width: 360,
           color: Theme.of(context).primaryColor,
           child: TextButton(
-            style: ElevatedButton.styleFrom(
-              onPrimary: Theme.of(context).buttonColor,
-            ),
+            // style: ElevatedButton.styleFrom(
+            //   onPrimary: Theme.of(context).buttonColor,
+            // ),
             onPressed: () {
               Navigator.of(context).pop();
             },

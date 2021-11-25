@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/settings_interactor.dart';
 import 'package:places/ui/screens/onboarding_screen.dart';
-import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -27,13 +27,13 @@ class SettingsScreen extends StatelessWidget {
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
 
+  @override
+  Size get preferredSize => Size.fromHeight(height);
+
   const _AppBar({
     this.height = 56,
     Key? key,
   }) : super(key: key);
-
-  @override
-  Size get preferredSize => Size.fromHeight(height);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text(
           AppStrings.settings,
           textAlign: TextAlign.center,
-          style: Theme.of(context).accentTextTheme.headline6,
+          style: Theme.of(context).textTheme.headline6!.copyWith(
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
         ),
       ),
       backgroundColor: Colors.transparent,
@@ -81,7 +83,9 @@ class _Body extends StatelessWidget {
             children: [
               Text(
                 AppStrings.darkTheme,
-                style: Theme.of(context).accentTextTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
               ),
               Expanded(
                 child: Container(),
@@ -108,7 +112,9 @@ class _Body extends StatelessWidget {
             children: [
               Text(
                 AppStrings.studyGuide,
-                style: Theme.of(context).accentTextTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
               ),
               Expanded(
                 child: Container(),
@@ -124,7 +130,7 @@ class _Body extends StatelessWidget {
                 },
                 icon: ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                    Theme.of(context).buttonColor,
+                    Theme.of(context).secondaryHeaderColor,
                     BlendMode.modulate,
                   ),
                   child: MyIcons.iconInfo,

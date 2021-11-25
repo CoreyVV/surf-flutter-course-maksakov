@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/model/place.dart';
-import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/place_details.dart';
+import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/widgets/favorite_button.dart';
-import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 class PlaceCard extends StatelessWidget {
   final Place place;
@@ -16,7 +15,7 @@ class PlaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
       clipBehavior: Clip.hardEdge,
       child: SizedBox(
         width: double.infinity,
@@ -28,7 +27,7 @@ class PlaceCard extends StatelessWidget {
             ),
             Material(
               color: Colors.transparent,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
               clipBehavior: Clip.hardEdge,
               child: Ink(
                 child: InkWell(
@@ -53,10 +52,7 @@ class PlaceCard extends StatelessWidget {
               left: 16,
               child: Text(
                 place.placeType,
-                style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: white,
-                    ),
+                style: Theme.of(context).textTheme.button,
               ),
             ),
             Positioned(
@@ -88,7 +84,7 @@ class _Base extends StatelessWidget {
         SizedBox(
           height: 96,
           child: Image.network(
-            place.urls[0],
+            place.urls.first,
             // loadingBuilder: loadingBuilder,
             fit: BoxFit.cover,
             width: double.infinity,
@@ -110,7 +106,9 @@ class _Base extends StatelessWidget {
                   child: Text(
                     place.name,
                     maxLines: 2,
-                    style: Theme.of(context).accentTextTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
                   ),
                 ),
               ),
@@ -136,5 +134,3 @@ class _Base extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/place_interactor.dart';
-import 'package:provider/provider.dart';
+import 'package:places/ui/screens/place_list_screen.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
 import 'package:places/ui/screens/settings_screen.dart';
-import 'package:places/ui/screens/place_list_screen.dart';
 import 'package:places/ui/screens/visiting_screen.dart';
+import 'package:provider/provider.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
   int pageIndex;

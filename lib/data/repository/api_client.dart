@@ -35,10 +35,12 @@ class ApiClient {
           print(
             'REQUEST  [${options.method}] => PATH:${options.baseUrl}${options.path}',
           );
+
           return handler.next(options);
         },
         onResponse: (response, handler) {
           print('RESPONSE [${response.statusCode}]');
+
           return handler.next(response);
         },
       ),

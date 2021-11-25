@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/my_icons.dart';
-import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/place_list_screen.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
 
 int _amountFilteredPlaces = 0;
 
@@ -27,8 +26,7 @@ class FiltersScreen extends StatefulWidget {
 class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
-    final isSmallScreenResolution =
-        MediaQuery.of(context).size.height <= 600;
+    final isSmallScreenResolution = MediaQuery.of(context).size.height <= 600;
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +69,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
-                    .copyWith(color: Theme.of(context).buttonColor),
+                    .copyWith(color: Theme.of(context).secondaryHeaderColor),
               ),
             ),
           ),
@@ -139,10 +137,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconHotel.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -164,10 +162,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconRestaurant.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -189,10 +187,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconParticularPlace.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -211,10 +209,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconPark.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -236,10 +234,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconMuseum.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -261,10 +259,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconCafe.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -311,10 +309,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconHotel.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               fontSize: 12,
                             ),
                       ),
@@ -338,10 +334,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconRestaurant.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               fontSize: 12,
                             ),
                       ),
@@ -365,10 +359,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconParticularPlace.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               fontSize: 12,
                             ),
                       ),
@@ -397,10 +389,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconPark.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               fontSize: 12,
                             ),
                       ),
@@ -424,10 +414,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconMuseum.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               fontSize: 12,
                             ),
                       ),
@@ -451,10 +439,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconCafe.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
                               fontSize: 12,
                             ),
                       ),
@@ -490,7 +476,7 @@ class TypeFilterBox extends StatelessWidget {
         children: [
           sightTypeIcon.icon,
           InkWell(
-            borderRadius: BorderRadius.circular(64),
+            borderRadius: const BorderRadius.all(Radius.circular(64)),
             onTap: onTap,
             child: Ink(),
           ),
@@ -543,7 +529,9 @@ class DistanceFilterState extends State<DistanceFilter> {
                     children: [
                       Text(
                         AppStrings.distance,
-                        style: Theme.of(context).accentTextTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
                       ),
                       const SizedBox(
                         width: 132,
@@ -552,10 +540,7 @@ class DistanceFilterState extends State<DistanceFilter> {
                         alignment: Alignment.centerRight,
                         child: Text(
                           _textRangeValues,
-                          style: Theme.of(context)
-                              .accentTextTheme
-                              .bodyText1!
-                              .copyWith(color: inactiveBlack),
+                          style: Theme.of(context).primaryTextTheme.bodyText1,
                         ),
                       ),
                     ],
@@ -633,8 +618,7 @@ class _ShowButtonState extends State<ShowButton> {
     final List<Sight> sights = [];
     bool isSuitable;
     for (final Sight sight in mocks) {
-      isSuitable = true
-      ;
+      isSuitable = true;
       if (filterList.isNotEmpty) {
         if (isSuitable && (filterList.contains(sight.type))) {
           sights.add(sight);

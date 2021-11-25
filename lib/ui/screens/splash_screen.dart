@@ -25,25 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
     _navigateToNext();
   }
 
-  Future<void> _navigateToNext() async {
-    await Future.wait(
-      [
-        _isInitialized,
-        Future<bool>.delayed(
-          const Duration(seconds: 2),
-          () => true,
-        ),
-      ],
-      eagerError: true,
-    );
-
-    await Navigator.of(context).pushReplacement<void, void>(
-      MaterialPageRoute(
-        builder: (_) => const OnboardingScreen(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,6 +42,29 @@ class _SplashScreenState extends State<SplashScreen> {
         child: MyIcon(
           asset: AssetsStr.subtract,
         ),
+      ),
+    );
+  }
+
+  Future<void> _navigateToNext() async {
+    await Future.wait(
+      [
+        _isInitialized,
+        Future<bool>.delayed(
+          const Duration(seconds: 2),
+          () => true,
+        ),
+      ],
+      eagerError: true,
+    );
+
+    _toOnboardingScreen();
+  }
+
+  void _toOnboardingScreen() {
+    Navigator.of(context).pushReplacement<void, void>(
+      MaterialPageRoute(
+        builder: (_) => const OnboardingScreen(),
       ),
     );
   }
