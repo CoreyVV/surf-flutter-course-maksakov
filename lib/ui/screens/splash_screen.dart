@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/screens/onboarding_screen.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -28,13 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerRight,
           end: Alignment.centerLeft,
           colors: [
-            yellow,
-            greenWhite,
+            Theme.of(context).colorScheme.green,
+            Theme.of(context).colorScheme.yellow,
           ],
         ),
       ),

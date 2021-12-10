@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/screens/filters_screen.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 import 'package:places/ui/screens/sight_search_screen.dart';
 
 class SearchBar extends StatelessWidget {
@@ -41,13 +42,17 @@ class SearchBar extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(color: Colors.transparent),
               ),
-              fillColor: Theme.of(context).primaryColorDark,
+              fillColor: Theme.of(context).colorScheme.background,
               filled: true,
               hintText: AppStrings.searchBarHintText,
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(color: Theme.of(context).colorScheme.inactiveBlack),
               contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
               prefixIcon: MyIcon(
                 asset: AssetsStr.search,
-                color: Theme.of(context).unselectedWidgetColor,
+                color: Theme.of(context).colorScheme.inactiveBlack,
                 height: 18,
                 fit: BoxFit.scaleDown,
               ),
@@ -59,7 +64,7 @@ class SearchBar extends StatelessWidget {
             child: IconButton(
               icon: MyIcon(
                 asset: AssetsStr.filter,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).colorScheme.green,
               ),
               iconSize: 18,
               onPressed: () {

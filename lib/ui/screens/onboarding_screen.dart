@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/ui/screens/place_list_screen.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -37,13 +38,13 @@ class __BodyState extends State<_Body> {
           ],
         ),
         Positioned(
-          left: 156,
+          left: MediaQuery.of(context).size.width / 2 - 28,
           bottom: 136,
           child: Row(
             children: [
-              for (int i = 0; i < 3; i++)
+              for (int index = 0; index < 3; index++)
                 _MyIndicator(
-                  isActive: i == _currentPageValue,
+                  isActive: index == _currentPageValue,
                 ),
             ],
           ),
@@ -65,6 +66,9 @@ class _FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 24,
+        ),
         const _ButtonSkip(),
         const SizedBox(
           height: 187,
@@ -87,7 +91,9 @@ class _FirstPage extends StatelessWidget {
         Text(
           AppStrings.lookForOnboardingScreen,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                color: Theme.of(context).colorScheme.secondaryVariant,
+              ),
         ),
       ],
     );
@@ -101,6 +107,9 @@ class _SecondPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 24,
+        ),
         const _ButtonSkip(),
         const SizedBox(
           height: 187,
@@ -123,7 +132,9 @@ class _SecondPage extends StatelessWidget {
         Text(
           AppStrings.reachGoalOnboardingScreen,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style:  Theme.of(context).textTheme.bodyText2!.copyWith(
+            color: Theme.of(context).colorScheme.secondaryVariant,
+          ),
         ),
       ],
     );
@@ -138,7 +149,7 @@ class _ThirdPage extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 253,
+          height: 267,
         ),
         MyIcon(
           asset: AssetsStr.tutorial3Frame,
@@ -158,12 +169,17 @@ class _ThirdPage extends StatelessWidget {
         Text(
           AppStrings.sharePlacesOnboardingScreen,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyText2,
+          style:  Theme.of(context).textTheme.bodyText2!.copyWith(
+            color: Theme.of(context).colorScheme.secondaryVariant,
+          ),
         ),
         const SizedBox(
           height: 188,
         ),
-        const _ButtonStart(),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: _ButtonStart(),
+        ),
       ],
     );
   }
@@ -188,8 +204,8 @@ class _MyIndicator extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         color: isActive
-            ? Theme.of(context).colorScheme.secondary
-            : Theme.of(context).unselectedWidgetColor,
+            ? Theme.of(context).colorScheme.green
+            : Theme.of(context).colorScheme.inactiveBlack,
       ),
     );
   }
@@ -202,7 +218,7 @@ class _ButtonStart extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 48,
-      width: 376,
+      width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
           Navigator.of(context).pushReplacement<void, void>(
@@ -211,7 +227,10 @@ class _ButtonStart extends StatelessWidget {
             ),
           );
         },
-        child: const Text(AppStrings.onStartUppercase),
+        child: Text(
+          AppStrings.onStartUppercase,
+          style: Theme.of(context).textTheme.button,
+        ),
       ),
     );
   }
@@ -222,29 +241,25 @@ class _ButtonSkip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 66,
+    return Container(
+      alignment: Alignment.centerRight,
+      height: 56,
       width: 392,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 255,
-          top: 28,
-        ),
-        child: TextButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement<void, void>(
-              MaterialPageRoute(
-                builder: (_) => const PlaceListScreen(),
-              ),
-            );
-          },
-          child: Text(
-            AppStrings.skip,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(color: Theme.of(context).secondaryHeaderColor),
-          ),
+      padding: const EdgeInsets.only(right: 16),
+      child: TextButton(
+        onPressed: () {
+          Navigator.of(context).pushReplacement<void, void>(
+            MaterialPageRoute(
+              builder: (_) => const PlaceListScreen(),
+            ),
+          );
+        },
+        child: Text(
+          AppStrings.skip,
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(color: Theme.of(context).colorScheme.green),
         ),
       ),
     );

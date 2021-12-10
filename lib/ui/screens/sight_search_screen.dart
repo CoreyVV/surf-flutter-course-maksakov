@@ -4,6 +4,7 @@ import 'package:places/data/model/place_dto.dart';
 import 'package:places/ui/screens/place_details.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
 
 enum _State {
@@ -48,9 +49,11 @@ class _SightSearchScreenState extends State<SightSearchScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(AppStrings.listInterestingPlaces),
         centerTitle: true,
         automaticallyImplyLeading: false,
+        elevation: 0.0,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -148,29 +151,35 @@ class _SearchBar extends StatelessWidget {
       controller: controller,
       focusNode: focusNode,
       cursorHeight: 24,
-      cursorWidth: 1,
+      cursorColor: Theme.of(context).colorScheme.onPrimary,
       textInputAction: TextInputAction.search,
       onEditingComplete: onEditingComplete,
       decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: Colors.transparent),
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderSide:
+              BorderSide(color: Theme.of(context).colorScheme.transparent),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: Colors.transparent),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderSide:
+              BorderSide(color: Theme.of(context).colorScheme.transparent),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: Colors.transparent),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderSide:
+              BorderSide(color: Theme.of(context).colorScheme.transparent),
         ),
-        fillColor: Theme.of(context).primaryColorDark,
+        fillColor: Theme.of(context).colorScheme.background,
         filled: true,
         hintText: ' Поиск',
+        hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+              color: Theme.of(context).colorScheme.inactiveBlack,
+            ),
         contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
         prefixIcon: MyIcon(
           asset: AssetsStr.search,
-          color: Theme.of(context).unselectedWidgetColor,
+          color: Theme.of(context).colorScheme.inactiveBlack,
           height: 18,
           fit: BoxFit.scaleDown,
         ),
@@ -187,6 +196,9 @@ class _SearchBar extends StatelessWidget {
           ),
         ),
       ),
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
     );
   }
 }
@@ -212,10 +224,10 @@ class _History extends StatelessWidget {
           padding: const EdgeInsets.only(top: 32, bottom: 4),
           child: Text(
             AppStrings.lookingForUppercase,
-            style: Theme.of(context)
-                .primaryTextTheme
-                .bodyText2!
-                .copyWith(fontSize: 14),
+            style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  color: Theme.of(context).colorScheme.inactiveBlack,
+                  fontSize: 14,
+                ),
           ),
         ),
         for (var i = 0; i < _historyQueries.length; i++)
@@ -233,8 +245,9 @@ class _History extends StatelessWidget {
                   height: 13,
                 ),
                 if (i != (_historyQueries.length - 1))
-                  const Divider(
+                  Divider(
                     height: 1,
+                    color: Theme.of(context).colorScheme.inactiveBlack,
                   )
                 else
                   Container(),
@@ -244,11 +257,16 @@ class _History extends StatelessWidget {
         Container(
           alignment: Alignment.centerLeft,
           child: TextButton(
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+            ),
             onPressed: onCleanPressed,
-            // style: ElevatedButton.styleFrom(
-            //   onPrimary: Theme.of(context).elevatedButtonTheme.style!.backgroundColor,
-            // ),
-            child: const Text(AppStrings.clearHistory),
+            child: Text(
+              AppStrings.clearHistory,
+              style: Theme.of(context).textTheme.button!.copyWith(
+                    color: Theme.of(context).colorScheme.green,
+                  ),
+            ),
           ),
         ),
       ],
@@ -269,7 +287,7 @@ class _NothingFound extends StatelessWidget {
         ),
         MyIcon(
           asset: AssetsStr.search,
-          color: Theme.of(context).unselectedWidgetColor,
+          color: Theme.of(context).colorScheme.inactiveBlack,
           height: 48,
         ),
         const SizedBox(
@@ -277,14 +295,18 @@ class _NothingFound extends StatelessWidget {
         ),
         Text(
           AppStrings.foundNothing,
-          style: Theme.of(context).primaryTextTheme.headline6,
+          style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
+                color: Theme.of(context).colorScheme.inactiveBlack,
+              ),
         ),
         const SizedBox(
           height: 8,
         ),
         Text(
           AppStrings.tryChange,
-          style: Theme.of(context).primaryTextTheme.bodyText2,
+          style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
+                color: Theme.of(context).colorScheme.inactiveBlack,
+              ),
           textAlign: TextAlign.center,
         ),
       ],
@@ -366,12 +388,20 @@ class _Item extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(sight.name),
                       const SizedBox(
                         height: 8,
                       ),
-                      Text(sight.placeType),
+                      Text(
+                        sight.placeType,
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryVariant,
+                            ),
+                      ),
                     ],
                   ),
                 ),
@@ -420,10 +450,7 @@ class _HistoryItem extends StatelessWidget {
                 child: Text(
                   data,
                   maxLines: 2,
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .subtitle1!
-                      .copyWith(fontWeight: FontWeight.w400),
+                  style: Theme.of(context).primaryTextTheme.bodyText1,
                 ),
               ),
             ),
@@ -434,7 +461,7 @@ class _HistoryItem extends StatelessWidget {
             child: IconButton(
               icon: MyIcon(
                 asset: AssetsStr.delete,
-                color: Theme.of(context).unselectedWidgetColor,
+                color: Theme.of(context).colorScheme.secondaryVariant,
               ),
               splashRadius: 13,
               onPressed: () => onPressed(data),

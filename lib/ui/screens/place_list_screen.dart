@@ -8,6 +8,7 @@ import 'package:places/ui/screens/place_card.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
 import 'package:places/ui/screens/widgets/search_bar.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +98,7 @@ class __SightListPortraitWidgetState extends State<_SightListPortraitWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Observer(
         builder: (context) {
           final future = _store.getListPlacesFuture;
@@ -239,12 +240,12 @@ class _NewSightButton extends StatelessWidget {
           );
         },
         child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(30)),
             gradient: LinearGradient(
               colors: <Color>[
-                yellow,
-                greenWhite,
+                Theme.of(context).colorScheme.yellow,
+                Theme.of(context).colorScheme.green,
               ],
             ),
           ),
@@ -253,12 +254,18 @@ class _NewSightButton extends StatelessWidget {
             width: 177,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                MyIcon(asset: AssetsStr.iconPlus),
-                SizedBox(
+              children: [
+                MyIcon(
+                  asset: AssetsStr.iconPlus,
+                  color: Theme.of(context).iconTheme.color,
+                ),
+                const SizedBox(
                   width: 13.64,
                 ),
-                Text(AppStrings.newSightButtonTextUppercase),
+                Text(
+                  AppStrings.newSightButtonTextUppercase,
+                  style: Theme.of(context).textTheme.button,
+                ),
               ],
             ),
           ),
@@ -270,7 +277,7 @@ class _NewSightButton extends StatelessWidget {
 
 class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
-  double get maxExtent => 240;
+  double get maxExtent => 220;
 
   @override
   double get minExtent => 80;
@@ -293,9 +300,7 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
                     Text(
                       AppStrings.appBarText2Str,
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: Theme.of(context).colorScheme.onSecondary,
-                      ),
+                      style: Theme.of(context).textTheme.headline4,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -315,14 +320,12 @@ class _AppBarPortraitHeaderDelegate extends SliverPersistentHeaderDelegate {
                   ],
                 )
               : Container(
-                  color: Theme.of(context).canvasColor,
+                  color: Theme.of(context).colorScheme.primary,
                   height: minExtent,
                   child: Center(
                     child: Text(
                       AppStrings.appBarText1Str,
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
                 ),
@@ -363,9 +366,7 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         AppStrings.appBarText1Str,
-                        style: Theme.of(context).textTheme.headline6!.copyWith(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
+                        style: Theme.of(context).textTheme.headline6,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -385,15 +386,13 @@ class _AppBarLandscapeHeaderDelegate extends SliverPersistentHeaderDelegate {
                   ],
                 )
               : Container(
-                  color: Theme.of(context).canvasColor,
+                  color: Theme.of(context).primaryColor,
                   height: minExtent,
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       AppStrings.appBarText1Str,
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                            color: Theme.of(context).colorScheme.onSecondary,
-                          ),
+                      style: Theme.of(context).textTheme.headline6,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -421,7 +420,7 @@ class _ErrorPlaceHolder extends StatelessWidget {
         children: [
           MyIcon(
             asset: AssetsStr.errorPlaceHolder,
-            color: Theme.of(context).unselectedWidgetColor,
+            color: Theme.of(context).colorScheme.secondaryVariant,
             height: 64,
           ),
           const SizedBox(

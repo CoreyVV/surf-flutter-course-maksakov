@@ -4,6 +4,7 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 import 'package:provider/provider.dart';
 
 class PlaceDetails extends StatelessWidget {
@@ -20,6 +21,7 @@ class PlaceDetails extends StatelessWidget {
       future: context.read<PlaceInteractor>().getPlaceDetails(id),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
+          //todo: проверить прогресс индикатор
           return const Center(child: CircularProgressIndicator());
         }
         final place = snapshot.data!;
@@ -31,7 +33,7 @@ class PlaceDetails extends StatelessWidget {
           ),
           child: Material(
             child: Container(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height * 0.9,
@@ -71,6 +73,7 @@ class _PlaceDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
+        color: Theme.of(context).colorScheme.primary,
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
         ),
@@ -79,8 +82,8 @@ class _PlaceDetails extends StatelessWidget {
             _PlaceTexts(place: place),
             const Padding(
               padding: EdgeInsets.only(
-                left: 16,
-                right: 16,
+                // left: 16,
+                // right: 16,
                 bottom: 24,
               ),
               child: _ButtonGoTo(),
@@ -91,41 +94,37 @@ class _PlaceDetails extends StatelessWidget {
                 border: Border(
                   top: BorderSide(
                     width: 0.8,
-                    color: Theme.of(context).unselectedWidgetColor,
+                    color: Theme.of(context).colorScheme.inactiveBlack,
                   ),
                 ),
               ),
-              padding: const EdgeInsets.only(
-                left: 17,
-              ),
-              child: Container(
-                padding: const EdgeInsets.only(
-                  top: 19,
-                ),
-                child: Row(
-                  children: [
-                    _Button(
-                      title: AppStrings.schedule,
-                      asset: AssetsStr.iconCalendar,
-                      onTap: () {
-                        //TODO: убрать print
-                        print('SightDetails/iconCalendar was tapped');
-                      },
-                    ),
-                    const SizedBox(width: 40),
-                    _Button(
-                      title: AppStrings.addToFavorites,
-                      asset: AssetsStr.iconHeart,
-                      onTap: () {
-                        //TODO(vv): убрать print, See https://link/todo.
-                        print('SightDetails/iconHeart was tapped');
-                        context
-                            .read<FavoritePlaceInteractor>()
-                            .setFavorite(place);
-                      },
-                    ),
-                  ],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  _Button(
+                    title: AppStrings.schedule,
+                    asset: AssetsStr.iconCalendar,
+                    onTap: () {
+                      //TODO: убрать print
+                      print('SightDetails/iconCalendar was tapped');
+                    },
+                  ),
+                  // const SizedBox(width: 40),
+                  _Button(
+                    title: AppStrings.addToFavorites,
+                    asset: AssetsStr.iconHeart,
+                    onTap: () {
+                      //TODO(vv): убрать print, See https://link/todo.
+                      print('SightDetails/iconHeart was tapped');
+                      context
+                          .read<FavoritePlaceInteractor>()
+                          .setFavorite(place);
+                    },
+                  ),
+                ],
               ),
             ),
           ],
@@ -176,13 +175,13 @@ class _PlaceImagesState extends State<_PlaceImages> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 width: 40,
                 height: 40,
                 child: MyIcon(
                   asset: AssetsStr.iconClose,
-                  color: Theme.of(context).primaryIconTheme.color,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   height: 12,
                   fit: BoxFit.scaleDown,
                 ),
@@ -194,9 +193,9 @@ class _PlaceImagesState extends State<_PlaceImages> {
             bottom: 0,
             child: Row(
               children: [
-                for (int i = 0; i < widget.place.urls.length; i++)
+                for (int index = 0; index < widget.place.urls.length; index++)
                   _MyIndicator(
-                    isActive: i == _currentPageValue,
+                    isActive: index == _currentPageValue,
                     width: 392 / widget.place.urls.length,
                   ),
               ],
@@ -230,7 +229,9 @@ class _MyIndicator extends StatelessWidget {
       width: width,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
-        color: isActive ? Theme.of(context).indicatorColor : Colors.transparent,
+        color: isActive
+            ? Theme.of(context).indicatorColor
+            : Theme.of(context).colorScheme.transparent,
       ),
     );
   }
@@ -263,17 +264,20 @@ class _ButtonGoTo extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 48,
-      width: 328,
+      width: double.infinity,
       child: ElevatedButton.icon(
         onPressed: () {
           //TODO: убрать print
           print('sight_details/go was tapped');
         },
-        icon: const MyIcon(
+        icon: MyIcon(
           asset: AssetsStr.buttonWhiteIconGo,
+          color: Theme.of(context).iconTheme.color,
         ),
-        label: const Text(
+        label: Text(
           AppStrings.createRouteUppercase,
+          style: Theme.of(context).textTheme.button,
+          // style: ,
         ),
       ),
     );
@@ -295,24 +299,26 @@ class _Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Theme.of(context).colorScheme.transparent,
       child: InkWell(
         onTap: onTap,
-        child: RichText(
-          text: TextSpan(
+        child: Container(
+          alignment: Alignment.center,
+
+          width: 164,
+          height: 40,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              WidgetSpan(
-                child: MyIcon(
-                  asset: asset,
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+              MyIcon(
+                asset: asset,
+                color: Theme.of(context).colorScheme.secondary,
               ),
-              const WidgetSpan(
-                child: SizedBox(width: 9),
-              ),
-              TextSpan(
-                text: title,
+              const SizedBox(width: 9),
+              Text(
+                title,
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
               ),
             ],
@@ -344,7 +350,7 @@ class _PlaceTexts extends StatelessWidget {
           child: Text(
             place.name,
             style: Theme.of(context).textTheme.headline5!.copyWith(
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
           ),
         ),
@@ -353,7 +359,7 @@ class _PlaceTexts extends StatelessWidget {
             Text(
               place.placeType,
               style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: Theme.of(context).colorScheme.secondaryVariant,
                     fontWeight: FontWeight.w700,
                   ),
             ),
@@ -376,7 +382,7 @@ class _PlaceTexts extends StatelessWidget {
           child: Text(
             place.description,
             style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
             maxLines: 4,
           ),

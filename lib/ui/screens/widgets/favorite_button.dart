@@ -49,6 +49,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             clipBehavior: Clip.hardEdge,
             child: InkWell(
+              //todo: убрать greenWhite
               highlightColor: greenWhite.withOpacity(0.24),
               splashColor: greenWhite.withOpacity(0.12),
               onTap: () {

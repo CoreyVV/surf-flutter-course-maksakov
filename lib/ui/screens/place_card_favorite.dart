@@ -6,8 +6,8 @@ import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
 import 'package:places/ui/screens/place_details.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
-import 'package:places/ui/screens/res/colors.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 import 'package:provider/provider.dart';
 
 class PlaceCardFavorite extends StatelessWidget {
@@ -47,7 +47,7 @@ class PlaceCardFavorite extends StatelessWidget {
               Container(
                 width: 360,
                 height: 122,
-                color: Theme.of(context).primaryColorDark,
+                color: Theme.of(context).colorScheme.background,
                 child: Stack(
                   children: [
                     Positioned(
@@ -55,9 +55,7 @@ class PlaceCardFavorite extends StatelessWidget {
                       left: 16,
                       child: Text(
                         place.name,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                         maxLines: 2,
                       ),
                     ),
@@ -75,7 +73,7 @@ class PlaceCardFavorite extends StatelessWidget {
                               style: Theme.of(context)
                                   .primaryTextTheme
                                   .bodyText2!
-                                  .copyWith(color: green),
+                                  .copyWith(color: Theme.of(context).colorScheme.green),
                             ),
                     ),
                     Positioned(
@@ -134,7 +132,7 @@ class _IconCalendar extends StatelessWidget {
                     children: [
                       Container(
                           height: 240,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).colorScheme.red,
                           child: CupertinoDatePicker(
                               initialDateTime: DateTime.now(),
                               onDateTimeChanged: (datetime) {},
@@ -229,7 +227,7 @@ class _ImagePart extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Container(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.red,
             ),
           ),
           Image.network(

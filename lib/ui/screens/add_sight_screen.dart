@@ -6,6 +6,7 @@ import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
 import 'package:places/ui/screens/res/app_strings.dart';
 import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 
 String _selectedType = SightType.museum;
 String _name = '';
@@ -110,38 +111,35 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Padding(
-        padding: const EdgeInsets.only(left: 16, top: 18, bottom: 18),
-        child: Row(
-          children: [
-            Material(
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Ink(
-                  child: Text(
-                    'Отмена',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).primaryTextTheme.subtitle1,
-                  ),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      title: Row(
+        children: [
+          Material(
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Ink(
+                child: Text(
+                  AppStrings.cancel,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).primaryTextTheme.subtitle1,
                 ),
               ),
             ),
-            const SizedBox(
-              width: 51,
-            ),
-            Text(
-              AppStrings.newSightButtonText,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                color: Theme.of(context).colorScheme.onSecondary,
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            width: 51,
+          ),
+          Text(
+            AppStrings.newSightButtonText,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline6,
+          ),
+        ],
       ),
       automaticallyImplyLeading: false,
+      elevation: 0.0,
       toolbarHeight: height,
     );
   }
@@ -170,9 +168,9 @@ class _NewSightBody extends StatelessWidget {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    AppStrings.category,
+                    AppStrings.categoryUppercase,
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: Theme.of(context).colorScheme.onSecondary,
+                          color: Theme.of(context).colorScheme.inactiveBlack,
                           fontSize: 12,
                         ),
                   ),
@@ -183,9 +181,7 @@ class _NewSightBody extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(
                         width: 0.8,
-                        color: Theme.of(context)
-                            .unselectedWidgetColor
-                            .withOpacity(0.56),
+                        color: Theme.of(context).colorScheme.inactiveBlack,
                       ),
                     ),
                   ),
@@ -195,7 +191,7 @@ class _NewSightBody extends StatelessWidget {
           ),
           _InputBoxes(),
           const SizedBox(
-            height: 116,
+            height: 28,
           ),
           const Align(
             alignment: Alignment.bottomCenter,
@@ -235,7 +231,7 @@ class _CategoryChoice extends StatelessWidget {
             },
             icon: MyIcon(
               asset: AssetsStr.iconView,
-              color: Theme.of(context).primaryIconTheme.color,
+              color: Theme.of(context).colorScheme.onPrimary,
             ),
           ),
         ),
@@ -320,14 +316,19 @@ class _LocationButton extends StatelessWidget {
       alignment: Alignment.centerLeft,
       height: 48,
       child: TextButton(
-        // style: ElevatedButton.styleFrom(
-        //   onPrimary: Theme.of(context).buttonColor,
-        // ),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+        ),
         onPressed: () {
           //TODO: убрать print
           print('AddSightScreen/Location button was tapped');
         },
-        child: const Text(AppStrings.markOnMap),
+        child: Text(
+          AppStrings.markOnMap,
+          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                color: Theme.of(context).colorScheme.green,
+              ),
+        ),
       ),
     );
   }
@@ -422,7 +423,7 @@ class __InputBoxState extends State<_InputBox> {
           child: Text(
             widget.title,
             style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context).colorScheme.inactiveBlack,
                   fontSize: 12,
                 ),
           ),
@@ -452,7 +453,7 @@ class __InputBoxState extends State<_InputBox> {
                 ? IconButton(
                     icon: MyIcon(
                       asset: AssetsStr.iconClear,
-                      color: Theme.of(context).textTheme.bodyText1!.color,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                     onPressed: () {
                       _controller.clear();
@@ -497,22 +498,19 @@ class _SelectSightTypeState extends State<SelectSightType> {
             ),
         ],
       ),
-      bottomSheet: SizedBox(
+      bottomSheet: Container(
+        width: double.infinity,
         height: 64,
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            width: double.infinity,
-            height: 64,
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                //TODO: убрать print
-                print('AddSightScreen/SelectSightType/save button was tapped');
-              },
-              child: const Text(AppStrings.save),
-            ),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            //TODO: убрать print
+            print('AddSightScreen/SelectSightType/save button was tapped');
+          },
+          child: Text(
+            AppStrings.saveUppercase,
+            style: Theme.of(context).textTheme.button,
           ),
         ),
       ),
@@ -535,6 +533,7 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       leading: IconButton(
         splashRadius: 28,
         onPressed: () {
@@ -550,23 +549,22 @@ class _AppBarSightType extends StatelessWidget implements PreferredSizeWidget {
         icon: const MyIcon(asset: AssetsStr.iconArrow),
       ),
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            width: 88,
-          ),
           Container(
             alignment: Alignment.centerLeft,
-            // padding: const EdgeInsets.only(left: 16, top: 18, bottom: 18),
             child: Text(
               AppStrings.category,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                    color: Theme.of(context).colorScheme.onSecondary,
-                  ),
+              style: Theme.of(context).textTheme.headline6,
             ),
+          ),
+          const SizedBox(
+            width: 48,
           ),
         ],
       ),
+      elevation: 0.0,
       toolbarHeight: height,
     );
   }
@@ -601,7 +599,7 @@ class _TypeFilterBox extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 height: 48,
                 width: double.infinity,
-                color: Colors.transparent,
+                color: Theme.of(context).colorScheme.transparent,
                 child: Text(
                   sightType.title,
                   style: Theme.of(context).textTheme.bodyText1,
@@ -616,7 +614,7 @@ class _TypeFilterBox extends StatelessWidget {
             bottom: 12,
             child: MyIcon(
               asset: AssetsStr.iconTick,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.green,
             ),
           ),
       ],
@@ -661,7 +659,7 @@ class __ImagesRowState extends State<_ImagesRow> {
                       borderRadius: const BorderRadius.all(Radius.circular(12)),
                       child: MyIcon(
                         asset: AssetsStr.buttonWhitePlus,
-                        color: Theme.of(context).secondaryHeaderColor,
+                        color: Theme.of(context).colorScheme.green,
                         // height: 72,
                         // fit: BoxFit.fitHeight,
                       ),
@@ -724,14 +722,15 @@ class _ImageRowItem extends StatelessWidget {
                 top: 3,
                 right: 3,
                 child: Material(
-                  color: Colors.transparent,
+                  color: Theme.of(context).colorScheme.transparent,
                   child: InkWell(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     onTap: onRemove,
                     child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.transparent,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        color: Theme.of(context).colorScheme.transparent,
                       ),
                       child: const MyIcon(
                         asset: AssetsStr.iconClear,
@@ -755,51 +754,42 @@ class _PhotoSelectDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(12)),
-              child: Container(
-                height: 152,
-                color: Theme.of(context).primaryColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const _DialogCameraButton(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14.57),
-                      child: Divider(
-                        height: 1,
-                        color: Theme.of(context)
-                            .unselectedWidgetColor
-                            .withOpacity(0.56),
-                        thickness: 0.56,
-                      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+            child: Container(
+              height: 152,
+              color: Theme.of(context).colorScheme.primary,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const _DialogCameraButton(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14.57),
+                    child: Divider(
+                      height: 1,
+                      color: Theme.of(context).colorScheme.inactiveBlack,
                     ),
-                    const _DialogPhotoButton(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14.57),
-                      child: Divider(
-                        height: 1,
-                        color: Theme.of(context)
-                            .unselectedWidgetColor
-                            .withOpacity(0.56),
-                        thickness: 0.56,
-                      ),
+                  ),
+                  const _DialogPhotoButton(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14.57),
+                    child: Divider(
+                      height: 1,
+                      color: Theme.of(context).colorScheme.inactiveBlack,
                     ),
-                    const _DialogFileButton(),
-                  ],
-                ),
+                  ),
+                  const _DialogFileButton(),
+                ],
               ),
             ),
-            const _DialogCancelButton(),
-          ],
-        ),
+          ),
+          const _DialogCancelButton(),
+        ],
       ),
     );
   }
@@ -824,15 +814,12 @@ class _DialogCameraButton extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 17, right: 13),
                 child: MyIcon(
                   asset: AssetsStr.iconCamera,
-                  color: Theme.of(context).unselectedWidgetColor,
+                  color: Theme.of(context).colorScheme.secondaryVariant,
                 ),
               ),
               Text(
                 AppStrings.camera,
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle1!
-                    .copyWith(fontWeight: FontWeight.w400),
+                style: Theme.of(context).primaryTextTheme.bodyText1,
               ),
             ],
           ),
@@ -861,15 +848,12 @@ class _DialogPhotoButton extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 17, right: 13),
                 child: MyIcon(
                   asset: AssetsStr.iconPhoto,
-                  color: Theme.of(context).unselectedWidgetColor,
+                  color: Theme.of(context).colorScheme.secondaryVariant,
                 ),
               ),
               Text(
                 AppStrings.photo,
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle1!
-                    .copyWith(fontWeight: FontWeight.w400),
+                style: Theme.of(context).primaryTextTheme.bodyText1,
               ),
             ],
           ),
@@ -898,15 +882,12 @@ class _DialogFileButton extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 17, right: 13),
                 child: MyIcon(
                   asset: AssetsStr.iconFail,
-                  color: Theme.of(context).unselectedWidgetColor,
+                  color: Theme.of(context).colorScheme.secondaryVariant,
                 ),
               ),
               Text(
                 AppStrings.file,
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle1!
-                    .copyWith(fontWeight: FontWeight.w400),
+                style: Theme.of(context).primaryTextTheme.bodyText1,
               ),
             ],
           ),
@@ -930,7 +911,7 @@ class _DialogCancelButton extends StatelessWidget {
         child: Container(
           height: 48,
           width: 360,
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           child: TextButton(
             // style: ElevatedButton.styleFrom(
             //   onPrimary: Theme.of(context).buttonColor,
@@ -938,7 +919,12 @@ class _DialogCancelButton extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text(AppStrings.cancelUppercase),
+            child: Text(
+              AppStrings.cancelUppercase,
+              style: Theme.of(context).textTheme.button!.copyWith(
+                    color: Theme.of(context).colorScheme.green,
+                  ),
+            ),
           ),
         ),
       ),

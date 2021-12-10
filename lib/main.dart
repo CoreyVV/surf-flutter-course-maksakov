@@ -47,18 +47,21 @@ class __MaterialAppWithThemeState extends State<_MaterialAppWithTheme> {
         builder: (context) {
           final settingsInteractor = Provider.of<SettingsInteractor>(context);
           final style = SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            systemNavigationBarColor:
-            settingsInteractor.isDarkTheme ? blackMain : white,
+            statusBarIconBrightness: settingsInteractor.isDarkTheme
+                ? Brightness.light
+                : Brightness.dark,
+            statusBarColor: Theme.of(context).colorScheme.transparent,
+            systemNavigationBarColor: settingsInteractor.isDarkTheme ? colorBlackMain: colorWhite,
+            systemNavigationBarIconBrightness: settingsInteractor.isDarkTheme
+                ? Brightness.light
+                : Brightness.dark,
           );
           Provider.of<FavoritePlaceInteractor>(context).init();
 
           return AnnotatedRegion<SystemUiOverlayStyle>(
             value: style,
             child: MaterialApp(
-              theme: settingsInteractor.isDarkTheme
-                  ? darkTheme.copyWith(colorScheme: lightTheme.colorScheme.copyWith(secondary: white))
-                  : lightTheme.copyWith(colorScheme: lightTheme.colorScheme.copyWith(secondary: colorWhiteSecondary)),
+              theme: settingsInteractor.isDarkTheme ? darkTheme : lightTheme,
               home: const SplashScreen(),
               // home: const PlaceListScreen(),
               title: 'places',

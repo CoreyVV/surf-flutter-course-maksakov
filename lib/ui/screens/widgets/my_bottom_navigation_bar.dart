@@ -31,6 +31,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             asset: widget.pageIndex == 0
                 ? AssetsStr.iconListFull
                 : AssetsStr.bottomNavigationIconList,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           label: '',
         ),
@@ -39,6 +40,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             asset: widget.pageIndex == 1
                 ? AssetsStr.iconMapFull
                 : AssetsStr.bottomNavigationIconMap,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           label: '',
         ),
@@ -47,6 +49,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             asset: widget.pageIndex == 2
                 ? AssetsStr.iconHeartFull
                 : AssetsStr.bottomNavigationIconHeart,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           label: '',
         ),
@@ -55,6 +58,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             asset: widget.pageIndex == 3
                 ? AssetsStr.iconSettingsFull
                 : AssetsStr.bottomNavigationIconSettings,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           label: '',
         ),
