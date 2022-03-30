@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/model/place.dart';
-import 'package:provider/provider.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteButton extends StatefulWidget {
   final Place place;
@@ -46,9 +46,10 @@ class _FavoriteButtonState extends State<FavoriteButton> {
 
           return Material(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: const BorderRadius.all(Radius.circular(6)),
             clipBehavior: Clip.hardEdge,
             child: InkWell(
+              //todo: убрать greenWhite
               highlightColor: greenWhite.withOpacity(0.24),
               splashColor: greenWhite.withOpacity(0.12),
               onTap: () {
@@ -67,6 +68,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
             ),
           );
         }
+
         return const SizedBox.shrink();
       },
     );

@@ -19,7 +19,6 @@ final List<Sight> mocks = [
         'A series of waterfalls and gorges. You will certainly enjoy hiking in the Glen gorge along the stream and admiring the 19 waterfalls along its course. You can also opt for a hike on the gorge rim for breathtaking views from above!',
     type: SightType.park,
     isVisited: true,
-    isPlanned: false,
   ),
   Sight(
     id: '0001',
@@ -32,7 +31,6 @@ final List<Sight> mocks = [
     details: 'Terraced fields.',
     type: SightType.park,
     isVisited: true,
-    isPlanned: false,
   ),
   Sight(
     id: '0002',
@@ -45,7 +43,6 @@ final List<Sight> mocks = [
     details: 'An ancient city.',
     type: SightType.museum,
     isVisited: true,
-    isPlanned: false,
   ),
   Sight(
     id: '0003',
@@ -57,7 +54,6 @@ final List<Sight> mocks = [
     details: 'Test location.',
     images: [],
     type: SightType.park,
-    isVisited: false,
     isPlanned: true,
   ),
   Sight(
@@ -70,7 +66,6 @@ final List<Sight> mocks = [
     details: 'Test location.',
     images: [],
     type: SightType.park,
-    isVisited: false,
     isPlanned: true,
   ),
 ];

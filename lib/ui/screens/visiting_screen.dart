@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:places/data/interactor/favorite_place_interactor.dart';
 import 'package:places/data/interactor/place_interactor.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/ui/screens/place_card_favorite.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
+import 'package:places/ui/screens/widgets/my_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/widgets/bottom_navigation_bar.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/sight_card_favorite.dart';
-
 
 class VisitingScreen extends StatefulWidget {
   const VisitingScreen({Key? key}) : super(key: key);
@@ -15,8 +15,8 @@ class VisitingScreen extends StatefulWidget {
   @override
   _VisitingScreenState createState() => _VisitingScreenState();
 }
-class _VisitingScreenState extends State<VisitingScreen> {
 
+class _VisitingScreenState extends State<VisitingScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -25,7 +25,9 @@ class _VisitingScreenState extends State<VisitingScreen> {
         return Scaffold(
           appBar: const _AppBar(),
           body: const _Body(),
-          bottomNavigationBar: MyBottomNavigationBar(pageIndex: 2,),
+          bottomNavigationBar: MyBottomNavigationBar(
+            pageIndex: 2,
+          ),
         );
       }),
     );
@@ -47,18 +49,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Container(
-        padding: const EdgeInsets.only(
-          left: 134,
-          top: 16,
-          right: 133,
-          bottom: 16,
-        ),
+        height: 56,
         alignment: Alignment.center,
         child: Text(
           AppStrings.favorite,
           textAlign: TextAlign.center,
-          style: Theme.of(context).accentTextTheme.headline6,
-          maxLines: 2,
+          style: Theme.of(context).textTheme.headline6,
         ),
       ),
       bottom: PreferredSize(
@@ -71,40 +67,51 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             bottom: 6,
           ),
           decoration: BoxDecoration(
-            color: Theme.of(context).primaryColorDark,
-            borderRadius: BorderRadius.circular(25),
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: const BorderRadius.all(Radius.circular(25)),
           ),
+          //todo: убрать splash effect
           child: TabBar(
             labelPadding: EdgeInsets.zero,
-            labelColor: Theme.of(context).primaryColor,
-            unselectedLabelColor: Theme.of(context).unselectedWidgetColor,
+            labelColor: Theme.of(context).colorScheme.primary,
+            labelStyle: Theme.of(context).textTheme.button,
+            unselectedLabelColor: Theme.of(context).colorScheme.inactiveBlack,
+            unselectedLabelStyle: Theme.of(context).textTheme.button,
             indicatorSize: TabBarIndicatorSize.label,
             indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: Theme.of(context).accentColor,
+              borderRadius: const BorderRadius.all(Radius.circular(40)),
+              color: Theme.of(context).colorScheme.secondary,
             ),
             tabs: [
               Container(
                 width: 184,
                 height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
-                child: const Center(child: Text(AppStrings.wantToVisit)),
+                child: const Center(
+                  child: Text(
+                    AppStrings.wantToVisit,
+                  ),
+                ),
               ),
               Container(
                 width: 184,
                 height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
                 ),
-                child: const Center(child: Text(AppStrings.visited)),
+                child: const Center(
+                  child: Text(
+                    AppStrings.visited,
+                  ),
+                ),
               ),
             ],
           ),
         ),
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0.0,
       toolbarHeight: 108,
       automaticallyImplyLeading: false,
@@ -126,7 +133,8 @@ class _BodyState extends State<_Body> {
       children: [
         SafeArea(
           child: _TabList(
-            listPlace: context.read<FavoritePlaceInteractor>().getFavoritesPlaces,
+            listPlace:
+                context.read<FavoritePlaceInteractor>().getFavoritesPlaces,
             asset: AssetsStr.card,
             bodyText: AppStrings.markFavorite,
           ),
@@ -163,22 +171,26 @@ class _EmptyList extends StatelessWidget {
           ),
           MyIcon(
             asset: asset,
-            color: Theme.of(context).unselectedWidgetColor,
-            height: 48,
+            color: Theme.of(context).colorScheme.inactiveBlack,
+            height: 64,
           ),
           const SizedBox(
             height: 32,
           ),
           Text(
             AppStrings.empty,
-            style: Theme.of(context).primaryTextTheme.headline6,
+            style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
+                  color: Theme.of(context).colorScheme.inactiveBlack,
+                ),
           ),
           const SizedBox(
             height: 8,
           ),
           Text(
             bodyText,
-            style: Theme.of(context).primaryTextTheme.bodyText2,
+            style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
+                  color: Theme.of(context).colorScheme.inactiveBlack,
+                ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -346,18 +358,17 @@ class _Bucket extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const MyIcon(
+        MyIcon(
           asset: AssetsStr.iconBucket,
+          color: Theme.of(context).iconTheme.color,
         ),
         const SizedBox(
           height: 8,
         ),
         Text(
           AppStrings.delete,
-          style: Theme.of(context).accentTextTheme.bodyText1!.copyWith(
-                color: Theme.of(
-                  context,
-                ).primaryColor,
+          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                color: Theme.of(context).iconTheme.color,
               ),
         ),
       ],
@@ -385,11 +396,11 @@ class _DismissibleStackState extends State<_DismissibleStack> {
     return Stack(
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
           child: Container(
             width: 360,
-            height: 218,
-            color: Theme.of(context).backgroundColor,
+            height: 216,
+            color: Theme.of(context).colorScheme.red,
           ),
         ),
         const Positioned(
@@ -407,7 +418,7 @@ class _DismissibleStackState extends State<_DismissibleStack> {
           },
           onDismissed: (direction) => widget.onRemove(),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
             child: PlaceCardFavorite(
               key: ValueKey(widget.place),
               place: widget.place,

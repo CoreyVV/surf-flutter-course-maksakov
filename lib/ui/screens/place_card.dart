@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:places/data/model/place.dart';
+import 'package:places/ui/screens/place_details.dart';
 import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/sight_details.dart';
+import 'package:places/ui/screens/res/themes.dart';
 import 'package:places/ui/screens/widgets/favorite_button.dart';
-import 'package:places/ui/screens/widgets/loading_builder.dart';
 
 class PlaceCard extends StatelessWidget {
   final Place place;
@@ -16,7 +16,7 @@ class PlaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
       clipBehavior: Clip.hardEdge,
       child: SizedBox(
         width: double.infinity,
@@ -27,11 +27,12 @@ class PlaceCard extends StatelessWidget {
               place: place,
             ),
             Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(16),
+              color: Theme.of(context).colorScheme.transparent,
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
               clipBehavior: Clip.hardEdge,
               child: Ink(
                 child: InkWell(
+                  //todo: замениь на цвета из colorScheme
                   highlightColor: greenWhite.withOpacity(0.24),
                   splashColor: greenWhite.withOpacity(0.12),
                   onTap: () {
@@ -53,10 +54,9 @@ class PlaceCard extends StatelessWidget {
               left: 16,
               child: Text(
                 place.placeType,
-                style: Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: white,
-                    ),
+                style: Theme.of(context).textTheme.button!.copyWith(
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ),
             ),
             Positioned(
@@ -88,8 +88,8 @@ class _Base extends StatelessWidget {
         SizedBox(
           height: 96,
           child: Image.network(
-            place.urls[0],
-            loadingBuilder: loadingBuilder,
+            place.urls.first,
+            // loadingBuilder: loadingBuilder,
             fit: BoxFit.cover,
             width: double.infinity,
           ),
@@ -97,7 +97,7 @@ class _Base extends StatelessWidget {
         Container(
           padding: const EdgeInsets.only(left: 16, right: 16),
           height: 92,
-          color: Theme.of(context).primaryColorDark,
+          color: Theme.of(context).colorScheme.background,
           child: Column(
             children: [
               const SizedBox(
@@ -110,7 +110,7 @@ class _Base extends StatelessWidget {
                   child: Text(
                     place.name,
                     maxLines: 2,
-                    style: Theme.of(context).accentTextTheme.bodyText1,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
               ),
@@ -136,5 +136,3 @@ class _Base extends StatelessWidget {
     );
   }
 }
-
-

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:places/domain/sight.dart';
 import 'package:places/mocks.dart';
-import 'package:places/ui/screens/res/colors.dart';
-import 'package:places/ui/screens/res/icons.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/sight_list_screen.dart';
+import 'package:places/ui/screens/place_list_screen.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
 
 int _amountFilteredPlaces = 0;
 
@@ -16,108 +16,43 @@ final int _searchDivisions =
     ((_searchMaxDistance - _searchMinDistance) / _searchDistanceStep).round();
 late RangeValues _currentRangeValues;
 
-//класс типа места с иконкой и заголовком
-class SightTypeIcon {
-  final String type;
-  final String title;
-  final SvgPicture icon;
-
-  SightTypeIcon({
-    required this.title,
-    required this.type,
-    required this.icon,
-  });
-
-  @override
-  String toString() {
-    return title;
-  }
-}
-
-//типы мест для таблицы фильтров
-final sightTypeIconCafe = SightTypeIcon(
-  title: AppStrings.sightTypeCafeTitle,
-  type: SightType.cafe,
-  icon: MyIcons.catalogWhiteCafe,
-);
-final sightTypeIconHotel = SightTypeIcon(
-  title: AppStrings.sightTypeHotelTitle,
-  type: SightType.hotel,
-  icon: MyIcons.catalogWhiteHotel,
-);
-final sightTypeIconMuseum = SightTypeIcon(
-  title: AppStrings.sightTypeMuseumTitle,
-  type: SightType.museum,
-  icon: MyIcons.catalogWhiteMuseum,
-);
-final sightTypeIconPark = SightTypeIcon(
-  title: AppStrings.sightTypeParkTitle,
-  type: SightType.park,
-  icon: MyIcons.catalogWhitePark,
-);
-final sightTypeIconParticularPlace = SightTypeIcon(
-  title: AppStrings.sightTypeParticularPlaceTitle,
-  type: SightType.particularPlace,
-  icon: MyIcons.catalogWhiteParticularPlace,
-);
-final sightTypeIconRestaurant = SightTypeIcon(
-  title: AppStrings.sightTypeRestaurantTitle,
-  type: SightType.restaurant,
-  icon: MyIcons.catalogWhiteRestaurant,
-);
-
-//храним значение таблицы фильтров
-Map<SightTypeIcon, bool> filterMap = {
-  sightTypeIconCafe: false,
-  sightTypeIconHotel: false,
-  sightTypeIconMuseum: false,
-  sightTypeIconPark: false,
-  sightTypeIconParticularPlace: false,
-  sightTypeIconRestaurant: false,
-};
-List<String> filterList = [];
-
 //экран фильтров
-class FilterScreen extends StatefulWidget {
-  const FilterScreen({Key? key}) : super(key: key);
+class FiltersScreen extends StatefulWidget {
+  const FiltersScreen({Key? key}) : super(key: key);
 
   @override
-  _FilterScreenState createState() => _FilterScreenState();
+  _FiltersScreenState createState() => _FiltersScreenState();
 }
 
-class _FilterScreenState extends State<FilterScreen> {
+class _FiltersScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
-    final isSmallScreenResolution =
-        MediaQuery.of(context).size.height <= 600;
+    final isSmallScreenResolution = MediaQuery.of(context).size.height <= 600;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16, top: 16),
-          child: SizedBox(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        leading: IconButton(
+          splashRadius: 16,
+          onPressed: () {
+            //TODO: убрать print
+            print('filter_screen/back was tapped');
+            Navigator.push<void>(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const PlaceListScreen(),
+              ),
+            );
+          },
+          icon: MyIcon(
+            asset: AssetsStr.iconArrow,
+            color: Theme.of(context).colorScheme.onPrimary,
             height: 32,
-            width: 32,
-            child: IconButton(
-              splashRadius: 16,
-              onPressed: () {
-                //TODO: убрать print
-                print('filter_screen/back was tapped');
-                Navigator.push<void>(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const SightListScreen(),
-                  ),
-                );
-              },
-              icon: MyIcons.iconArrow,
-            ),
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 16, right: 16),
+            padding: const EdgeInsets.only(right: 16),
             child: TextButton(
               onPressed: () {
                 //TODO: убрать print
@@ -129,14 +64,14 @@ class _FilterScreenState extends State<FilterScreen> {
               },
               child: Text(
                 AppStrings.clear,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Theme.of(context).buttonColor),
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      color: Theme.of(context).colorScheme.green,
+                    ),
               ),
             ),
           ),
         ],
+        elevation: 0.0,
       ),
       body: Column(
         children: [
@@ -200,10 +135,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconHotel.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -225,10 +160,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconRestaurant.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -250,10 +185,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconParticularPlace.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -272,10 +207,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconPark.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -297,10 +232,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconMuseum.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -322,10 +257,10 @@ class TypeFilterSmall extends StatelessWidget {
                   ),
                   Text(
                     sightTypeIconCafe.title,
-                    style:
-                        Theme.of(context).accentTextTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 12,
+                        ),
                   ),
                 ],
               ),
@@ -353,6 +288,17 @@ class TypeFilter extends StatelessWidget {
       padding: const EdgeInsets.only(left: 16, top: 16, right: 24),
       child: Column(
         children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 16, right: 16.5, bottom: 24),
+            child: Text(
+              AppStrings.categoryUppercase,
+              style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    fontSize: 12.0,
+                    color: Theme.of(context).colorScheme.inactiveBlack,
+                  ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 16.5, right: 16.5, bottom: 40),
             child: Row(
@@ -372,10 +318,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconHotel.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12,
                             ),
                       ),
@@ -399,10 +343,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconRestaurant.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12,
                             ),
                       ),
@@ -426,10 +368,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconParticularPlace.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12,
                             ),
                       ),
@@ -458,10 +398,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconPark.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12,
                             ),
                       ),
@@ -485,10 +423,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconMuseum.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12,
                             ),
                       ),
@@ -512,10 +448,8 @@ class TypeFilter extends StatelessWidget {
                       ),
                       Text(
                         sightTypeIconCafe.title,
-                        style: Theme.of(context)
-                            .accentTextTheme
-                            .bodyText2!
-                            .copyWith(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
                               fontSize: 12,
                             ),
                       ),
@@ -551,15 +485,27 @@ class TypeFilterBox extends StatelessWidget {
         children: [
           sightTypeIcon.icon,
           InkWell(
-            borderRadius: BorderRadius.circular(64),
+            borderRadius: const BorderRadius.all(Radius.circular(64)),
             onTap: onTap,
             child: Ink(),
           ),
           if (filterMap[sightTypeIcon]!)
             Positioned(
-              right: -4,
-              bottom: -4,
-              child: MyIcons.iconTickChoice,
+              right: 3,
+              bottom: 3,
+              child: Container(
+                height: 16.0,
+                width: 16.0,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                ),
+                child: MyIcon(
+                  asset: AssetsStr.iconTick,
+                  color: Theme.of(context).colorScheme.primary,
+                  // height: 8.0,
+                ),
+              ),
             ),
         ],
       ),
@@ -598,13 +544,12 @@ class DistanceFilterState extends State<DistanceFilter> {
             child: Column(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
                       Text(
                         AppStrings.distance,
-                        style: Theme.of(context).accentTextTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       const SizedBox(
                         width: 132,
@@ -613,16 +558,21 @@ class DistanceFilterState extends State<DistanceFilter> {
                         alignment: Alignment.centerRight,
                         child: Text(
                           _textRangeValues,
-                          style: Theme.of(context)
-                              .accentTextTheme
-                              .bodyText1!
-                              .copyWith(color: inactiveBlack),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryVariant,
+                                  ),
                         ),
                       ),
                     ],
                   ),
                 ),
                 RangeSlider(
+                  // activeColor: Theme.of(context).sliderTheme.activeTrackColor,
+                  // inactiveColor: Theme.of(context).sliderTheme.inactiveTrackColor,
+                  //
                   values: _currentRangeValues,
                   onChanged: (newRangeValues) {
                     setState(() => renewTextRangeSlider(newRangeValues));
@@ -672,7 +622,10 @@ class _ShowButtonState extends State<ShowButton> {
               print('show button was tapped');
               print(filterList);
             },
-            child: Text(_textElevatedButton),
+            child: Text(
+              _textElevatedButton,
+              style: Theme.of(context).textTheme.button,
+            ),
           ),
         ),
       ),
@@ -691,11 +644,10 @@ class _ShowButtonState extends State<ShowButton> {
   }
 
   void getSights() async {
-    final List<Sight> sights = [];
+    final sights = <Sight>[];
     bool isSuitable;
-    for (final Sight sight in mocks) {
-      isSuitable = true
-      ;
+    for (final sight in mocks) {
+      isSuitable = true;
       if (filterList.isNotEmpty) {
         if (isSuitable && (filterList.contains(sight.type))) {
           sights.add(sight);
@@ -711,3 +663,64 @@ class _ShowButtonState extends State<ShowButton> {
     setState(() {});
   }
 }
+
+//класс типа места с иконкой и заголовком
+class SightTypeIcon {
+  final String type;
+  final String title;
+  final SvgPicture icon;
+
+  SightTypeIcon({
+    required this.title,
+    required this.type,
+    required this.icon,
+  });
+
+  @override
+  String toString() {
+    return title;
+  }
+}
+
+//типы мест для таблицы фильтров
+final sightTypeIconCafe = SightTypeIcon(
+  title: AppStrings.sightTypeCafeTitle,
+  type: SightType.cafe,
+  icon: MyIcons.catalogWhiteCafe,
+);
+final sightTypeIconHotel = SightTypeIcon(
+  title: AppStrings.sightTypeHotelTitle,
+  type: SightType.hotel,
+  icon: MyIcons.catalogWhiteHotel,
+);
+final sightTypeIconMuseum = SightTypeIcon(
+  title: AppStrings.sightTypeMuseumTitle,
+  type: SightType.museum,
+  icon: MyIcons.catalogWhiteMuseum,
+);
+final sightTypeIconPark = SightTypeIcon(
+  title: AppStrings.sightTypeParkTitle,
+  type: SightType.park,
+  icon: MyIcons.catalogWhitePark,
+);
+final sightTypeIconParticularPlace = SightTypeIcon(
+  title: AppStrings.sightTypeParticularPlaceTitle,
+  type: SightType.particularPlace,
+  icon: MyIcons.catalogWhiteParticularPlace,
+);
+final sightTypeIconRestaurant = SightTypeIcon(
+  title: AppStrings.sightTypeRestaurantTitle,
+  type: SightType.restaurant,
+  icon: MyIcons.catalogWhiteRestaurant,
+);
+
+//храним значение таблицы фильтров
+Map<SightTypeIcon, bool> filterMap = {
+  sightTypeIconCafe: false,
+  sightTypeIconHotel: false,
+  sightTypeIconMuseum: false,
+  sightTypeIconPark: false,
+  sightTypeIconParticularPlace: false,
+  sightTypeIconRestaurant: false,
+};
+List<String> filterList = [];

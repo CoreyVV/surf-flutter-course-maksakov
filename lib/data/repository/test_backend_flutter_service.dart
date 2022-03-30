@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:places/data/exception/network_exception.dart';
 import 'package:places/data/repository/api_place.dart';
+import 'package:places/data/repository/api_place_dto.dart';
 import 'package:places/data/repository/api_urls.dart';
 import 'package:places/data/repository/get_place_body.dart';
-import 'package:places/data/repository/api_place_dto.dart';
 import 'package:places/data/repository/get_places_dto_body.dart';
 
 class TestBackEndFlutterService {
@@ -23,14 +23,12 @@ class TestBackEndFlutterService {
       final response = await _getDio().get<dynamic>(
         ApiUrls.place,
       );
-      List<ApiPlace> _listApiPlaces = response.data
+      final listApiPlaces = (response.data as List)
           .whereType<Map<String, dynamic>>()
-          .map<ApiPlace>(
-            (place) => ApiPlace.fromApi(place),
-          )
+          .map((place) => ApiPlace.fromApi(place))
           .toList();
 
-      return _listApiPlaces;
+      return listApiPlaces;
     } on DioError catch (e) {
       final options = e.requestOptions;
 
@@ -45,7 +43,7 @@ class TestBackEndFlutterService {
     try {
       final response = await _getDio().get<dynamic>('${ApiUrls.place}/$id');
 
-      return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       throw NetworkException.fromDioError(e);
     }
@@ -76,7 +74,7 @@ class TestBackEndFlutterService {
         queryParameters: body.toApi(),
       );
 
-      return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       throw NetworkException.fromDioError(e);
     }
@@ -117,7 +115,7 @@ class TestBackEndFlutterService {
         queryParameters: body.toApi(),
       );
 
-      return ApiPlace.fromApi(response.data);
+      return ApiPlace.fromApi(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       throw NetworkException.fromDioError(e);
     }
@@ -131,7 +129,7 @@ class TestBackEndFlutterService {
     final String nameFilter,
   ) async {
     try {
-      final body = GetPlaceDtoBody(
+      final body = GetPlacesDtoBody(
         lat: lat,
         lng: lng,
         radius: radius,
@@ -143,16 +141,12 @@ class TestBackEndFlutterService {
         ApiUrls.filteredPlaces,
         data: body.toApi(),
       );
-      if (response.statusCode == 200) {
-        _listApiPlacesDto = response.data
-            .whereType<Map<String, dynamic>>()
-            .map<ApiPlace>(
-              (placeDto) => ApiPlaceDto.fromApi(placeDto),
-            )
-            .toList();
-      } else {
-        _listApiPlacesDto = <ApiPlaceDto>[];
-      }
+      _listApiPlacesDto = response.statusCode == 200
+          ? (response.data as List)
+              .whereType<Map<String, dynamic>>()
+              .map((placeDto) => ApiPlaceDto.fromApi(placeDto))
+              .toList()
+          : <ApiPlaceDto>[];
 
       return _listApiPlacesDto;
     } on DioError catch (e) {
@@ -167,20 +161,24 @@ class TestBackEndFlutterService {
           print(
             'ERROR $e',
           );
+
           return handler.next(e);
         },
         onRequest: (options, handler) {
           print(
             'REQUEST  [${options.method}] => PATH:${options.baseUrl}${options.path}  BODY: ${options.data}',
           );
+
           return handler.next(options);
         },
         onResponse: (response, handler) {
           print('RESPONSE [${response.statusCode}]');
+
           return handler.next(response);
         },
       ),
     );
+
     return _dio;
   }
 }

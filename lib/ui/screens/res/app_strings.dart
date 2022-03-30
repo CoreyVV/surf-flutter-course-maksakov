@@ -13,6 +13,7 @@ class AppStrings {
   static const String cancel = 'Отмена';
   static const String cancelUppercase = 'ОТМЕНА';
   static const String category = 'Категория';
+  static const String categoryUppercase = 'КАТЕГОРИЯ';
   static const String notChosen = 'Не выбрано';
   static const String nameUppercase = 'НАЗВАНИЕ';
   static const String latitudeUppercase = 'ШИРОТА';
@@ -21,6 +22,7 @@ class AppStrings {
   static const String markOnMap = 'Указать на карте';
   static const String create = 'Создать';
   static const String save = 'Сохранить';
+  static const String saveUppercase = 'СОХРАНИТЬ';
   static const String camera = 'Камера';
   static const String photo = 'Фотография';
   static const String file = 'Файл';
@@ -51,7 +53,7 @@ class AppStrings {
   static const String listInterestingPlaces = 'Список интересных мест';
   static const String lookingForUppercase = 'ВЫ ИСКАЛИ';
   static const String clearHistory = 'Очистить историю';
-  static const String foundNothing = 'Ничего не найденою';
+  static const String foundNothing = 'Ничего не найдено';
   static const String tryChange = 'Попробуйте изменить параметры\nпоиска.';
   static const String favorite = 'Избранное';
   static const String wantToVisit = 'Хочу посетить';

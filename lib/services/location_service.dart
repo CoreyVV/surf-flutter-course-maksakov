@@ -7,7 +7,7 @@ class LocationService {
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     final defPosition = LocationData.fromMap(
-      <String, dynamic>{'latitude': 51.6754966, 'longitude': 39.20888230},
+      <String, dynamic>{'latitude': 51.6754966, 'longitude': 39.2088823},
     );
     final location = Location();
 
@@ -43,10 +43,11 @@ class LocationService {
     final lat1 = _degreesToRadians(placePosition.latitude!);
     final lat2 = _degreesToRadians(currentPosition.latitude!);
 
-    final a = sin(dLat/2) * sin(dLat/2) +
+    final catA = sin(dLat/2) * sin(dLat/2) +
         sin(dLon/2) * sin(dLon/2) * cos(lat1) * cos(lat2);
-    final c = 2 * atan2(sqrt(a), sqrt(1-a));
-    return earthRadiusKm * c;
+    final gipC = 2 * atan2(sqrt(catA), sqrt(1-catA));
+
+    return earthRadiusKm * gipC;
   }
 
   double _degreesToRadians(double degrees) {

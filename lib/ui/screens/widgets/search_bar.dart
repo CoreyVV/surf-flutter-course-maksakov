@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:places/ui/screens/res/strings.dart';
-import 'package:places/ui/screens/sight_search_screen.dart';
 import 'package:places/ui/screens/filters_screen.dart';
-import 'package:places/ui/screens/res/icons.dart';
+import 'package:places/ui/screens/res/app_strings.dart';
+import 'package:places/ui/screens/res/my_icons.dart';
+import 'package:places/ui/screens/res/themes.dart';
+import 'package:places/ui/screens/sight_search_screen.dart';
 
 class SearchBar extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -29,25 +30,29 @@ class SearchBar extends StatelessWidget {
             },
             readOnly: true,
             decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.transparent),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.transparent),
+              focusedBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.transparent),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderSide: BorderSide(color: Colors.transparent),
               ),
-              fillColor: Theme.of(context).primaryColorDark,
+              fillColor: Theme.of(context).colorScheme.background,
               filled: true,
               hintText: AppStrings.searchBarHintText,
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(color: Theme.of(context).colorScheme.inactiveBlack),
               contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
               prefixIcon: MyIcon(
                 asset: AssetsStr.search,
-                color: Theme.of(context).unselectedWidgetColor,
+                color: Theme.of(context).colorScheme.inactiveBlack,
                 height: 18,
                 fit: BoxFit.scaleDown,
               ),
@@ -59,14 +64,14 @@ class SearchBar extends StatelessWidget {
             child: IconButton(
               icon: MyIcon(
                 asset: AssetsStr.filter,
-                color: Theme.of(context).accentIconTheme.color,
+                color: Theme.of(context).colorScheme.green,
               ),
               iconSize: 18,
               onPressed: () {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const FilterScreen(),
+                    builder: (_) => const FiltersScreen(),
                   ),
                 );
               },

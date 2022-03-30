@@ -7,15 +7,15 @@ class ApiClient {
   }
 
   dynamic postData(String url, dynamic data) async {
-    return _dio().post<dynamic>(url);
+    return _dio().post<dynamic>(url, data: data);
   }
 
   dynamic putData(String url, dynamic data) async {
-    return _dio().put<dynamic>(url);
+    return _dio().put<dynamic>(url, data: data);
   }
 
   dynamic deleteData(String url, dynamic data) async {
-    return _dio().delete<dynamic>(url);
+    return _dio().delete<dynamic>(url, data: data);
   }
 
   Dio _dio() {
@@ -35,10 +35,12 @@ class ApiClient {
           print(
             'REQUEST  [${options.method}] => PATH:${options.baseUrl}${options.path}',
           );
+
           return handler.next(options);
         },
         onResponse: (response, handler) {
           print('RESPONSE [${response.statusCode}]');
+
           return handler.next(response);
         },
       ),
